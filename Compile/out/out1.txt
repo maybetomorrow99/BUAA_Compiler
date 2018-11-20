@@ -1,0 +1,35 @@
+token 1   :CONST   const at line 1
+token 2   :CHAR    char  at line 1
+token 3   :ID      a     at line 1
+token 4   :EQU     =     at line 1
+token 5   :SIGCHAR 'b' at line 1
+token 6   :SEMI    ;     at line 1
+token 7   :INT     int   at line 3
+token 8   :MAIN    main  at line 3
+token 9   :LPAR    (     at line 3
+token 10  :RPAR    )     at line 3
+token 11  :LBRA    {     at line 3
+token 12  :PRINTF  printf at line 4
+token 13  :LPAR    (     at line 4
+token 14  :STRING  "Hello world" at line 4
+token 15  :RPAR    )     at line 4
+token 16  :SEMI    ;     at line 4
+token 17  :RETURN  return at line 5
+token 18  :LPAR    (     at line 5
+token 19  :NUM     0     at line 5
+token 20  :RPAR    )     at line 5
+token 21  :SEMI    ;     at line 5
+token 22  :RBRA    }     at line 6
+ERROR#1   :Invalid symbol @ at line 8
+token 23  :STRING  "sdfsf" at line 10
+token 24  :ID      fdsaflj at line 10
+ERROR#2   :Missing double quotes "233 at line 10
+token 25  :NUM     123   at line 11
+ERROR#3   :Invalid symbol ! at line 12
+token 26  :ID      abc   at line 12
+ERROR#4   :Missing single quotes 'a at line 13
+token 27  :ID      bc    at line 13
+ERROR#5   :Missing single quotes '1 at line 13
+token 28  :NUM     23    at line 13
+ERROR#6   :Illegal character type in single quotes '@' at line 14
+token 29  :NUM     2333  at line 14
