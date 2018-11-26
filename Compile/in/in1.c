@@ -1,6 +1,4 @@
-const char a = 'b';
+void main(){
 
-int main(){
-    printf("Hello world");
-    return (0);
 }
+

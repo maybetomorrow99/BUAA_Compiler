@@ -3,6 +3,7 @@
 #include <vector>
 #include <fstream>
 #include <queue>
+#include <iomanip>
 using namespace std;
 typedef enum {
 	//error
@@ -31,7 +32,7 @@ typedef enum {
 
 extern std::string TokenName[];
 extern std::string ReservedWords[];
-extern void lexer_test();
+void lexer_test();
 const int ReservedWordsNum = 15;
 
 class Token {
@@ -47,13 +48,13 @@ public:
 	Lexer() { lineNum = 1; count = 1; ecount = 1; };
 	ifstream fin;
 	ofstream fout;
+	int lineNum;					//行号 
 	int count;
 	int ecount;						//错误数
 	Token getToken();
 	void printToken(Token t);
 private:
 	string line;
-	int lineNum;					//行号 
 	int ll;							//当前行长度
 	int cc;							//字符指针
 	Token token;

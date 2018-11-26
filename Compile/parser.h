@@ -1,13 +1,18 @@
 #pragma once
 #include <iostream>
+#include  <io.h>
+#include <string>
 #include "lexer.h"
+#include "error.h"
+#include "symbol.h"
 
 using namespace std;
 
-extern void parser_test();
+void parser_test();
 
 class Parser {
 public:
+	Lexer lexer;
 	void getToken();
 	void program();
 	void constDecl();
@@ -17,6 +22,7 @@ public:
 	void funcWithVal();
 	void funcWithNoVal();
 	void mainFunc();
+	void intNum();
 	void expression();
 	void item();
 	void factor();
@@ -26,19 +32,24 @@ public:
 	void stateCol();
 	void statement();
 	void ifState();
+	void condition();
 	void whileState();
 	void switchState();
 	void caseState();
 	void funcWithValState();
 	void funcWithNoValState();
-	void varParaTab();
+	void valParaTab();
 	void assignState();
 	void scanfState();
 	void printfState();
 	void returnState();
 private:
-	Lexer lexer;
+	
 	Token curToken;
 	queue<Token> tokens;
+	queue<Token> tmpTokens;
+	SymbolTable symTab;
 	void pushToken(Token t);
+	void clearToken();
+	void retract();
 };

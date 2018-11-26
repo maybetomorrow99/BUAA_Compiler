@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
 	parser_test();
-	cout << "Lexical analysis has been completed" << endl;
+	cout << "Parser has been completed" << endl;
 	system("Pause");
 	return 0;
 }

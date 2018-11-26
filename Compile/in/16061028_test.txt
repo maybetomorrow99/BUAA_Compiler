@@ -23,7 +23,7 @@ int factorial(int n){
 }
 
 int test_while{
-    int n = 3;
+    int n;
     do{ 
         n = n - 1;
         printf(n);

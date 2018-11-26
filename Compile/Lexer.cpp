@@ -35,7 +35,7 @@ std::string TokenSymbol[] = {
 std::string ReservedWords[] = {
 	"const", "int", "char", "void", "main",
 	"if", "else", "do", "while", "switch", "case", "default",
-	"scan", "printf", "return"
+	"scanf", "printf", "return"
 };
 
 
