@@ -1,9 +1,5 @@
 #include "lexer.h"
-#include <stdio.h>
-#include <string>
-#include <fstream>
-#include <algorithm> 
-#include <iomanip>
+
 using namespace std;
 
 std::string TokenName[] = {

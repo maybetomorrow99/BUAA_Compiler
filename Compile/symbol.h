@@ -1,17 +1,11 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <queue>
-#include <iomanip>
+#include "stdafx.h"
 
 #define TABLESIZE 512
 
-using namespace std;
-
 typedef enum {
 	UNDEFINEKD, CONSTKD, VARKD, PARAKD, ARRAYKD, FUNCKD
-}SymbolKind;
+} SymbolKind;
 
 
 typedef enum {
@@ -22,12 +16,14 @@ typedef enum {
 
 class SymbolItem {
 public:
-	string name;
-	SymbolKind kind;	//var array
-	SymbolType type;	//int char
-	int value;			
-	int para;
-	SymbolItem(string name, SymbolKind kind, SymbolType type, int value, int para);
+	string name;		
+	SymbolKind kind;	//const/ var/ para/ array/ func
+	SymbolType type;	//void/ int/ char/ string
+	int value;			//常量的值
+	int addr;			//地址偏移量
+	int level;			//表示层级
+	int para;			//表示函数的参数个数或数组长度
+	SymbolItem(string name, SymbolKind kind, SymbolType type, int value, int addr, int level, int para);
 };
 
 class SymbolTable {

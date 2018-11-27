@@ -1,12 +1,15 @@
 #include "symbol.h"
+#include "stdafx.h"
 
-SymbolItem::SymbolItem(string name, SymbolKind kind, SymbolType type, int value, int para) {
+SymbolItem::SymbolItem(string name, SymbolKind kind, SymbolType type, 
+						int value, int addr, int level, int para) {
 	this->name = name;
 	this->kind = kind;
 	this->type = type;
-	this->value = para;
+	this->value = value;
+	this->addr = addr;
+	this->level = level;
 	this->para = para;
-
 }
 
 
@@ -20,6 +23,6 @@ bool SymbolTable::isFunc(string name, SymbolType type) {
 }
 
 void SymbolTable::insert(string name, SymbolKind kind, SymbolType type, int value, int para) {
-	SymbolItem item = SymbolItem(name, kind, type, 0, 0);
-	items.push_back(item);
+	//SymbolItem item = SymbolItem(name, kind, type, 0, 0);
+	//items.push_back(item);
 }

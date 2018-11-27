@@ -1,5 +1,6 @@
 #pragma once
-#include <iostream>
+#include "stdafx.h"
+
 #define UNKNOWN						0
 #define MISSING_SIN_QUOTE           1
 #define MISSING_DOU_QUOTES          2
@@ -40,7 +41,5 @@
 #define VARIABLE_NOT_INITIALIZED    37
 #define SYMBOL_TABLE_OVERFLOW       38
 #define ARRAY_OVER                  39
-
-using namespace std;
 
 void error(int errid, int lineNum);

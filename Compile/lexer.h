@@ -1,10 +1,6 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <fstream>
-#include <queue>
-#include <iomanip>
-using namespace std;
+#include "stdafx.h"
+
 typedef enum {
 	//error
 	ERROR,
@@ -54,7 +50,7 @@ public:
 	Token getToken();
 	void printToken(Token t);
 private:
-	string line;
+	std::string line;
 	int ll;							//当前行长度
 	int cc;							//字符指针
 	Token token;

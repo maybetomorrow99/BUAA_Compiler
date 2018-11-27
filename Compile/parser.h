@@ -1,12 +1,9 @@
 #pragma once
-#include <iostream>
-#include  <io.h>
-#include <string>
+#include "stdafx.h"
 #include "lexer.h"
 #include "error.h"
 #include "symbol.h"
 
-using namespace std;
 
 void parser_test();
 

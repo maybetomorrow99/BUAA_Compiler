@@ -1,5 +1,6 @@
 #include "parser.h"
 
+using namespace std;
 
 void Parser::getToken() {
 	if (tokens.size()) {
