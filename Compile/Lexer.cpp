@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-std::string TokenName[] = {
+string TokenName[] = {
 	"error",
 	"const", "int", "char", "void", "main",
 	"if", "else", "do", "while", "switch", "case", "default",
@@ -12,7 +12,7 @@ std::string TokenName[] = {
 	"=", "<", "<=", ">", ">=",
 	"!=", "=="
 };
-std::string TokenSymbol[] = {
+string TokenSymbol[] = {
 	"ERROR   ",
 	"CONST   ", "INT     ", "CHAR    ", "VOID    ", "MAIN    ",
 	"IF      ", "ELSE    ", "DO      ", "WHILE   ", "SWITCH  ", "CASE    ", "DEFAULT ",
@@ -26,7 +26,7 @@ std::string TokenSymbol[] = {
 	"ENDOFFILE"
 };
 
-std::string ReservedWords[] = {
+string ReservedWords[] = {
 	"const", "int", "char", "void", "main",
 	"if", "else", "do", "while", "switch", "case", "default",
 	"scanf", "printf", "return"

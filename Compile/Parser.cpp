@@ -1,5 +1,6 @@
 #include "parser.h"
 
+
 void Parser::getToken() {
 	if (tokens.size()) {
 		curToken = tokens.front();
@@ -183,28 +184,43 @@ void Parser::constDef() {
 		if (curToken.type != ID) {
 			error(MISSING_IDEN, lexer.lineNum);
 		}
-
+		name = curToken.str;
 		getToken();
 		if (curToken.type != EQU) {
 			error(MISSING_EQUAL_SIGN, lexer.lineNum);
 		}
 
 		getToken();
-		intNum();
+		value = intNum();
+
+		if (!symTab.inTable(name)) {
+			symTab.insert(name, CONSTKD, INTTP, value);
+			quaterList.push_back(Quaternary("CON", "int", name, to_string(value)));
+		}
+		else {
+			error(IDENT_REDEF, lexer.lineNum);
+		}
 
 		while (curToken.type == COMMA) {
 			getToken();
 			if (curToken.type != ID) {
 				error(MISSING_IDEN, lexer.lineNum);
 			}
-
+			name = curToken.str;
 			getToken();
 			if (curToken.type != EQU) {
 				error(MISSING_EQUAL_SIGN, lexer.lineNum);
 			}
 
 			getToken();
-			intNum();
+			value = intNum();
+			if (!symTab.inTable(name)) {
+				symTab.insert(name, CONSTKD, INTTP, value);
+				quaterList.push_back(Quaternary("CON", "int", name, to_string(value)));
+			}
+			else {
+				error(IDENT_REDEF, lexer.lineNum);
+			}
 		}							
 	}
 	else if (curToken.type == CHAR) {
@@ -214,6 +230,7 @@ void Parser::constDef() {
 			//error
 			error(MISSING_IDEN, lexer.lineNum);
 		}
+		name = curToken.str;
 
 		getToken();
 		if (curToken.type != EQU) {
@@ -223,6 +240,15 @@ void Parser::constDef() {
 		if (curToken.type != SIGCHAR) {
 			error(MISSING_CHAR, lexer.lineNum);
 		}
+		
+		value = curToken.str[0];
+		if (!symTab.inTable(name)) {
+			symTab.insert(name, CONSTKD, CHARTP, value);
+			quaterList.push_back(Quaternary("CON", "char", name, to_string(value)));
+		}
+		else {
+			error(IDENT_REDEF, lexer.lineNum);
+		}
 
 		getToken();
 		while (curToken.type == COMMA) {
@@ -231,6 +257,7 @@ void Parser::constDef() {
 				//error
 				error(MISSING_IDEN, lexer.lineNum);
 			}
+			name = curToken.str;
 
 			getToken();
 			if (curToken.type != EQU) {
@@ -240,6 +267,15 @@ void Parser::constDef() {
 			getToken();
 			if (curToken.type != SIGCHAR) {
 				error(MISSING_CHAR, lexer.lineNum);
+			}
+
+			value = curToken.str[0];
+			if (!symTab.inTable(name)) {
+				symTab.insert(name, CONSTKD, CHARTP, value);
+				quaterList.push_back(Quaternary("CON", "char", name, to_string(value)));
+			}
+			else {
+				error(IDENT_REDEF, lexer.lineNum);
 			}
 
 			getToken();
@@ -386,7 +422,7 @@ void Parser::funcWithVal() {
 		}
 		
 		//原始版本待修改
-		symTab.insert(name, FUNCKD, type, 0, 0);
+		//symTab.insert(name, FUNCKD, type, 0, 0);
 
 		getToken();
 	}
@@ -399,7 +435,7 @@ void Parser::funcWithVal() {
 		}
 
 		//原始版本待修改
-		symTab.insert(name, FUNCKD, type, 0, 0);
+		//symTab.insert(name, FUNCKD, type, 0, 0);
 
 		getToken();
 	}
@@ -448,7 +484,7 @@ void Parser::funcWithNoVal() {
 			error(MISSING_RIGHT_BRACE, lexer.lineNum);
 		}
 
-		symTab.insert(name, FUNCKD, type, 0, 1);
+		//symTab.insert(name, FUNCKD, type, 0, 1);
 
 		getToken();
 	}
@@ -459,7 +495,7 @@ void Parser::funcWithNoVal() {
 			error(MISSING_RIGHT_BRACE, lexer.lineNum);
 		}
 
-		symTab.insert(name, FUNCKD, type, 0, 0);
+		//symTab.insert(name, FUNCKD, type, 0, 0);
 
 		getToken();
 	}
@@ -525,16 +561,21 @@ void Parser::mainFunc() {
 /*
 <整数>        ::= ［＋｜－］<无符号整数>
 */
-void Parser::intNum() {
+int Parser::intNum() {
+	int sign = 1;
 	if (curToken.type == PLUS || curToken.type == MINUS) {
+		if (curToken.type == MINUS)
+			sign = -1;
 		getToken();
 	}
 	if (curToken.type == NUM) {
+		sign *= atoi(curToken.str.c_str());
 		getToken();
 	}
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
+	return sign;
 	//cout << setw(4) << left << lexer.lineNum<< "This is a integer" << endl;
 }
 
@@ -1109,6 +1150,13 @@ void Parser::returnState() {
 	}
 
 	cout << setw(4) << left << lexer.lineNum  << "This is a return statement" << endl;
+}
+
+void Parser::printQuater() {
+	cout << "\n These are quaternary " << endl;
+	for (int i = 0; i < quaterList.size(); i++) {
+		cout << quaterList[i].toString() << endl;
+	}
 }
 
 void parser_test() {

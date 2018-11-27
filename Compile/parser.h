@@ -22,7 +22,7 @@ public:
 	void funcWithVal();
 	void funcWithNoVal();
 	void mainFunc();
-	void intNum();
+	int intNum();
 	void expression();
 	void item();
 	void factor();
@@ -43,12 +43,21 @@ public:
 	void scanfState();
 	void printfState();
 	void returnState();
+
+	void printQuater();
+
 private:
-	
 	Token curToken;
 	queue<Token> tokens;
 	queue<Token> tmpTokens;
 	void pushToken(Token t);
 	void clearToken();
 	void retract();
+
+	string name;
+	SymbolKind kind;	//const/ var/ para/ array/ func
+	SymbolType type;	//void/ int/ char/ string
+	int value;			//常量的值
+	int addr;			//地址偏移量
+	int para;
 };
