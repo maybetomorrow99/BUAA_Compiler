@@ -1,7 +1,5 @@
 #include "parser.h"
 
-using namespace std;
-
 void Parser::getToken() {
 	if (tokens.size()) {
 		curToken = tokens.front();
@@ -386,8 +384,9 @@ void Parser::funcWithVal() {
 		if (curToken.type != RBRA) {
 			error(MISSING_RIGHT_BRACE, lexer.lineNum);
 		}
-
-		symTab.insert(name, FUNCKD, type, 0, 1);
+		
+		//原始版本待修改
+		symTab.insert(name, FUNCKD, type, 0, 0);
 
 		getToken();
 	}
@@ -399,6 +398,7 @@ void Parser::funcWithVal() {
 			error(MISSING_LEFT_BRACE, lexer.lineNum);
 		}
 
+		//原始版本待修改
 		symTab.insert(name, FUNCKD, type, 0, 0);
 
 		getToken();
@@ -1114,8 +1114,8 @@ void Parser::returnState() {
 void parser_test() {
 	Parser parser;
 	string path;
-	//path = "./in/in3.c";
-	cin >> path;
+	path = "./in/in1.c";
+	//cin >> path;
 	if (_access(path.data(), 0) == -1) {
 		cout << "File doesn't exist!" << endl;
 		return;

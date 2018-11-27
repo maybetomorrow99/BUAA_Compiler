@@ -26,8 +26,8 @@ typedef enum {
 	ENDOFFILE
 } TokenType;
 
-extern std::string TokenName[];
-extern std::string ReservedWords[];
+extern string TokenName[];
+extern string ReservedWords[];
 void lexer_test();
 const int ReservedWordsNum = 15;
 
@@ -36,7 +36,7 @@ public:
 	Token() { type = ERROR; lineNum = 1; str = ""; }
 	TokenType type;
 	int lineNum;
-	std::string str;				//字符串转数值atoi(str.c_str())
+	string str;				//字符串转数值atoi(str.c_str())
 };
 
 class Lexer {

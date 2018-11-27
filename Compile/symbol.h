@@ -1,8 +1,6 @@
 #pragma once
 #include "stdafx.h"
 
-#define TABLESIZE 512
-
 typedef enum {
 	UNDEFINEKD, CONSTKD, VARKD, PARAKD, ARRAYKD, FUNCKD
 } SymbolKind;
@@ -28,8 +26,15 @@ public:
 
 class SymbolTable {
 public:
+	SymbolTable() { offset = 0; }
 	vector<SymbolItem> items;
+	int offset;
+
+	void insert(string name, SymbolKind kind, SymbolType type, int level, int value);
+	bool isConst(string name);
+	bool isVar(string name);
+	bool isArray(string name);
+	bool isPara(string name);
 	bool isFunc(string name, SymbolType type);
-	void insert(string name, SymbolKind kind, SymbolType type, int value, int para);
 
 };

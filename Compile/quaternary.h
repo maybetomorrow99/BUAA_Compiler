@@ -1,15 +1,11 @@
 #pragma once
 #include "stdafx.h"
 
-
-typedef enum {
-
-} Operator;
-
 class Quaternary {
 public:
-	Operator oper;
-	std::string op1;
-	std::string op2;
-	std::string res;
+	string oper;
+	string op1;
+	string op2;
+	string res;
+	Quaternary(string oper, string op1, string op2, string res);
 };

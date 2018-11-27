@@ -3,13 +3,16 @@
 #include "lexer.h"
 #include "error.h"
 #include "symbol.h"
-
+#include "quaternary.h"
 
 void parser_test();
 
 class Parser {
 public:
 	Lexer lexer;
+	SymbolTable symTab;
+	vector<Quaternary> quaterList;
+
 	void getToken();
 	void program();
 	void constDecl();
@@ -45,7 +48,6 @@ private:
 	Token curToken;
 	queue<Token> tokens;
 	queue<Token> tmpTokens;
-	SymbolTable symTab;
 	void pushToken(Token t);
 	void clearToken();
 	void retract();

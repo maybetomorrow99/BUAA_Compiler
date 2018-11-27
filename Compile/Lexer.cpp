@@ -1,7 +1,5 @@
 #include "lexer.h"
 
-using namespace std;
-
 std::string TokenName[] = {
 	"error",
 	"const", "int", "char", "void", "main",
