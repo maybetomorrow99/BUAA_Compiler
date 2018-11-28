@@ -9,9 +9,11 @@ void parser_test();
 
 class Parser {
 public:
+	Parser() { tempIndex = 0; labelIndex = 0; }
 	Lexer lexer;
 	SymbolTable symTab;
 	vector<Quaternary> quaterList;
+	vector<string> stringPool;
 
 	void getToken();
 	void program();
@@ -32,10 +34,10 @@ public:
 	void stateCol();
 	void statement();
 	void ifState();
-	void condition();
+	void condition(string label);
 	void whileState();
 	void switchState();
-	void caseState();
+	void caseState(SymbolItem exprSym, string labelEnd);
 	SymbolItem funcWithValState();
 	void funcWithNoValState();
 	void valParaTab();
@@ -56,8 +58,10 @@ private:
 
 	int tempIndex;
 	string genVar();
-
+	int labelIndex;
 	string genLab();
+
+	int insertString(string str);
 
 	string name;		//±íÏî
 	SymbolKind kind;	//const/ var/ para/ array/ func
