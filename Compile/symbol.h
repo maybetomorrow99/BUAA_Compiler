@@ -15,7 +15,7 @@ extern string TypeStr[];
 
 class SymbolItem {
 public:
-	string name;		
+	string name;		//表项名字
 	SymbolKind kind;	//const/ var/ para/ array/ func
 	SymbolType type;	//void/ int/ char/ string
 	int value;			//常量的值
@@ -40,6 +40,7 @@ public:
 	bool isArray(string name);
 	bool isPara(string name);
 	bool isFunc(string name, SymbolType type);
+	bool updateFuncPara(string name, int para);
 	void printTable();
 
 };

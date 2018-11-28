@@ -41,6 +41,7 @@ void SymbolTable::insert(string name, SymbolKind kind, SymbolType type, int valu
 		offset += value * 4;
 	}
 	else if (kind == FUNCKD) {	//此时value表示参数个数
+		curFuncAddr = items.size();
 		funcIndex.push_back(items.size());
 		offset = 0;
 		items.push_back(SymbolItem(name, kind, type, 0, offset, value));
@@ -123,8 +124,21 @@ bool SymbolTable::isFunc(string name, SymbolType type) {
 	return false;
 }
 
+/*
+更改函数表项的参数个数
+*/
+bool SymbolTable::updateFuncPara(string name, int para) {
+	for (int i = 0; i < funcIndex.size(); i++) {
+		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD ) {
+			items[funcIndex[i]].para = para;
+			return true;
+		}
+	}
+	return false;
+}
+
 void SymbolTable::printTable() {
-	cout << "name      kind      type      value     addr      para" << endl;
+	cout << "\nname      kind      type      value     addr      para" << endl;
 	for (int i = 0; i < items.size(); i++) {
 		SymbolItem item = items[i];
 		cout << setw(10) << left << item.name;

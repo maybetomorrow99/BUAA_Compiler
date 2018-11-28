@@ -54,7 +54,7 @@ private:
 	void clearToken();
 	void retract();
 
-	string name;
+	string name;		//表项
 	SymbolKind kind;	//const/ var/ para/ array/ func
 	SymbolType type;	//void/ int/ char/ string
 	int value;			//常量的值

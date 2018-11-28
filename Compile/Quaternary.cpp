@@ -8,5 +8,5 @@ Quaternary::Quaternary(string oper, string op1, string op2, string res) {
 }
 
 string Quaternary::toString() {
-	return oper + " " + op1 + " " + op2 + " " + res;
+	return oper + ", " + op1 + ", " + op2 + ", " + res;
 }
