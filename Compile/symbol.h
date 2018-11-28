@@ -15,6 +15,7 @@ extern string TypeStr[];
 
 class SymbolItem {
 public:
+	SymbolItem(){}
 	string name;		//±íÏîÃû×Ö
 	SymbolKind kind;	//const/ var/ para/ array/ func
 	SymbolType type;	//void/ int/ char/ string
@@ -35,11 +36,12 @@ public:
 	void insert(string name, SymbolKind kind, SymbolType type, int value);
 	bool inTable(string name);
 	SymbolItem search(string name);
+	SymbolItem searchFunc(string name);
 	bool isConst(string name);
 	bool isVar(string name);
 	bool isArray(string name);
 	bool isPara(string name);
-	bool isFunc(string name, SymbolType type);
+	bool isFunc(string name);
 	bool updateFuncPara(string name, int para);
 	void printTable();
 

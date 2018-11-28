@@ -79,6 +79,16 @@ SymbolItem SymbolTable::search(string name) {
 	}
 }
 
+SymbolItem SymbolTable::searchFunc(string name) {
+	if (isFunc(name)) {
+		for (int i = 0; i < funcIndex.size(); i++) {
+			if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
+				return items[funcIndex[i]];
+			}
+		}
+	}
+}
+
 bool SymbolTable::isConst(string name) {
 	if (inTable(name)) {
 		SymbolItem item = search(name);
@@ -115,9 +125,9 @@ bool SymbolTable::isPara(string name) {
 	return false;
 }
 
-bool SymbolTable::isFunc(string name, SymbolType type) {
+bool SymbolTable::isFunc(string name) {
 	for (int i = 0; i < funcIndex.size(); i++) {
-		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD && items[funcIndex[i]].type == type) {
+		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
 			return true;
 		}
 	}

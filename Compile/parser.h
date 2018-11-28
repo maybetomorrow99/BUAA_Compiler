@@ -23,9 +23,9 @@ public:
 	void funcWithNoVal();
 	void mainFunc();
 	int intNum();
-	void expression();
-	void item();
-	void factor();
+	SymbolItem expression();
+	SymbolItem item();
+	SymbolItem factor();
 	void declHeader();
 	void paraTab();
 	void compState();
@@ -36,7 +36,7 @@ public:
 	void whileState();
 	void switchState();
 	void caseState();
-	void funcWithValState();
+	SymbolItem funcWithValState();
 	void funcWithNoValState();
 	void valParaTab();
 	void assignState();
@@ -53,6 +53,11 @@ private:
 	void pushToken(Token t);
 	void clearToken();
 	void retract();
+
+	int tempIndex;
+	string genVar();
+
+	string genLab();
 
 	string name;		//±íÏî
 	SymbolKind kind;	//const/ var/ para/ array/ func

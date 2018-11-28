@@ -24,6 +24,16 @@ void Parser::retract() {
 	clearToken();
 }
 
+string Parser::genVar() {
+	string s = "temp" + to_string(tempIndex++);
+	return s;
+}
+
+string Parser::genLab() {
+	string s = "label";
+	return s;
+}
+
 //除了主程序外，每个子程序段的最后一定是getToken()
 /*
 <程序>    :: = ［<常量说明>］［<变量说明>］{ <有返回值函数定义> | <无返回值函数定义> }<主函数>
@@ -559,8 +569,6 @@ void Parser::funcWithNoVal() {
 			error(MISSING_RIGHT_BRACE, lexer.lineNum);
 		}
 
-		//symTab.insert(name, FUNCKD, type, 0, 0);
-
 		getToken();
 	}
 	else {
@@ -650,50 +658,86 @@ int Parser::intNum() {
 <表达式>    ::= ［＋｜－］<项>{<加法运算符><项>}  
 //[+|-]只作用于第一个<项>
 */
-void Parser::expression() {
+SymbolItem Parser::expression() {
+	SymbolItem itemSym1, itemSym2;
+	int sign = 0;
 	if (curToken.type == PLUS || curToken.type == MINUS) {
+		sign = curToken.type;
 		getToken();
 	}
-	item();
+	itemSym1 = item();
+	if (sign == MINUS)
+		quaterList.push_back(Quaternary("SUB", "0", itemSym1.name, itemSym1.name));
+
 	while (curToken.type == PLUS || curToken.type == MINUS) {
+		sign = curToken.type;
 		getToken();
-		item();
+		itemSym2 = item();
+
+		if (sign == PLUS)
+			quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, itemSym1.name));
+		else
+			quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, itemSym1.name));
 	}
 	
 	cout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;
+	return itemSym1;
 }
 
 /*
 <项>     ::= <因子>{<乘法运算符><因子>}
 */
-void Parser::item() {
-	factor();
+SymbolItem Parser::item() {
+	SymbolItem factorSym1, factorSym2;
+	factorSym1 = factor();
 	while (curToken.type == MULT || curToken.type == DIV) {
+		int sign = curToken.type;
 		getToken();
-		factor();
+		factorSym2 = factor();
+
+		//进行一次运算
+		if (sign == MULT)
+			quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, factorSym1.name));
+		else
+			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, factorSym1.name));
 	}
 
 	cout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;
+	return factorSym1;
 }
 
 /*
 <因子>    ::= <标识符>｜<标识符>‘[’<表达式>‘]’｜<整数>|<字符>｜<有返回值函数调用语句>|‘(’<表达式>‘)’
 */
-void Parser::factor() {
+SymbolItem Parser::factor() {
 	//<标识符>｜<标识符>‘[’<表达式>‘]’|<有返回值函数调用语句>
-	string name;
-	if (curToken.type == ID) { //***待修改
+	SymbolItem factorSym;
+	SymbolItem arrayIndex;
+	if (curToken.type == ID) { //***TODO
 		pushToken(curToken);
-
-		name = curToken.str;
-
+		
+		string idName = curToken.str;
+		if (!symTab.inTable(idName)) {
+			error(IDENT_NOT_DEF, lexer.lineNum);
+		}
+		
 		getToken();
 		if (curToken.type == LBRK) {		//<标识符>‘[’<表达式>‘]’
 			clearToken();
 			getToken();
-			expression();
+
+			//将数组的值放到一个新变量中
+			factorSym.name = genVar();
+			factorSym.type = symTab.search(idName).type;
+			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
+			quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", name));
+
+			arrayIndex = expression();
 			if (curToken.type == RBRK) {
 				getToken();
+
+				//取数组值
+				quaterList.push_back(Quaternary("LARY", idName, arrayIndex.name, factorSym.name));
 			}
 			else {
 				error(MISSING_RIGHT_BRACKET, lexer.lineNum);
@@ -703,30 +747,56 @@ void Parser::factor() {
 			pushToken(curToken);
 			retract();
 			getToken();
-			funcWithValState();
+
+			factorSym = funcWithValState();
+			factorSym.type = symTab.search(idName).type;
+			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
+
+			//接受函数返回值
+			quaterList.push_back(Quaternary("VOF", idName, "", factorSym.name));
 		}
-		else if (symTab.isFunc(name, INTTP) || symTab.isFunc(name, CHARTP)) {	//<有返回值函数调用语句>无参数，如果是函数，还需要回溯
+		else if (symTab.isFunc(idName)) {	//<有返回值函数调用语句>无参数，如果是函数，还需要回溯
 			pushToken(curToken);
 			retract();
 			getToken();
-			funcWithValState();
+
+			factorSym = funcWithValState();
+			type = symTab.search(idName).type;
+			symTab.insert(factorSym.name, VARKD, type, 0);
+
+			//接受函数返回值
+			quaterList.push_back(Quaternary("VOF", idName, "", factorSym.name));
 		}
 		else {					//<标识符>
 			clearToken();
-			//getToken();
+			
+			factorSym.name = genVar();
+			factorSym.type = symTab.search(idName).type;
+			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
+			quaterList.push_back(Quaternary("LVAR", idName, "", factorSym.name));
 		}
 
 	}
 	//整数
 	else if (curToken.type == PLUS || curToken.type == MINUS || curToken.type == NUM) {
-		intNum();
+		value = intNum();
+		factorSym.name = genVar();
+		factorSym.type = INTTP;
+		symTab.insert(factorSym.name, VARKD, INTTP, value);
+		quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
 	}
-	else if (curToken.type == SIGCHAR) {
+	else if (curToken.type == SIGCHAR) {	//字符
+		factorSym.name = genVar();
+		factorSym.type = CHARTP;
+		symTab.insert(factorSym.name, VARKD, CHARTP, curToken.str[0]);
+		quaterList.push_back(Quaternary("LI", to_string(curToken.str[0]), "", factorSym.name));
 		getToken();
 	}
-	else if (curToken.type == LPAR) {
+	else if (curToken.type == LPAR) {		//表达式
 		getToken();
-		expression();
+		factorSym = expression();
+		symTab.insert(factorSym.name, VARKD, INTTP, 0);	//TODO:此处可能有问题，表达式的类型不一定是整型
+
 		if (curToken.type == RPAR) {
 			getToken();
 		}
@@ -738,7 +808,9 @@ void Parser::factor() {
 		error(UNKNOWN, lexer.lineNum);
 	}
 
+	
 	cout << setw(4) << left << lexer.lineNum<< "This is a factor" << endl;
+	return factorSym;
 }
 
 /*
@@ -880,24 +952,29 @@ void Parser::statement() {
 		pushToken(curToken);
 		getToken();
 
-		if (curToken.type == LPAR) {	//函数调用有参数，待修改
+		if (curToken.type == LPAR) {	//函数调用有参数，TODO
 			pushToken(curToken);
 			retract();
 			getToken();
-			if (symTab.isFunc(name, VOIDTP))
-				funcWithNoValState();
-			else
-				funcWithValState();
+			if (symTab.isFunc(name)) {
+				if(symTab.searchFunc(name).type == VOIDTP)
+					funcWithNoValState();
+				else
+					funcWithValState();
+			}
 		}
 		else {
-			//赋值或有无返回值无参数函数调用语句，待修改*****
+			//赋值或有无返回值无参数函数调用语句，TODO*****
 			pushToken(curToken);
 			retract();
 			getToken();
-			if (symTab.isFunc(name, VOIDTP))
-				funcWithNoValState();
-			else if (symTab.isFunc(name, INTTP) || symTab.isFunc(name, CHARTP))
-				funcWithValState();
+
+			if (symTab.isFunc(name)) {
+				if (symTab.searchFunc(name).type == VOIDTP)
+					funcWithNoValState();
+				else
+					funcWithValState();
+			}
 			else
 				assignState();
 		}
@@ -1077,7 +1154,10 @@ void Parser::caseState() {
 /*
 <有返回值函数调用语句> ::= <标识符>‘(’<值参数表>‘)’|<标识符> //第一种选择为有参数的情况，第二种选择为无参数的情况
 */
-void Parser::funcWithValState() {
+SymbolItem Parser::funcWithValState() {//有问题
+	SymbolItem nonono;
+	nonono.name = genVar();
+	nonono.type = INTTP;
 	if (curToken.type != ID) {
 		error(MISSING_IDEN, lexer.lineNum);
 	}
@@ -1093,6 +1173,7 @@ void Parser::funcWithValState() {
 		}
 	}
 	cout << setw(4) << left << lexer.lineNum<< "This is a function call statement with return value " << endl;
+	return nonono;
 }
 
 /*
@@ -1250,7 +1331,11 @@ void Parser::returnState() {
 void Parser::printQuater() {
 	cout << "\nThis is quaternary list " << endl;
 	for (int i = 0; i < quaterList.size(); i++) {
-		cout << quaterList[i].toString() << endl;
+		Quaternary quater = quaterList[i];
+		cout << setw(10) << left << quater.oper;
+		cout << setw(10) << left << quater.op1;
+		cout << setw(10) << left << quater.op2;
+		cout << setw(10) << left << quater.res << endl;
 	}
 }
 
