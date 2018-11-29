@@ -33,6 +33,9 @@
     <ClCompile Include="Quaternary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MipsGenerator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lexer.h">
@@ -51,6 +54,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="quaternary.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="mips.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

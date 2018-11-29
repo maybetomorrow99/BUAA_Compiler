@@ -120,6 +120,7 @@
   <ItemGroup>
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Lexer.cpp" />
+    <ClCompile Include="MipsGenerator.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Quaternary.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
@@ -128,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="error.h" />
     <ClInclude Include="lexer.h" />
+    <ClInclude Include="mips.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="quaternary.h" />
     <ClInclude Include="stdafx.h" />

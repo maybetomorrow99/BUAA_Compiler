@@ -1,5 +1,8 @@
 #include "parser.h"
 
+SymbolTable symTab;
+vector<Quaternary> quaterList;
+vector<string> stringPool;
 
 void Parser::getToken() {
 	if (tokens.size()) {
@@ -1492,7 +1495,7 @@ void Parser::returnState() {
 }
 
 
-void Parser::printQuater(string path) {
+void printQuater(string path) {
 	ofstream fout;
 	fout.open(path);
 	fout << "\nThis is quaternary list " << endl;

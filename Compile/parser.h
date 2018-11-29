@@ -7,13 +7,16 @@
 
 void parser_test();
 
+void printQuater(string path);
+
+extern SymbolTable symTab;
+extern vector<Quaternary> quaterList;
+extern vector<string> stringPool;
+
 class Parser {
 public:
 	Parser() { tempIndex = 0; labelIndex = 0; }
 	Lexer lexer;
-	SymbolTable symTab;
-	vector<Quaternary> quaterList;
-	vector<string> stringPool;
 
 	void getToken();
 	void program();
@@ -46,7 +49,6 @@ public:
 	void printfState();
 	void returnState();
 
-	void printQuater(string path);
 
 private:
 	Token curToken;
