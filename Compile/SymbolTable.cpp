@@ -89,6 +89,36 @@ SymbolItem SymbolTable::searchFunc(string name) {
 	}
 }
 
+
+int SymbolTable::getFuncAddr(string name) {
+	for (int i = 0; i < funcIndex.size(); i++) {
+		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
+			return funcIndex[i];
+		}
+	}
+}
+
+
+SymbolItem SymbolTable::getCurFunc() {
+	return items[curFuncAddr];
+}
+
+
+bool SymbolTable::isGlobal(string name) {
+	for (int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name)
+			return false;
+	}
+	if (funcIndex.size()) {
+		for (int i = 0; i < funcIndex[0]; i++) {
+			if (items[i].name == name)
+				return true;
+		}
+	}
+	return false;
+}
+
+
 bool SymbolTable::isConst(string name) {
 	if (inTable(name)) {
 		SymbolItem item = search(name);
@@ -145,6 +175,11 @@ bool SymbolTable::updateFuncPara(string name, int para) {
 		}
 	}
 	return false;
+}
+
+
+void SymbolTable::updateFuncVal() {
+	items[curFuncAddr].value = offset;
 }
 
 void SymbolTable::printTable() {

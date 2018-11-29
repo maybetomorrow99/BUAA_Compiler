@@ -14,13 +14,16 @@ void Parser::getToken() {
 	}
 }
 
+
 void Parser::pushToken(Token t) {
 	tmpTokens.push(t);
 }
 
+
 void Parser::clearToken() {
 	while (!tmpTokens.empty()) tmpTokens.pop();
 }
+
 
 void Parser::retract() {
 	tokens = tmpTokens;
@@ -32,9 +35,10 @@ void Parser::retract() {
 生成变量名
 */
 string Parser::genVar() {
-	string s = "temp" + to_string(tempIndex++);
+	string s = "$temp" + to_string(tempIndex++);
 	return s;
 }
+
 
 /*
 生成标签
@@ -463,6 +467,7 @@ void Parser::varDef() {
 //第一种选择为有参数的情况，第二种选择为无参数的情况
 */
 void Parser::funcWithVal() {
+	retFlag = false;
 	//声明头部
 	string fname;
 	if (curToken.type == INT || curToken.type == CHAR) {
@@ -531,7 +536,10 @@ void Parser::funcWithVal() {
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
-
+	if (!retFlag) {
+		error(0, lexer.lineNum);
+	}
+	symTab.updateFuncVal();
 	cout << setw(4) << left << lexer.lineNum<< "This is a function definition with return value" << endl;
 }
 
@@ -541,6 +549,7 @@ void Parser::funcWithVal() {
 //第一种选择为有参数的情况，第二种选择为无参数的情况
 */
 void Parser::funcWithNoVal() {
+	retFlag = false;
 	string fname;
 
 	if (curToken.type != VOID) {
@@ -605,6 +614,10 @@ void Parser::funcWithNoVal() {
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
+	if (!retFlag) {
+		quaterList.push_back(Quaternary("REN", "", "", ""));
+	}
+	symTab.updateFuncVal();
 
 	cout << setw(4) << left << lexer.lineNum<< "This is a function definition without return value" << endl;
 }
@@ -664,6 +677,7 @@ void Parser::mainFunc() {
 		error(MISSING_LEFT_BRACE, lexer.lineNum);
 	}
 
+	symTab.updateFuncVal();
 	cout << setw(4) << left << lexer.lineNum<< "This is main function" << endl;
 }
 
@@ -1469,6 +1483,7 @@ void Parser::printfState() {
 	cout << setw(4) << left << lexer.lineNum<< "This is a printf statement" << endl;
 }
 
+
 /*
 <返回语句>   ::=  return[‘(’<表达式>‘)’]
 */
@@ -1490,7 +1505,10 @@ void Parser::returnState() {
 			error(MISSING_RIGHT_PARENTHESIS, lexer.lineNum);
 		}
 	}
-
+	else {		//return;空return
+		quaterList.push_back(Quaternary("REN", "", "", ""));
+	}
+	retFlag = true;
 	cout << setw(4) << left << lexer.lineNum  << "This is a return statement" << endl;
 }
 
@@ -1498,7 +1516,7 @@ void Parser::returnState() {
 void printQuater(string path) {
 	ofstream fout;
 	fout.open(path);
-	fout << "\nThis is quaternary list " << endl;
+	//fout << "\nThis is quaternary list " << endl;
 	for (int i = 0; i < quaterList.size(); i++) {
 		Quaternary quater = quaterList[i];
 		fout << setw(10) << left << quater.oper;

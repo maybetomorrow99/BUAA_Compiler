@@ -15,7 +15,7 @@ extern vector<string> stringPool;
 
 class Parser {
 public:
-	Parser() { tempIndex = 0; labelIndex = 0; }
+	Parser() { tempIndex = 0; labelIndex = 0; retFlag = false; }
 	Lexer lexer;
 
 	void getToken();
@@ -62,7 +62,7 @@ private:
 	string genVar();
 	int labelIndex;
 	string genLab();
-
+	bool retFlag;
 	int insertString(string str);
 
 	string name;		//±íÏî
