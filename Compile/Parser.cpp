@@ -463,7 +463,7 @@ void Parser::funcWithVal() {
 	//ÉùÃ÷Í·²¿
 	string fname;
 	if (curToken.type == INT || curToken.type == CHAR) {
-		type == (curToken.type == INT) ? INTTP : CHARTP;
+		type = (curToken.type == INT) ? INTTP : CHARTP;
 
 		getToken();
 		if (curToken.type == ID) {
@@ -654,6 +654,7 @@ void Parser::mainFunc() {
 	getToken();
 
 	symTab.insert("main", FUNCKD, VOIDTP, 0);
+	quaterList.push_back(Quaternary("FUNC", "void", "", "main"));
 
 	compState();
 	if (curToken.type != RBRA) {
@@ -765,7 +766,7 @@ SymbolItem Parser::factor() {
 			factorSym.name = genVar();
 			factorSym.type = symTab.search(idName).type;
 			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
-			quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", name));
+			quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", factorSym.name));
 
 			arrayIndex = expression();
 			if (curToken.type == RBRK) {
@@ -1491,14 +1492,16 @@ void Parser::returnState() {
 }
 
 
-void Parser::printQuater() {
-	cout << "\nThis is quaternary list " << endl;
+void Parser::printQuater(string path) {
+	ofstream fout;
+	fout.open(path);
+	fout << "\nThis is quaternary list " << endl;
 	for (int i = 0; i < quaterList.size(); i++) {
 		Quaternary quater = quaterList[i];
-		cout << setw(10) << left << quater.oper;
-		cout << setw(10) << left << quater.op1;
-		cout << setw(10) << left << quater.op2;
-		cout << setw(10) << left << quater.res << endl;
+		fout << setw(10) << left << quater.oper;
+		fout << setw(10) << left << quater.op1;
+		fout << setw(10) << left << quater.op2;
+		fout << setw(10) << left << quater.res << endl;
 	}
 }
 

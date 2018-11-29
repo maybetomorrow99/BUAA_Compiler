@@ -46,7 +46,7 @@ public:
 	void printfState();
 	void returnState();
 
-	void printQuater();
+	void printQuater(string path);
 
 private:
 	Token curToken;

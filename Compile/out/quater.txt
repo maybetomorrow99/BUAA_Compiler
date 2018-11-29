@@ -1,0 +1,254 @@
+
+This is quaternary list 
+CON       int       1         con_int_1 
+CON       int       2         con_int_2 
+CON       char      97        con_char_1
+CON       char      98        con_char_2
+VAR       int                 var_int_1 
+VAR       int                 var_int_2 
+ARY       int       101       var_int_array_1
+ARY       int       101       var_int_array_2
+VAR       char                var_char_1
+ARY       char      101       var_char_array
+VAR       int                 _abcdefghigklmnopqrstuvwxyz
+VAR       int                 abcdefghijklmnopqrstuvwxyz1234567890
+FUNC      char                test_if   
+PARA      int                 a         
+PARA      int                 b         
+LVAR      a                   temp0     
+LVAR      b                   temp1     
+BLTZ      temp0     temp1     label0    
+LI        97                  temp2     
+RET                           temp2     
+JUMP                          label1    
+LAB                           label0    
+LI        98                  temp3     
+RET                           temp3     
+LAB                           label1    
+FUNC      int                 test_factorial
+PARA      int                 n         
+LVAR      n                   temp4     
+LI        0                   temp5     
+BNE       temp4     temp5     label2    
+LI        1                   temp6     
+RET                           temp6     
+JUMP                          label3    
+LAB                           label2    
+LVAR      n                   temp8     
+LI        1                   temp9     
+SUB       temp8     temp9     temp8     
+PUSH                          temp8     
+CALL                          test_factorial
+VOF       test_factorial          temp7     
+RET                           temp7     
+LAB                           label3    
+FUNC      int                 test_while
+VAR       int                 n         
+LI        3                   temp10    
+LVAR      temp10              n         
+JUMP                          label4    
+LAB                           label5    
+LVAR      n                   temp11    
+LI        1                   temp12    
+SUB       temp11    temp12    temp11    
+LVAR      temp11              n         
+LVAR      n                   temp13    
+PI                            temp13    
+LAB                           label4    
+LVAR      n                   temp14    
+BEQ       temp14    0         label5    
+LAB                           label6    
+LI        666                 temp15    
+RET                           temp15    
+FUNC      void                test_switch_char
+PARA      char                c         
+LVAR      c                   temp16    
+LI        97                  temp17    
+BNE       temp16    temp17    label8    
+PC                            0         
+PC                            1         
+JUMP                          label7    
+LAB                           label8    
+LI        98                  temp18    
+BNE       temp16    temp18    label9    
+PC                            2         
+JUMP                          label7    
+LAB                           label9    
+PC                            3         
+LAB                           label7    
+FUNC      void                test_relation
+PARA      int                 n         
+LVAR      n                   temp19    
+LI        3                   temp20    
+BGEZ      temp19    temp20    label10   
+PC                            4         
+JUMP                          label11   
+LAB                           label10   
+LAB                           label11   
+LVAR      n                   temp21    
+LI        4                   temp22    
+BGTZ      temp21    temp22    label12   
+PC                            5         
+JUMP                          label13   
+LAB                           label12   
+LAB                           label13   
+LVAR      n                   temp23    
+LI        5                   temp24    
+BLEZ      temp23    temp24    label14   
+PC                            6         
+JUMP                          label15   
+LAB                           label14   
+LAB                           label15   
+LVAR      n                   temp25    
+LI        6                   temp26    
+BLTZ      temp25    temp26    label16   
+PC                            7         
+JUMP                          label17   
+LAB                           label16   
+LAB                           label17   
+LVAR      n                   temp27    
+LI        7                   temp28    
+BEQ       temp27    temp28    label18   
+PC                            8         
+JUMP                          label19   
+LAB                           label18   
+LAB                           label19   
+LVAR      n                   temp29    
+LI        8                   temp30    
+BNE       temp29    temp30    label20   
+PC                            9         
+JUMP                          label21   
+LAB                           label20   
+LAB                           label21   
+FUNC      void                test_expression
+VAR       int                 res       
+LI        0                   temp31    
+LVAR      con_int_2           temp32    
+LI        1                   temp33    
+DIV       temp32    temp33    temp32    
+LI        1                   temp34    
+ADD       temp32    temp34    temp32    
+SARY      var_int_array_1temp31    temp32    
+LVAR      con_int_1           temp35    
+SUB       0         temp35    temp35    
+VAR       int                 temp36    
+LI        0                   temp37    
+LARY      var_int_array_1temp37    temp36    
+SUB       temp35    temp36    temp35    
+LI        5                   temp38    
+ADD       temp35    temp38    temp35    
+LI        97                  temp39    
+ADD       temp35    temp39    temp35    
+LI        3                   temp41    
+PUSH                          temp41    
+CALL                          test_factorial
+VOF       test_factorial          temp40    
+ADD       temp35    temp40    temp35    
+LI        -1                  temp42    
+LI        2                   temp43    
+LI        1                   temp44    
+ADD       temp43    temp44    temp43    
+MUL       temp42    temp43    temp42    
+ADD       temp35    temp42    temp35    
+LVAR      temp35              res       
+PC                            10        
+LVAR      res                 temp45    
+PI                            temp45    
+PC                            11        
+FUNC      void                main      
+CON       int       3         con_int_3 
+CON       int       44        con_int_4 
+CON       int       -555      con_int_5 
+VAR       int                 var_int_res
+VAR       char                var_char_res
+VAR       int                 var_int_3 
+VAR       int                 var_int_4 
+VAR       int                 op        
+READ                          op        
+LVAR      op                  temp46    
+LI        1                   temp47    
+BNE       temp46    temp47    label23   
+PC                            12        
+READ                          var_int_1 
+READ                          var_int_2 
+LVAR      var_int_1           temp49    
+PUSH                          temp49    
+LVAR      var_int_2           temp50    
+PUSH                          temp50    
+CALL                          test_if   
+VOF       test_if             temp48    
+LVAR      temp48              var_char_res
+LVAR      var_int_res          temp51    
+PI                            temp51    
+LVAR      var_int_1           temp53    
+PUSH                          temp53    
+LVAR      var_int_2           temp54    
+PUSH                          temp54    
+CALL                          test_if   
+VOF       test_if             temp52    
+LVAR      temp52              var_char_res
+LVAR      var_int_res          temp55    
+PI                            temp55    
+JUMP                          label22   
+LAB                           label23   
+LI        2                   temp56    
+BNE       temp46    temp56    label24   
+PC                            13        
+READ                          var_int_1 
+LVAR      var_int_1           temp58    
+PUSH                          temp58    
+CALL                          test_factorial
+VOF       test_factorial          temp57    
+LVAR      temp57              var_int_res
+LVAR      var_int_res          temp59    
+PI                            temp59    
+JUMP                          label22   
+LAB                           label24   
+LI        3                   temp60    
+BNE       temp46    temp60    label25   
+PC                            14        
+CALL                          test_while
+VOF       test_while          temp61    
+LVAR      temp61              var_int_res
+LVAR      var_int_res          temp62    
+PI                            temp62    
+JUMP                          label22   
+LAB                           label25   
+LI        4                   temp63    
+BNE       temp46    temp63    label26   
+PC                            15        
+READ                          var_char_1
+LVAR      var_char_1          temp64    
+PUSH                          temp64    
+CALL                          test_switch_char
+READ                          var_char_1
+LVAR      var_char_1          temp65    
+PUSH                          temp65    
+CALL                          test_switch_char
+READ                          var_char_1
+LVAR      var_char_1          temp66    
+PUSH                          temp66    
+CALL                          test_switch_char
+JUMP                          label22   
+LAB                           label26   
+LI        5                   temp67    
+BNE       temp46    temp67    label27   
+PC                            16        
+READ                          var_int_1 
+LVAR      var_int_1           temp68    
+PUSH                          temp68    
+CALL                          test_relation
+READ                          var_int_1 
+LVAR      var_int_1           temp69    
+PUSH                          temp69    
+CALL                          test_relation
+JUMP                          label22   
+LAB                           label27   
+LI        6                   temp70    
+BNE       temp46    temp70    label28   
+PC                            17        
+CALL                          test_expression
+JUMP                          label22   
+LAB                           label28   
+PC                            18        
+LAB                           label22   

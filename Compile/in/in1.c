@@ -5,22 +5,23 @@ INT var_int_1, var_int_2, var_int_array_1[101];
 int var_int_array_2[101];
 char var_char_1, var_char_array[101];
 
+int _abcdefghigklmnopqrstuvwxyz;
+int ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890;
 
-void test_expression{ 
-    int res;
-    var_int_array_1[0] = con_int_2 / 1 + 1;
-    res = -con_int_1 - var_int_array_1[0] + +005 + 'a'  + -1 * (2 + 1);
-    printf("The result is ");  
-}
-
-void test_relation(int n){
-    if (n < 3)
-        n = 1;
+char test_if(int a, int b){ 
+    if (a >= b)
+        return ('a');
     else
-		var_int_array_2[0] = 2;
-	
-	var_int_1 = 3;
+        return ('b');
 }
+
+int test_factorial(int n){
+    if (n == 0) 
+        return (1);
+    else
+        return (test_factorial(n - 1));
+}
+
 
 int test_while{
     int n;
@@ -46,30 +47,96 @@ void test_switch_char(char c){
             printf("cat");
         }
     }
-    
-    c = 'a'; 
 }
 
-int test_factorial(int n){
-    if (n == 0) 
-        return (1);
-    else
-        return (test_factorial(n - 1));
+
+void test_relation(int n){
+    if (n < 3)
+        printf("<");
+    else;
+
+    if (n <= 4)
+        printf("<=");
+    else;
+
+    if (n > 5)
+        printf(">");
+    else;
+
+    if (n >= 6)
+        printf(">=");
+    else;
+
+    if (n != 7)
+        printf("!=");
+    else;
+
+    if (n == 8)
+        printf("==");
+    else;
 }
 
+
+void test_expression{ 
+    int res;
+    var_int_array_1[0] = con_int_2 / 1 + 1;
+    res = -con_int_1 - var_int_array_1[0] + +005 + 'a' + test_factorial(3) + -1 * (2 + 1);
+    printf("The result is ", res);
+    printf(" !#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~");
+}
 
 
 void main(){
-	int b;
-	int n;
-	n = 3;
-	b = test_factorial(n);
-	test_while;
-	scanf(b);
-	printf("test");
-	printf("love");
-	printf("test", b);
-	printf(n);
-	return;
-}
+    const int con_int_3 = 003, con_int_4 = +44, con_int_5 = -555; 
+    int var_int_res;
+    char var_char_res;
+    int var_int_3, var_int_4;
+    int op;
 
+    scanf(op);
+    switch(op){
+        case 1:{
+            printf("test_if");
+            scanf(var_int_1, var_int_2);
+            var_char_res = test_if(var_int_1, var_int_2);
+            printf(var_int_res);
+            var_char_res = test_if(var_int_1, var_int_2);
+            printf(var_int_res);
+        }
+        case 2:{
+            printf("test_factorial");
+            scanf(var_int_1);
+            var_int_res = test_factorial(var_int_1);
+            printf(var_int_res);            
+        }
+        case 3:{
+            printf("test_while");
+            var_int_res = test_while;
+            printf(var_int_res);            
+        }
+        case 4:{
+            printf("test_switch_char");
+            scanf(var_char_1);
+            test_switch_char(var_char_1);
+            scanf(var_char_1);
+            test_switch_char(var_char_1);
+            scanf(var_char_1);
+            test_switch_char(var_char_1);            
+        }
+        case 5:{
+            printf("test_relation");
+            scanf(var_int_1);
+            test_relation(var_int_1);
+            scanf(var_int_1);
+            test_relation(var_int_1);                         
+        }
+        case 6:{
+            printf("test_expression");
+            test_expression;
+        }
+        default:{
+            printf("Please input 1~6");
+        }
+    }
+    return;
+}
