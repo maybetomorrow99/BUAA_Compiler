@@ -52,14 +52,22 @@ void SymbolTable::insert(string name, SymbolKind kind, SymbolType type, int valu
 	}
 }
 
+
+/*
+查找标识符是否存在
+查找位置包括当前层，全局变量区和函数区*/
 bool SymbolTable::inTable(string name) {
 	for (int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return true;
 	}
 	if (funcIndex.size()) {
-		for (int i = 0; i < funcIndex[0]; i++) {
+		for (int i = 0; i < funcIndex[0]; i++) {	//全局变量
 			if (items[i].name == name)
+				return true;
+		}
+		for (int i = 0; i < funcIndex.size(); i++) {	//函数索引表
+			if (items[funcIndex[i]].name == name)
 				return true;
 		}
 	}
@@ -109,9 +117,11 @@ SymbolItem SymbolTable::getCurFunc() {
 }
 
 
-
+/*
+判断是否是全局变量
+*/
 bool SymbolTable::isGlobal(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (int i = curFuncAddr; i < items.size(); i++) {	//局部变量和全局变量重名，则为局部变量
 		if (items[i].name == name)
 			return false;
 	}

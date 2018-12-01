@@ -8,7 +8,7 @@ ARY       int       101       var_int_array_1
 ARY       int       101       var_int_array_2
 VAR       char                var_char_1
 ARY       char      101       var_char_array
-FUNC      char                test_if   
+FUNC      int                 test_if   
 PARA      int                 a         
 PARA      int                 b         
 LVAR      a                   $temp0    
@@ -26,13 +26,13 @@ CON       int       3         con_int_3
 CON       int       44        con_int_4 
 CON       int       -555      con_int_5 
 VAR       int                 var_int_res
-LI        1                   $temp5    
+LI        2                   $temp5    
 PUSH                          $temp5    
 LI        2                   $temp6    
 PUSH                          $temp6    
 CALL                          test_if   
 VOF       test_if             $temp4    
-LVAR      $temp4              var_char_res
+LVAR      $temp4              var_int_res
 LVAR      var_int_res          $temp7    
 PI                            $temp7    
 LI        2                   $temp9    
@@ -41,7 +41,7 @@ LI        1                   $temp10
 PUSH                          $temp10   
 CALL                          test_if   
 VOF       test_if             $temp8    
-LVAR      $temp8              var_char_res
+LVAR      $temp8              var_int_res
 LVAR      var_int_res          $temp11   
 PI                            $temp11   
 REN                                     

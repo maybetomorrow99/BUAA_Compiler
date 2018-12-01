@@ -768,7 +768,7 @@ SymbolItem Parser::factor() {
 	SymbolItem arrayIndex;
 	if (curToken.type == ID) { //***TODO
 		pushToken(curToken);
-		
+		 
 		string idName = curToken.str;
 		if (!symTab.inTable(idName)) {
 			error(IDENT_NOT_DEF, lexer.lineNum);

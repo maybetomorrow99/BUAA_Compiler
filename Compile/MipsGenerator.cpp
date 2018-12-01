@@ -6,7 +6,7 @@ MipsGenerator::MipsGenerator(string asmPath) {
 
 /*
 判断该局部变量是否在寄存器中
-目前，将所有的临时变量放在内存中，将局部变量的前8个放在寄存器中，对应寄存器t2-t9
+目前，将所有的临时变量放在内存中，将局部变量/常量（不包括参数）的前8个放在寄存器中，对应寄存器t2-t9
 */
 bool MipsGenerator::inReg(string name) {
 	if (name[0] == '$')
@@ -23,20 +23,24 @@ bool MipsGenerator::inReg(string name) {
 
 /*
 变量寄存器从t2开始
+将局部变量/常量的前8个放入寄存器中
+因为在符号表中函数表项还占有一个位置，所以要先-4
 */
 int MipsGenerator::getRegNum(string name) {
 	int addr = symTab.search(name).addr;
 	int para = symTab.getCurFunc().para;
-	return 2 + (addr - para * 4) / 4;
+	return 2 + (addr - 4 - para * 4) / 4;
 }
 
 
 /*
-获取变量相对于fp的偏移
+获取变量相对于fp的偏移，注意变量也有可能是参数
 TODO:目前先给所有的变量都开辟空间，只不过靠前部分的变量实际上存储在寄存器中
 */
 int MipsGenerator::getOffset(string name) {
-	return symTab.search(name).addr + 32 * 4;
+	if (symTab.isPara(name))
+		return symTab.search(name).addr - 4;	//此处和符号表中相差4，因为在符号表中函数表项还占有一个位置
+	return symTab.search(name).addr + 32 * 4 - 4;	
 }
 
 
@@ -44,6 +48,7 @@ int MipsGenerator::getOffset(string name) {
 根据四元式生成Mips代码
 */
 void MipsGenerator::genMips() {
+	mipsout << "#" << curq.toString() << endl;
 	if (curq.oper == "CON") {
 		mipsCON();
 	}
@@ -87,7 +92,7 @@ void MipsGenerator::genMips() {
 		mipsLVAR();
 	}
 	else if (curq.oper == "SARY") {
-
+		
 	}
 	else if (curq.oper == "LARY") {
 
@@ -99,13 +104,13 @@ void MipsGenerator::genMips() {
 		mipsPI();
 	}
 	else if (curq.oper == "READ") {
-
+		mipsREAD();
 	}
 	else if (curq.oper == "RET") {
 		mipsRET();
 	}
 	else if (curq.oper == "REN") {
-
+		mipsREN();
 	}
 	else if (curq.oper == "BGT") {
 
@@ -167,7 +172,7 @@ int MipsGenerator::mipsGlobal() {
 	}
 
 	mipsout << ".text" << endl;
-
+	mipsout << "j main" << endl;
 	return index;
 
 }
@@ -216,11 +221,13 @@ int foo ==> FUNC int foo
 void MipsGenerator::mipsFUNC() {
 	string fname = curq.res;
 	int fsize = symTab.searchFunc(fname).value;
+	int para = symTab.searchFunc(fname).para;
 	symTab.updateCurFuncAddr(fname);
 	mipsout << fname << ":" << endl;
 
 	//分配栈空间
-	mipsout << "subi $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "add $fp, $sp, " << para * 4 << endl;
+	mipsout << "subi $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
 	//mipsout << "sw $ra, 0($sp)" << endl;	//TODO:保存ra是用跳转？
 }
 
@@ -318,8 +325,23 @@ x = tar(a, b) ==> CALL tar
 */
 void MipsGenerator::mipsCALL() {
 	string fname = curq.res;
-	symTab.updateCurFuncAddr(fname);
+	//symTab.updateCurFuncAddr(fname);
+	int para = symTab.searchFunc(fname).para;
+
+	//此时参数已经使sp的位置下降
+	for (int i = 8; i <= 25; i++) {	//保存临时寄存器等
+		mipsout << "sw $" << i << ", " << -i * 4 << "($sp)" << endl;
+	}
+	mipsout << "sw $fp ," << -30 * 4 << "($sp)" << endl;
+	mipsout << "sw $ra ," << -31 * 4 << "($sp)" << endl;
+
 	mipsout << "jal " << fname << endl;
+
+	for (int i = 8; i <=25 ; i++) {
+		mipsout << "lw $" << i << ", " << -para * 4 - i * 4 << "($sp)" << endl;
+	}
+	mipsout << "lw $fp ," << -para * 4 - 30 * 4 << "($sp)" << endl;
+	mipsout << "lw $ra ," << -para * 4 - 31 * 4 << "($sp)" << endl;
 }
 
 
@@ -347,15 +369,15 @@ void MipsGenerator::mipsVOF() {
 
 	if (symTab.isGlobal(resname)) {	//是全局变量
 		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $t0, 0($t1)" << endl;
+		mipsout << "sw $v0, 0($t1)" << endl;
 	}
 	else if (inReg(resname)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(resname);
-		mipsout << "move $t0 $" << regNum << endl;
+		mipsout << "move $" << regNum << ", $v0" << endl;
 	}
 	else {							//不在寄存器中的局部变量
 		int resaddr = -getOffset(resname);
-		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
+		mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
 	}
 }
 
@@ -377,23 +399,34 @@ void MipsGenerator::mipsLI() {
 /*
 LVAR √		√
 变量赋值	x = y	LVAR y x
-需要判断是全局变量还是局部变量，因为表达式的原因，等式右边一定是临时变量
+需要判断是全局变量还是局部变量，对两边都要判断
 */
 void MipsGenerator::mipsLVAR() {
 	string op1name = curq.op1;
 	string resname = curq.res;
-	int op1addr = -getOffset(op1name);
 
-	//读取临时变量
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	//读取等式右边
+	if (symTab.isGlobal(op1name)) {	//是全局变量
+		mipsout << "la $t1, " << op1name << endl;
+		mipsout << "lw $t0, 0($t1)" << endl;
+	}
+	else if (inReg(op1name)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(op1name);
+		mipsout << "move $t0 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int op1addr = -getOffset(op1name);
+		mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	}
 
+	//读取等式左边
 	if (symTab.isGlobal(resname)) {	//是全局变量
 		mipsout << "la $t1, " << resname << endl;
 		mipsout << "sw $t0, 0($t1)" << endl;
 	}
 	else if (inReg(resname)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(resname);
-		mipsout << "move $t0 $" << regNum << endl;
+		mipsout << "move $t" << regNum<< ", $t0" << endl;
 	}
 	else {							//不在寄存器中的局部变量
 		int resaddr = -getOffset(resname);
@@ -455,18 +488,31 @@ RET			√	返回表达式的值
 return a; ==> RET a
 */
 void MipsGenerator::mipsRET() {
-	return;
 	string name = curq.res;
-	int addr = getOffset(name);
+	int addr = -getOffset(name);
 	int fsize = symTab.getCurFunc().value;
-	mipsout << "lw $v0, " << addr << "($sp)" << endl;
-	mipsout << "lw $ra, 0($sp)" << endl;
-	mipsout << "addi $sp, $sp, " << fsize << endl;
+	int para = symTab.getCurFunc().para;
+	mipsout << "lw $v0, " << addr << "($fp)" << endl;
+	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
 
-void MipsGenerator::mipsREN() {
 
+/*
+REN				返回空
+return;	REN
+*/
+void MipsGenerator::mipsREN() {
+	cout << symTab.getCurFunc().name << endl;
+	if (symTab.getCurFunc().name == "main") {
+		mipsout << "li $v0," << 10 << endl;
+		mipsout << "syscall" << endl;
+		return;
+	}
+	int fsize = symTab.getCurFunc().value;
+	int para = symTab.getCurFunc().para;
+	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "jr $ra" << endl;
 }
 
 
