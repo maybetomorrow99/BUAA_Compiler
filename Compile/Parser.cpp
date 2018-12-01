@@ -717,8 +717,13 @@ SymbolItem Parser::expression() {
 		getToken();
 	}
 	itemSym1 = item();
-	if (sign == MINUS)
-		quaterList.push_back(Quaternary("SUB", "0", itemSym1.name, itemSym1.name));
+	if (sign == MINUS) {
+		itemSym2.name = genVar();
+		itemSym2.type = INTTP;
+		symTab.insert(itemSym2.name, VARKD, INTTP, 0);
+		quaterList.push_back(Quaternary("LI", to_string(0), "", itemSym2.name));
+		quaterList.push_back(Quaternary("SUB", itemSym2.name, itemSym1.name, itemSym1.name));
+	}
 
 	while (curToken.type == PLUS || curToken.type == MINUS) {
 		sign = curToken.type;
@@ -1145,7 +1150,12 @@ void Parser::condition(string label) {
 		}
 	}
 	else {
-		quaterList.push_back(Quaternary("BEQ", exprSym1.name, "0", label));
+		SymbolItem symTemp0;
+		symTemp0.name = genVar();
+		symTemp0.type = INTTP;
+		symTab.insert(symTemp0.name, VARKD, INTTP, 0);
+		quaterList.push_back(Quaternary("LI", to_string(0), "", symTemp0.name));
+		quaterList.push_back(Quaternary("BEQ", exprSym1.name, symTemp0.name, label));
 	}
 
  	cout << setw(4) << left << lexer.lineNum<< "This is a condition" << endl;
@@ -1164,7 +1174,6 @@ void Parser::whileState() {
 		error(UNKNOWN, lexer.lineNum);
 	}
 	
-	quaterList.push_back(Quaternary("JUMP", "", "", label1));
 	quaterList.push_back(Quaternary("LAB", "", "", label2));
 
 	getToken();
@@ -1179,11 +1188,12 @@ void Parser::whileState() {
 		error(MISSING_LEFT_PARENTHESIS, lexer.lineNum);
 	}
 	getToken();
-	condition(label2);
+	condition(label3);
 	if (curToken.type != RPAR) {
 		error(MISSING_RIGHT_PARENTHESIS, lexer.lineNum);
 	}
 
+	quaterList.push_back(Quaternary("JUMP", "", "", label2));
 	quaterList.push_back(Quaternary("LAB", "", "", label3));
 
 	getToken();

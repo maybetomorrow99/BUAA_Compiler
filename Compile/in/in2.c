@@ -19,7 +19,7 @@ int test_factorial(int n){
     if (n == 0) 
         return (1);
     else
-        return (test_factorial(n - 1));
+        return (n * test_factorial(n - 1));
 }
 
 
@@ -99,9 +99,9 @@ void main(){
             printf("test_if");
             scanf(var_int_1, var_int_2);
             var_char_res = test_if(var_int_1, var_int_2);
-            printf(var_int_res);
+            printf(var_char_res);
             var_char_res = test_if(var_int_1, var_int_2);
-            printf(var_int_res);
+            printf(var_char_res);
         }
         case 2:{
             printf("test_factorial");

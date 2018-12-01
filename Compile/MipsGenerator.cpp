@@ -83,10 +83,10 @@ void MipsGenerator::genMips() {
 		mipsLVAR();
 	}
 	else if (curq.oper == "SARY") {
-		
+		mipsSARY();
 	}
 	else if (curq.oper == "LARY") {
-
+		mipsLARY();
 	}
 	else if (curq.oper == "PC") {
 		mipsPC();
@@ -416,20 +416,111 @@ void MipsGenerator::mipsLVAR() {
 
 /*
 SARY √	√	√	数组元素赋值
-array[0] = 1 ==> SARY arrary 0 1
+array[i] = x ==> SARY arrary i x
+i 和 x应该都是局部变量
 */
 void MipsGenerator::mipsSARY() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string resname = curq.res;
-	int op1addr = symTab.search(op1name).addr;
-	int op2addr = symTab.search(op2name).addr;
-	int resaddr = symTab.search(resname).addr;
 
+	//读取i到t0
+	if (symTab.isGlobal(op2name)) {	//是全局变量
+		mipsout << "la $t1, " << op2name << endl;
+		mipsout << "lw $t0, 0($t1)" << endl;
+	}
+	else if (inReg(op2name)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(op2name);
+		mipsout << "move $t0 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int op2addr = -getOffset(op2name);
+		mipsout << "lw $t0, " << op2addr << "($fp)" << endl;
+	}
 
+	//将t0改为相对数组偏移量
+	mipsout << "mul $t0, $t0, 4" << endl;
+
+	//读取array地址并加上偏移，最终地址为t0
+	if (symTab.isGlobal(op1name)) {	//是全局变量
+		mipsout << "la $t1, " << op1name << endl;
+		mipsout << "add $t0, $t0, $t1 " << endl;
+	}
+	else {							//是不在寄存器中的局部变量，数组只能这样
+		int op1addr = -getOffset(op1name);
+		mipsout << "lw $t1, " << op1addr << "($fp)" << endl;
+		mipsout << "sub $t0, $t1, $t0" << endl;
+	}
+
+	//读取等式右边的值到t0,x只能为局部变量
+	if (inReg(resname)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(resname);
+		mipsout << "move $t1 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int resaddr = -getOffset(resname);
+		mipsout << "lw $t1, " << resaddr << "($fp)" << endl;
+	}
+
+	//赋值
+	mipsout << "sw $t1, ($t0)" << endl;
 }
 
+
+/*
+LARY	√	√	√
+取数组元素	x = array[i]	LARY array i x
+x和i应该为局部变量
+*/
 void MipsGenerator::mipsLARY() {
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string resname = curq.res;
+
+	//读取i到t0
+	if (symTab.isGlobal(op2name)) {	//是全局变量
+		mipsout << "la $t1, " << op2name << endl;
+		mipsout << "lw $t0, 0($t1)" << endl;
+	}
+	else if (inReg(op2name)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(op2name);
+		mipsout << "move $t0 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int op2addr = -getOffset(op2name);
+		mipsout << "lw $t0, " << op2addr << "($fp)" << endl;
+	}
+
+	//将t0改为相对数组偏移量
+	mipsout << "mul $t0, $t0, 4" << endl;
+
+	//读取array地址并加上偏移，最终地址为t0
+	if (symTab.isGlobal(op1name)) {	//是全局变量
+		mipsout << "la $t1, " << op1name << endl;
+		mipsout << "add $t0, $t0, $t1 " << endl;
+	}
+	else {							//是不在寄存器中的局部变量，数组只能这样
+		int op1addr = -getOffset(op1name);
+		mipsout << "lw $t1, " << op1addr << "($fp)" << endl;
+		mipsout << "sub $t0, $t1, $t0" << endl;
+	}
+
+	//取值到t0
+	mipsout << "lw $t0, ($t0)" << endl;
+
+	//读取等式左边并赋值
+	if (symTab.isGlobal(resname)) {	//是全局变量
+		mipsout << "la $t1, " << resname << endl;
+		mipsout << "sw $t0, 0($t1)" << endl;
+	}
+	else if (inReg(resname)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(resname);
+		mipsout << "move $t" << regNum << ", $t0" << endl;
+	}
+	else {							//不在寄存器中的局部变量
+		int resaddr = -getOffset(resname);
+		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
+	}
 
 }
 
@@ -472,8 +563,34 @@ void MipsGenerator::mipsPI() {
 	mipsout << "syscall" << endl;
 }
 
-void MipsGenerator::mipsREAD() {
 
+/*
+READ			√	读取整数或字符
+scanf(a)	RI a
+*/
+void MipsGenerator::mipsREAD() {
+	string resname = curq.res;
+	SymbolType type = symTab.search(resname).type;
+	
+	if (type == INTTP)
+		mipsout << "li $v0, 5" << endl;
+	else
+		mipsout << "li $v0, 12" << endl;
+	mipsout << "syscall" << endl;
+
+	//读取等式左边
+	if (symTab.isGlobal(resname)) {	//是全局变量
+		mipsout << "la $t1, " << resname << endl;
+		mipsout << "sw $v0, 0($t1)" << endl;
+	}
+	else if (inReg(resname)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(resname);
+		mipsout << "move $t" << regNum << ", $v0" << endl;
+	}
+	else {							//不在寄存器中的局部变量
+		int resaddr = -getOffset(resname);
+		mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
+	}
 }
 
 

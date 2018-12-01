@@ -9,24 +9,29 @@ var_int_array_1array     int       0         24        101
 var_int_array_2array     int       0         428       101       
 var_char_1var       char      0         832       0         
 var_char_arrayarray     char      0         836       101       
-test_factorialfunc      int       36        0         1         
-n         para      int       0         4         0         
-$temp0    var       int       0         8         0         
-$temp1    var       int       0         12        0         
-$temp2    var       int       1         16        0         
-$temp3    var       int       0         20        0         
-$temp5    var       int       0         24        0         
-$temp6    var       int       1         28        0         
-$temp4    var       int       0         32        0         
-main      func      void      48        0         0         
+_abcdefghigklmnopqrstuvwxyzvar       int       0         1240      0         
+abcdefghijklmnopqrstuvwxyz1234567890var       int       0         1244      0         
+test_if   func      char      28        0         2         
+a         para      int       0         4         0         
+b         para      int       0         8         0         
+$temp0    var       int       0         12        0         
+$temp1    var       int       0         16        0         
+$temp2    var       char      97        20        0         
+$temp3    var       char      98        24        0         
+main      func      void      68        0         0         
 con_int_3 const     int       3         4         0         
 con_int_4 const     int       44        8         0         
 con_int_5 const     int       -555      12        0         
-var_char_resvar       char      0         16        0         
-var_int_resvar       int       0         20        0         
-$temp8    var       int       3         24        0         
-$temp7    var       int       0         28        0         
-$temp9    var       int       0         32        0         
-$temp11   var       int       5         36        0         
-$temp10   var       int       0         40        0         
-$temp12   var       int       0         44        0         
+var_int_resvar       int       0         16        0         
+var_char_resvar       char      0         20        0         
+var_int_3 var       int       0         24        0         
+var_int_4 var       int       0         28        0         
+op        var       int       0         32        0         
+$temp5    var       int       0         36        0         
+$temp6    var       int       0         40        0         
+$temp4    var       char      0         44        0         
+$temp7    var       char      0         48        0         
+$temp9    var       int       0         52        0         
+$temp10   var       int       0         56        0         
+$temp8    var       char      0         60        0         
+$temp11   var       char      0         64        0         

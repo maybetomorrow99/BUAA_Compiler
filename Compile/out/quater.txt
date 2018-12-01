@@ -8,44 +8,48 @@ ARY       int       101       var_int_array_1
 ARY       int       101       var_int_array_2
 VAR       char                var_char_1
 ARY       char      101       var_char_array
-FUNC      int                 test_factorial
-PARA      int                 n         
-LVAR      n                   $temp0    
-LI        0                   $temp1    
-BNE       $temp0    $temp1    label0    
-LI        1                   $temp2    
+VAR       int                 _abcdefghigklmnopqrstuvwxyz
+VAR       int                 abcdefghijklmnopqrstuvwxyz1234567890
+FUNC      char                test_if   
+PARA      int                 a         
+PARA      int                 b         
+LVAR      a                   $temp0    
+LVAR      b                   $temp1    
+BLT       $temp0    $temp1    label0    
+LI        97                  $temp2    
 RET                           $temp2    
 JUMP                          label1    
 LAB                           label0    
-LVAR      n                   $temp3    
-LVAR      n                   $temp5    
-LI        1                   $temp6    
-SUB       $temp5    $temp6    $temp5    
-PUSH                          $temp5    
-CALL                          test_factorial
-VOF       test_factorial          $temp4    
-MUL       $temp3    $temp4    $temp3    
+LI        98                  $temp3    
 RET                           $temp3    
 LAB                           label1    
 FUNC      void                main      
 CON       int       3         con_int_3 
 CON       int       44        con_int_4 
 CON       int       -555      con_int_5 
-VAR       char                var_char_res
 VAR       int                 var_int_res
+VAR       char                var_char_res
+VAR       int                 var_int_3 
+VAR       int                 var_int_4 
+VAR       int                 op        
 PC                            0         
-LI        3                   $temp8    
-PUSH                          $temp8    
-CALL                          test_factorial
-VOF       test_factorial          $temp7    
-LVAR      $temp7              var_int_res
-LVAR      var_int_res          $temp9    
-PI                            $temp9    
-LI        5                   $temp11   
-PUSH                          $temp11   
-CALL                          test_factorial
-VOF       test_factorial          $temp10   
-LVAR      $temp10             var_int_res
-LVAR      var_int_res          $temp12   
-PI                            $temp12   
-REN                                     
+READ                          var_int_1 
+READ                          var_int_2 
+LVAR      var_int_1           $temp5    
+PUSH                          $temp5    
+LVAR      var_int_2           $temp6    
+PUSH                          $temp6    
+CALL                          test_if   
+VOF       test_if             $temp4    
+LVAR      $temp4              var_char_res
+LVAR      var_char_res          $temp7    
+PI                            $temp7    
+LVAR      var_int_2           $temp9    
+PUSH                          $temp9    
+LVAR      var_int_1           $temp10   
+PUSH                          $temp10   
+CALL                          test_if   
+VOF       test_if             $temp8    
+LVAR      $temp8              var_char_res
+LVAR      var_char_res          $temp11   
+PI                            $temp11   
