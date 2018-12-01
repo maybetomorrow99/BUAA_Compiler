@@ -47,6 +47,7 @@ public:
 	bool isFunc(string name);
 	bool updateFuncPara(string name, int para);
 	void updateFuncVal();
-	void printTable();
+	void updateCurFuncAddr(string fname);
+	void printTable(string path);
 
 };

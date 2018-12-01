@@ -9,9 +9,10 @@ int main() {
 	Parser parser;
 
 	string srcpath;
+
+	string symPath = "./out/symbol.txt";
 	string quaterPath = "./out/quater.txt";
 	string asmPath = "./out/result.asm";
-
 	MipsGenerator generator(asmPath);
 
 	srcpath = "./in/in1.c";
@@ -25,14 +26,16 @@ int main() {
 	parser.lexer.fin.open(srcpath, ios::in | ios::binary);
 	parser.lexer.fout.open("./out/out.txt");
 	parser.program();
-	symTab.printTable();
+
+	cout << "Parser has been completed" << endl;
+
+	symTab.printTable(symPath);
 	printQuater(quaterPath);
 	
 	if (parser.lexer.ecount > 1)
 		cout << "Compile failed!" << endl;
 	else
 		cout << "Compiled successfully" << endl;
-	cout << "Parser has been completed" << endl;
 	
 	generator.startWorking();
 	

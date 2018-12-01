@@ -13,7 +13,7 @@ PARA      int                 a
 PARA      int                 b         
 LVAR      a                   $temp0    
 LVAR      b                   $temp1    
-BLTZ      $temp0    $temp1    label0    
+BLT       $temp0    $temp1    label0    
 LI        97                  $temp2    
 RET                           $temp2    
 JUMP                          label1    

@@ -7,9 +7,9 @@ char var_char_1, var_char_array[101];
 
 char test_if(int a, int b){ 
     if (a >= b)
-        return ('a');
+        return (97);
     else
-        return ('b');
+        return (98);
 }
 
 

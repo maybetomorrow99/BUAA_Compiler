@@ -1123,16 +1123,16 @@ void Parser::condition(string label) {
 		exprSym2 = expression();
 		switch (tokenType) {
 		case LSS:
-			quaterList.push_back(Quaternary("BGEZ", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BGE", exprSym1.name, exprSym2.name, label));
 			break;
 		case LEQ:
-			quaterList.push_back(Quaternary("BGTZ", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BGT", exprSym1.name, exprSym2.name, label));
 			break;
 		case GTR:
-			quaterList.push_back(Quaternary("BLEZ", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BLE", exprSym1.name, exprSym2.name, label));
 			break;
 		case GEQ:
-			quaterList.push_back(Quaternary("BLTZ", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BLT", exprSym1.name, exprSym2.name, label));
 			break;
 		case NEQ:
 			quaterList.push_back(Quaternary("BEQ", exprSym1.name, exprSym2.name, label));

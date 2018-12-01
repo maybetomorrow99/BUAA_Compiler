@@ -9,42 +9,38 @@ var_int_array_1: .word 0: 101
 var_int_array_2: .word 0: 101
 var_char_1: .space 4
 var_char_array: .word 0: 101
+.text
 test_if:
-subi $sp, $sp, 28
-sw $ra, 0($sp)
-lw $t0, 4($sp)
-sw $t0, 12($sp)
-lw $t0, 8($sp)
-sw $t0, 16($sp)
-lw $t0, 12($sp)
-lw $t1, 16($sp)
-bltz $t0, $t1, label0
+subi $sp, $sp, 156
+lw $t0, -132($fp)
+sw $t0, -140($fp)
+lw $t0, -136($fp)
+sw $t0, -144($fp)
+lw $t0, -140($fp)
+lw $t1, -144($fp)
+blt $t0, $t1, label0
 li $t0, 97
-sw $t0, 20($sp)
-lw $v0, 20($sp)
-lw $ra, 0($sp)
-addi $sp, $sp, 28
-jr $ra
+sw $t0, -148($fp)
 j label1
 label0:
 li $t0, 98
-sw $t0, 24($sp)
-lw $v0, 24($sp)
-lw $ra, 0($sp)
-addi $sp, $sp, 28
-jr $ra
+sw $t0, -152($fp)
 label1:
 main:
-subi $sp, $sp, 52
-sw $ra, 0($sp)
-li $t0, 3
-sw $t0, 4($sp)
-li $t0, 44
-sw $t0, 8($sp)
-li $t0, -555
-sw $t0, 12($sp)
+subi $sp, $sp, 180
+li $t3, 3
+li $t4, 44
+li $t5, -555
 li $t0, 1
-sw $t0, 20($sp)
+sw $t0, -148($fp)
+lw $t0, -148($fp)
+sw $t0, ($sp)
+subi $sp, $sp, 4
 li $t0, 2
-sw $t0, 24($sp)
+sw $t0, -152($fp)
+lw $t0, -152($fp)
+sw $t0, ($sp)
+subi $sp, $sp, 4
 jal test_if
+sw $t0, -156($fp)
+lw $t0, -156($fp)

@@ -7,6 +7,12 @@ public:
 	ofstream mipsout;
 	MipsGenerator(string asmPath);
 
+	bool inReg(string name);
+
+	int getRegNum(string name);
+
+	int getOffset(string name);
+
 	void genMips();
 	int mipsGlobal();
 	void mipsCON();
@@ -30,11 +36,11 @@ public:
 	void mipsREAD();
 	void mipsRET();
 	void mipsREN();
-	void mipsBGTZ();
-	void mipsBGEZ();
+	void mipsBGT();
+	void mipsBGE();
 	void mipsBEQ();
-	void mipsBLEZ();
-	void mipsBLTZ();
+	void mipsBLE();
+	void mipsBLT();
 	void mipsBNE();
 	void mipsJUMP();
 	void mipsLAB();

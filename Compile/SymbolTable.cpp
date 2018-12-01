@@ -89,7 +89,9 @@ SymbolItem SymbolTable::searchFunc(string name) {
 	}
 }
 
-
+/*
+获取函数在符号表中的位置
+*/
 int SymbolTable::getFuncAddr(string name) {
 	for (int i = 0; i < funcIndex.size(); i++) {
 		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
@@ -99,9 +101,13 @@ int SymbolTable::getFuncAddr(string name) {
 }
 
 
+/*
+获取当前函数在符号表中的表项
+*/
 SymbolItem SymbolTable::getCurFunc() {
 	return items[curFuncAddr];
 }
+
 
 
 bool SymbolTable::isGlobal(string name) {
@@ -178,19 +184,34 @@ bool SymbolTable::updateFuncPara(string name, int para) {
 }
 
 
+/*
+更改函数表项的值，表示函数所需空间的大小
+*/
 void SymbolTable::updateFuncVal() {
 	items[curFuncAddr].value = offset;
 }
 
-void SymbolTable::printTable() {
-	cout << "\nname      kind      type      value     addr      para" << endl;
+
+/*
+更新curFuncAddr为当前函数在符号表中的位置
+*/
+void SymbolTable::updateCurFuncAddr(string fname) {
+	curFuncAddr = getFuncAddr(fname);
+}
+
+
+
+void SymbolTable::printTable(string path) {
+	ofstream fout;
+	fout.open(path);
+	fout << "name      kind      type      value     addr      para" << endl;
 	for (int i = 0; i < items.size(); i++) {
 		SymbolItem item = items[i];
-		cout << setw(10) << left << item.name;
-		cout << setw(10) << left << KindStr[item.kind];
-		cout << setw(10) << left << TypeStr[item.type];
-		cout << setw(10) << left << item.value;
-		cout << setw(10) << left << item.addr;
-		cout << setw(10) << left << item.para << endl;
+		fout << setw(10) << left << item.name;
+		fout << setw(10) << left << KindStr[item.kind];
+		fout << setw(10) << left << TypeStr[item.type];
+		fout << setw(10) << left << item.value;
+		fout << setw(10) << left << item.addr;
+		fout << setw(10) << left << item.para << endl;
 	}
 }
