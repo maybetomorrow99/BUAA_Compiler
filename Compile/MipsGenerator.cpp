@@ -61,17 +61,8 @@ void MipsGenerator::genMips() {
 	else if (curq.oper == "FUNC") {
 		mipsFUNC();
 	}
-	else if (curq.oper == "ADD") {
-		mipsADD();
-	}
-	else if (curq.oper == "SUB") {
-		mipsSUB();
-	}
-	else if (curq.oper == "MUL") {
-		mipsMUL();
-	}
-	else if (curq.oper == "DIV") {
-		mipsDIV();
+	else if (curq.oper == "ADD" || curq.oper == "SUB" || curq.oper == "MUL" || curq.oper == "DIV") {
+		mipsCal();
 	}
 	else if (curq.oper == "PARA") {
 		mipsPARA();
@@ -98,7 +89,7 @@ void MipsGenerator::genMips() {
 
 	}
 	else if (curq.oper == "PC") {
-
+		mipsPC();
 	}
 	else if (curq.oper == "PI") {
 		mipsPI();
@@ -113,22 +104,22 @@ void MipsGenerator::genMips() {
 		mipsREN();
 	}
 	else if (curq.oper == "BGT") {
-
+		mipsBGT();
 	}
 	else if (curq.oper == "BGE") {
-
+		mipsBGE();
 	}
 	else if (curq.oper == "BEQ") {
-
+		mipsBEQ();
 	}
 	else if (curq.oper == "BLE") {
-
+		mipsBLE();
 	}
 	else if (curq.oper == "BLT") {
 		mipsBLT();
 	}
 	else if (curq.oper == "BNE") {
-
+		mipsBNE();
 	}
 	else if (curq.oper == "JUMP") {
 		mipsJUMP();
@@ -170,6 +161,7 @@ int MipsGenerator::mipsGlobal() {
 	for (int i = 0; i < stringPool.size(); i++) {
 		mipsout << "$string" << i << ": .asciiz \"" << stringPool[i] << "\"" << endl;
 	}
+	mipsout << "$enter: .asciiz \"\\n\"" << endl;
 
 	mipsout << ".text" << endl;
 	mipsout << "j main" << endl;
@@ -234,79 +226,66 @@ void MipsGenerator::mipsFUNC() {
 
 /*
 ADD	√	√	√	加法
-x = a + b ==> ADD a b x
-*/
-void MipsGenerator::mipsADD() {
-	string op1name = curq.op1;
-	string op2name = curq.op2;
-	string resname = curq.res;
-	int op1addr = symTab.search(op1name).addr;
-	int op2addr = symTab.search(op2name).addr;
-	int resaddr = symTab.search(resname).addr;
-	
-	mipsout << "lw $t0, " << op1addr << "($sp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($sp)" << endl;
-	mipsout << "add $t2, $t0, $t1" << endl;
-	mipsout << "sw $t2, " << resaddr << "($sp)" << endl;
-}
-
-
-/*
 SUB	√	√	√	减法
-x = a - b ==> SUB a b x
-*/
-void MipsGenerator::mipsSUB() {
-	string op1name = curq.op1;
-	string op2name = curq.op2;
-	string resname = curq.res;
-	int op1addr = symTab.search(op1name).addr;
-	int op2addr = symTab.search(op2name).addr;
-	int resaddr = symTab.search(resname).addr;
-
-	mipsout << "lw $t0, " << op1addr << "($sp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($sp)" << endl;
-	mipsout << "sub $t2, $t0, $t1" << endl;
-	mipsout << "sw $t2, " << resaddr << "($sp)" << endl;
-}
-
-
-/*
 MUL	√	√	√	乘法
-x = a * b ==> MUL a b x
-*/
-void MipsGenerator::mipsMUL() {
-	string op1name = curq.op1;
-	string op2name = curq.op2;
-	string resname = curq.res;
-	int op1addr = symTab.search(op1name).addr;
-	int op2addr = symTab.search(op2name).addr;
-	int resaddr = symTab.search(resname).addr;
-
-	mipsout << "lw $t0, " << op1addr << "($sp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($sp)" << endl;
-	mipsout << "mult $t0, $t1" << endl;
-	mipsout << "mflo $t2" << endl;
-	mipsout << "sw $t2, " << resaddr << "($sp)" << endl;
-}
-
-
-/*
 DIV	√	√	√	除法
-x = a /b ==> DIV a b x
+x = a - b ==> ADD a b x
+参与sub运算的应该都是临时变量
 */
-void MipsGenerator::mipsDIV() {
+void MipsGenerator::mipsCal() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string resname = curq.res;
-	int op1addr = symTab.search(op1name).addr;
-	int op2addr = symTab.search(op2name).addr;
-	int resaddr = symTab.search(resname).addr;
 
-	mipsout << "lw $t0, " << op1addr << "($sp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($sp)" << endl;
-	mipsout << "div $t2, $t0, $t1" << endl;
-	mipsout << "mflo $t2" << endl;
-	mipsout << "sw $t2, " << resaddr << "($sp)" << endl;
+	//读取a
+	if (inReg(op1name)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(op1name);
+		mipsout << "move $t0 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int op1addr = -getOffset(op1name);
+		mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	}
+
+	//读取b
+	if (inReg(op2name)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(op2name);
+		mipsout << "move $t1 $t" << regNum << endl;
+	}
+	else {							//是不在寄存器中的局部变量
+		int op2addr = -getOffset(op2name);
+		mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	}
+
+	//计算x
+	if (curq.oper == "ADD") {
+		mipsout << "add $t0, $t0, $t1" << endl;
+	}
+	else if (curq.oper == "SUB") {
+		mipsout << "sub $t0, $t0, $t1" << endl;
+	}
+	else if (curq.oper == "MUL") {
+		mipsout << "mult $t0, $t1" << endl;
+		mipsout << "mflo $t0" << endl;
+	}
+	else {	//curq.oper == "DIV"
+		mipsout << "div $t0, $t1" << endl;
+		mipsout << "mflo $t0" << endl;
+	}
+
+	//读取等式左边并赋值
+	if (symTab.isGlobal(resname)) {	//是全局变量
+		mipsout << "la $t1, " << resname << endl;
+		mipsout << "sw $t0, 0($t1)" << endl;
+	}
+	else if (inReg(resname)) {		//是在寄存器中的局部变量
+		int regNum = getRegNum(resname);
+		mipsout << "move $t" << regNum << ", $t0" << endl;
+	}
+	else {							//不在寄存器中的局部变量
+		int resaddr = -getOffset(resname);
+		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
+	}
 }
 
 
@@ -454,13 +433,24 @@ void MipsGenerator::mipsLARY() {
 
 }
 
-void MipsGenerator::mipsPC() {
 
+/*
+PC			√	输出字符串
+printf("hello")	PC 1
+*/
+void MipsGenerator::mipsPC() {
+	mipsout << "li $v0, 4" << endl;
+	mipsout << "la $a0, $string" << curq.res << endl;
+	mipsout << "syscall" << endl;
+
+	mipsout << "li $v0, 4" << endl;
+	mipsout << "la $a0," << "$enter" << endl;
+	mipsout << "syscall" << endl;
 }
 
 
 /*
-PI			√	输出整数
+PI			√	输出整数或字符
 printf(x)	PI x
 x为临时变量
 */
@@ -475,6 +465,10 @@ void MipsGenerator::mipsPI() {
 		mipsout << "li $v0, 11" << endl;
 
 	mipsout << "lw $a0, " << addr << "($fp)" << endl;
+	mipsout << "syscall" << endl;
+	
+	mipsout << "li $v0, 4" << endl;
+	mipsout << "la $a0," << "$enter" << endl;
 	mipsout << "syscall" << endl;
 }
 
@@ -521,7 +515,14 @@ BGT√	√	√	大于比较跳转
 a > b ==> BGT a b lab
 */
 void MipsGenerator::mipsBGT() {
-
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string label = curq.res;
+	int op1addr = -getOffset(op1name);
+	int op2addr = -getOffset(op2name);
+	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	mipsout << "bgt $t0, $t1, " << label << endl;
 }
 
 
@@ -530,7 +531,14 @@ BGE √	√	√	大于等于比较跳转
 a >= b ==> BGE a b lab
 */
 void MipsGenerator::mipsBGE() {
-
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string label = curq.res;
+	int op1addr = -getOffset(op1name);
+	int op2addr = -getOffset(op2name);
+	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	mipsout << "bge $t0, $t1, " << label << endl;
 }
 
 
@@ -539,7 +547,14 @@ BEQ	√	√	√	等于跳转
 a==b ==> BEQ a b lab
 */
 void MipsGenerator::mipsBEQ() {
-
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string label = curq.res;
+	int op1addr = -getOffset(op1name);
+	int op2addr = -getOffset(op2name);
+	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	mipsout << "beq $t0, $t1, " << label << endl;
 }
 
 
@@ -548,7 +563,14 @@ BLE	√	√	√	小于等于比较跳转
 a <= b ==> BLE a b lab
 */
 void MipsGenerator::mipsBLE() {
-
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string label = curq.res;
+	int op1addr = -getOffset(op1name);
+	int op2addr = -getOffset(op2name);
+	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	mipsout << "ble $t0, $t1, " << label << endl;
 }
 
 
@@ -573,7 +595,14 @@ BNE	√	√	√	不等于跳转
 a != b ==> BNE a b lab
 */
 void MipsGenerator::mipsBNE() {
-
+	string op1name = curq.op1;
+	string op2name = curq.op2;
+	string label = curq.res;
+	int op1addr = -getOffset(op1name);
+	int op2addr = -getOffset(op2name);
+	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
+	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
+	mipsout << "bne $t0, $t1, " << label << endl;
 }
 
 

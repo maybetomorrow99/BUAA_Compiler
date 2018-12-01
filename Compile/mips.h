@@ -19,10 +19,7 @@ public:
 	void mipsVAR();
 	void mipsARY();
 	void mipsFUNC();
-	void mipsADD();
-	void mipsSUB();
-	void mipsMUL();
-	void mipsDIV();
+	void mipsCal();
 	void mipsPARA();
 	void mipsCALL();
 	void mipsPUSH();
