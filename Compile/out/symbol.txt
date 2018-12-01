@@ -31,7 +31,7 @@ $temp6    var       char      0         120       0
 $temp7    var       int       0         124       0         
 $temp8    var       int       0         128       0         
 $temp9    var       char      0         132       0         
-$temp10   var       char      0         136       0         
+$temp10   var       int       0         136       0         
 $temp11   var       int       0         140       0         
 $temp12   var       int       0         144       0         
 $temp13   var       int       0         148       0         

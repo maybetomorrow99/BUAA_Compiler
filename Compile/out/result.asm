@@ -26,8 +26,9 @@ $string7: .asciiz "blt1"
 $string8: .asciiz "bne0"
 $string9: .asciiz "beq0bgt?"
 $string10: .asciiz "ble?"
-$string11: .asciiz "result"
-$string12: .asciiz "fibo(fn):"
+$string11: .asciiz "hi"
+$string12: .asciiz "result"
+$string13: .asciiz "fibo(fn):"
 $enter: .asciiz "\n"
 .text
 j main
@@ -507,6 +508,13 @@ blt $t0, $t1, label22
 j label23
 #LAB, , , label22
 label22:
+#PC, , , 11
+li $v0, 4
+la $a0, $string11
+syscall
+li $v0, 4
+la $a0,$enter
+syscall
 #LVAR, n, , $temp44
 move $t0 $t2
 sw $t0, -172($fp)
@@ -1107,9 +1115,9 @@ sw $t0, -212($fp)
 #LVAR, $temp93, , result
 lw $t0, -212($fp)
 sw $t0, -172($fp)
-#PC, , , 11
+#PC, , , 12
 li $v0, 4
-la $a0, $string11
+la $a0, $string12
 syscall
 li $v0, 4
 la $a0,$enter
@@ -1677,9 +1685,9 @@ lw $ra ,-124($sp)
 li $v0, 5
 syscall
 move $t2, $v0
-#PC, , , 12
+#PC, , , 13
 li $v0, 4
-la $a0, $string12
+la $a0, $string13
 syscall
 li $v0, 4
 la $a0,$enter

@@ -210,6 +210,17 @@ void SymbolTable::updateCurFuncAddr(string fname) {
 }
 
 
+/*
+临时变量char参与运算之后转为int，在factor级
+*/
+void SymbolTable::changeVarType(string name) {
+	for (int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name && items[i].type == CHARTP) {
+			items[i].type = INTTP;
+			return;
+		}
+	}
+}
 
 void SymbolTable::printTable(string path) {
 	ofstream fout;

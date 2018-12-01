@@ -757,6 +757,8 @@ SymbolItem Parser::item() {
 			quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, factorSym1.name));
 		else
 			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, factorSym1.name));
+
+		symTab.changeVarType(factorSym1.name);
 	}
 
 	cout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;

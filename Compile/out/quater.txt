@@ -149,6 +149,7 @@ LI        1                   $temp43
 BLT       $temp41   $temp43   label22   
 JUMP                          label23   
 LAB                           label22   
+PC                            11        
 LVAR      n                   $temp44   
 PI                            $temp44   
 LAB                           label23   
@@ -306,7 +307,7 @@ MUL       $temp93   $temp98   $temp93
 LVAR      result              $temp102  
 MUL       $temp93   $temp102  $temp93   
 LVAR      $temp93             result    
-PC                            11        
+PC                            12        
 LVAR      result              $temp103  
 PI                            $temp103  
 REN                                     
@@ -360,7 +361,7 @@ CALL                          chtrue
 CALL                          empty     
 CALL                          testexpression
 READ                          fn        
-PC                            12        
+PC                            13        
 LVAR      fn                  $temp122  
 PUSH                          $temp122  
 CALL                          fibo      
