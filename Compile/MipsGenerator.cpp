@@ -448,7 +448,7 @@ void MipsGenerator::mipsSARY() {
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "lw $t1, " << op1addr << "($fp)" << endl;
+		mipsout << "addi $t1, $fp, " << op1addr << endl;
 		mipsout << "sub $t0, $t1, $t0" << endl;
 	}
 
@@ -501,7 +501,7 @@ void MipsGenerator::mipsLARY() {
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "lw $t1, " << op1addr << "($fp)" << endl;
+		mipsout << "addi $t1, $fp, " << op1addr << endl;
 		mipsout << "sub $t0, $t1, $t0" << endl;
 	}
 
