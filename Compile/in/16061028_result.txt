@@ -1,0 +1,42 @@
+###example 1###
+>>>input
+1
+>>>output
+test_if
+b
+a
+test_factorial
+24
+
+###example 2###
+>>>input
+2
+>>>output
+test_while
+2
+1
+0
+666
+test_switch_char
+apple
+ali
+boy
+cat
+
+###example 3###
+>>>input
+3
+1
+8
+>>>output
+test_relation
+<
+<=
+!=
+>
+>=
+!=
+==
+test_expression
+The result is
+86

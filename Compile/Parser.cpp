@@ -614,9 +614,14 @@ void Parser::funcWithNoVal() {
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
-	if (!retFlag) {
+
+
+	/*if (!retFlag) {
 		quaterList.push_back(Quaternary("REN", "", "", ""));
-	}
+	}*/
+
+	//默认在无返回值函数的最后加上return;
+	quaterList.push_back(Quaternary("REN", "", "", ""));
 	symTab.updateFuncVal();
 
 	cout << setw(4) << left << lexer.lineNum<< "This is a function definition without return value" << endl;
