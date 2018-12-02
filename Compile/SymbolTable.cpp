@@ -55,7 +55,8 @@ void SymbolTable::insert(string name, SymbolKind kind, SymbolType type, int valu
 
 /*
 查找标识符是否存在
-查找位置包括当前层，全局变量区和函数区*/
+查找位置包括当前层，全局变量区和函数区
+*/
 bool SymbolTable::inTable(string name) {
 	for (int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
@@ -73,6 +74,20 @@ bool SymbolTable::inTable(string name) {
 	}
 	return false;
 }
+
+
+/*
+查找参数是否已经定义过
+查找位置只包括当前层，也就是说局部变量可以覆盖全局变量和函数
+*/
+bool SymbolTable::paraInTable(string name) {
+	for (int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name)
+			return true;
+	}
+	return false;
+}
+
 
 SymbolItem SymbolTable::search(string name) {
 	for (int i = curFuncAddr; i < items.size(); i++) {

@@ -1,369 +1,294 @@
-CON       int       0         zero      
-CON       int       -1        neg       
-CON       int       1         pos       
-CON       char      99        c         
-CON       char      67        cc        
-CON       char      43        plus      
-CON       char      45        _plus     
-CON       char      42        mul       
-CON       char      47        _mul      
-CON       char      48        n_u_m_0   
-VAR       int                 a1var     
-VAR       int                 a2var     
-ARY       int       10        arrayintvar
-VAR       char                c1var     
-VAR       char                c2var     
-ARY       char      10        arraycharvar
-FUNC      void                testio    
-CON       int       10        iiii      
+CON       int       -10       a1        
+CON       int       5         b1        
+CON       char      56        c1        
+CON       char      45        d1        
+CON       char      65        d2        
 VAR       int                 i         
-ARY       int       10        iarray    
-VAR       char                ch        
-ARY       char      10        charray   
-PC                            0         
-PC                            1         
-READ                          i         
-READ                          ch        
-LI        0                   $temp0    
-LVAR      i                   $temp1    
-SARY      iarray    $temp0    $temp1    
-LI        0                   $temp2    
-LVAR      ch                  $temp3    
-SARY      charray   $temp2    $temp3    
-PC                            2         
-LVAR      i                   $temp4    
-PI                            $temp4    
-LVAR      ch                  $temp5    
-PI                            $temp5    
-VAR       char                $temp6    
+VAR       int                 j         
+VAR       int                 k         
+ARY       int       10        intarray  
+VAR       char                op        
+ARY       char      11        chararray 
+FUNC      int                 add       
+PARA      int                 a1        
+PARA      int                 b         
+PARA      int                 c         
+PARA      int                 d         
+PARA      char                k         
+LVAR      a1                  $temp0    
+LVAR      b                   $temp1    
+ADD       $temp0    $temp1    $temp0    
+LVAR      c                   $temp2    
+ADD       $temp0    $temp2    $temp0    
+LVAR      d                   $temp3    
+ADD       $temp0    $temp3    $temp0    
+LVAR      k                   $temp4    
+ADD       $temp0    $temp4    $temp0    
+RET                           $temp0    
+FUNC      char                get       
+VAR       char                $temp5    
+LVAR      k                   $temp6    
 LI        0                   $temp7    
-LARY      charray   $temp7    $temp6    
-PI                            $temp6    
-LVAR      neg                 $temp8    
-LVAR      ch                  $temp9    
-ADD       $temp8    $temp9    $temp8    
-PI                            $temp8    
-VAR       char                $temp10   
-LI        0                   $temp11   
-LARY      charray   $temp11   $temp10   
-LVAR      pos                 $temp12   
-LVAR      neg                 $temp13   
-SUB       $temp12   $temp13   $temp12   
-MUL       $temp10   $temp12   $temp10   
-PI                            $temp10   
-REN                                     
-FUNC      void                testif    
-PARA      int                 a         
-PARA      char                ch        
-VAR       int                 ch2       
-LVAR      ch                  $temp14   
-LVAR      ch                  $temp15   
-ADD       $temp14   $temp15   $temp14   
-LVAR      $temp14             ch2       
-LVAR      a                   $temp16   
-LI        10                  $temp17   
-BNE       $temp16   $temp17   label0    
-PC                            3         
-REN                                     
+SUB       $temp7    $temp6    $temp6    
+LI        2                   $temp8    
+LVAR      k                   $temp9    
+MUL       $temp8    $temp9    $temp8    
+ADD       $temp6    $temp8    $temp6    
+LARY      chararray $temp6    $temp5    
+RET                           $temp5    
+FUNC      int                 return_3  
+LI        3                   $temp10   
+RET                           $temp10   
+FUNC      int                 fib       
+PARA      int                 n         
+LVAR      n                   $temp11   
+LI        0                   $temp12   
+BGE       $temp11   $temp12   label0    
+LI        0                   $temp13   
+RET                           $temp13   
 JUMP                          label1    
 LAB                           label0    
-LVAR      a                   $temp18   
-LI        1                   $temp19   
-BLT       $temp18   $temp19   label2    
-PC                            4         
+LVAR      n                   $temp14   
+LI        0                   $temp15   
+BEQ       $temp14   $temp15   label2    
+LVAR      n                   $temp17   
+LI        1                   $temp18   
+SUB       $temp17   $temp18   $temp17   
+PUSH                          $temp17   
+CALL                          fib       
+VOF       fib                 $temp16   
+LVAR      n                   $temp20   
+LI        2                   $temp21   
+SUB       $temp20   $temp21   $temp20   
+PUSH                          $temp20   
+CALL                          fib       
+VOF       fib                 $temp19   
+ADD       $temp16   $temp19   $temp16   
+RET                           $temp16   
 JUMP                          label3    
 LAB                           label2    
-LVAR      a                   $temp20   
-LI        1                   $temp21   
-LI        0                   $temp22   
-SUB       $temp22   $temp21   $temp21   
-BGT       $temp20   $temp21   label4    
-PC                            5         
-JUMP                          label5    
-LAB                           label4    
-LVAR      a                   $temp23   
-LI        1                   $temp24   
-BLE       $temp23   $temp24   label6    
-PC                            6         
-JUMP                          label7    
-LAB                           label6    
-LVAR      a                   $temp25   
-LI        1                   $temp26   
-LI        0                   $temp27   
-SUB       $temp27   $temp26   $temp26   
-BGE       $temp25   $temp26   label8    
-PC                            7         
-JUMP                          label9    
-LAB                           label8    
-LVAR      a                   $temp28   
-LI        0                   $temp29   
-BEQ       $temp28   $temp29   label10   
-PC                            8         
-JUMP                          label11   
-LAB                           label10   
-LVAR      ch2                 $temp30   
-LI        126                 $temp31   
-BLE       $temp30   $temp31   label12   
-LVAR      a                   $temp32   
-LI        0                   $temp33   
-BEQ       $temp32   $temp33   label14   
-PC                            9         
-JUMP                          label15   
-LAB                           label14   
-PC                            9         
-LAB                           label15   
-JUMP                          label13   
-LAB                           label12   
-PC                            10        
-LAB                           label13   
-LAB                           label11   
-LAB                           label9    
-LAB                           label7    
-LAB                           label5    
+LI        1                   $temp22   
+RET                           $temp22   
 LAB                           label3    
 LAB                           label1    
-FUNC      void                testdowhile
-VAR       int                 n         
+FUNC      void                testexpr  
+PC                            0         
+LI        0                   $temp23   
+LVAR      a1                  $temp25   
+LVAR      b1                  $temp26   
+MUL       $temp25   $temp26   $temp25   
+PUSH                          $temp25   
+LVAR      a1                  $temp27   
+LVAR      b1                  $temp28   
+DIV       $temp27   $temp28   $temp27   
+PUSH                          $temp27   
+LVAR      b1                  $temp29   
+LVAR      a1                  $temp30   
+DIV       $temp29   $temp30   $temp29   
+PUSH                          $temp29   
+LVAR      d1                  $temp31   
+PUSH                          $temp31   
+LVAR      d2                  $temp32   
+PUSH                          $temp32   
+CALL                          add       
+VOF       add                 $temp24   
+SARY      intarray  $temp23   $temp24   
+LI        1                   $temp33   
 LI        1                   $temp34   
-LVAR      $temp34             n         
-LAB                           label17   
-LVAR      n                   $temp35   
+LI        2                   $temp35   
+ADD       $temp34   $temp35   $temp34   
 LI        2                   $temp36   
-MUL       $temp35   $temp36   $temp35   
-LVAR      $temp35             n         
-LAB                           label16   
-LVAR      n                   $temp37   
-LI        20                  $temp38   
-BGE       $temp37   $temp38   label18   
-JUMP                          label17   
-LAB                           label18   
-LAB                           label20   
-LVAR      n                   $temp39   
-LI        1                   $temp40   
-SUB       $temp39   $temp40   $temp39   
-LVAR      $temp39             n         
-LVAR      n                   $temp41   
-LI        1                   $temp42   
-DIV       $temp41   $temp42   $temp41   
-LI        1                   $temp43   
-BLT       $temp41   $temp43   label22   
-JUMP                          label23   
-LAB                           label22   
-PC                            11        
-LVAR      n                   $temp44   
-PI                            $temp44   
-LAB                           label23   
-LAB                           label19   
-LVAR      n                   $temp45   
+LI        3                   $temp37   
+LVAR      c1                  $temp38   
+LI        2                   $temp39   
+LI        1                   $temp41   
+PUSH                          $temp41   
+CALL                          return_3  
+VOF       return_3            $temp42   
+PUSH                          $temp42   
+VAR       int                 $temp43   
+LI        0                   $temp44   
+LARY      intarray  $temp44   $temp43   
+PUSH                          $temp43   
+LI        65                  $temp45   
 LI        0                   $temp46   
-BEQ       $temp45   $temp46   label21   
-JUMP                          label20   
-LAB                           label21   
+SUB       $temp46   $temp45   $temp45   
+PUSH                          $temp45   
+LI        65                  $temp47   
+PUSH                          $temp47   
+CALL                          add       
+VOF       add                 $temp40   
+LI        40                  $temp48   
+SUB       $temp40   $temp48   $temp40   
+LVAR      k                   $temp49   
+SUB       $temp40   $temp49   $temp40   
+MUL       $temp39   $temp40   $temp39   
+DIV       $temp38   $temp39   $temp38   
+ADD       $temp37   $temp38   $temp37   
+MUL       $temp36   $temp37   $temp36   
+ADD       $temp34   $temp36   $temp34   
+SARY      intarray  $temp33   $temp34   
+LI        2                   $temp50   
+LVAR      k                   $temp52   
+PUSH                          $temp52   
+CALL                          fib       
+VOF       fib                 $temp51   
+SARY      intarray  $temp50   $temp51   
+LI        0                   $temp53   
+LVAR      $temp53             j         
+LAB                           label5    
+VAR       int                 $temp54   
+LVAR      j                   $temp55   
+LARY      intarray  $temp55   $temp54   
+PI                            $temp54   
+LVAR      j                   $temp56   
+LI        1                   $temp57   
+ADD       $temp56   $temp57   $temp56   
+LVAR      $temp56             j         
+LAB                           label4    
+LVAR      j                   $temp58   
+LI        2                   $temp59   
+BGT       $temp58   $temp59   label6    
+JUMP                          label5    
+LAB                           label6    
 REN                                     
-FUNC      void                testswitch
+FUNC      void                testempty 
+REN                                     
+FUNC      void                main      
+CON       int       10        max       
 VAR       int                 x         
 VAR       int                 y         
-VAR       char                ch        
-LI        3                   $temp47   
-LVAR      $temp47             y         
-READ                          x         
-LVAR      x                   $temp48   
-LVAR      x                   $temp49   
-ADD       $temp48   $temp49   $temp48   
-LVAR      x                   $temp50   
-SUB       $temp48   $temp50   $temp48   
-LI        0                   $temp51   
-BNE       $temp48   $temp51   label25   
-LI        43                  $temp52   
-LVAR      $temp52             ch        
-JUMP                          label24   
-LAB                           label25   
-LI        1                   $temp53   
-BNE       $temp48   $temp53   label26   
-LI        45                  $temp54   
-LVAR      $temp54             ch        
-JUMP                          label24   
-LAB                           label26   
-LI        -1                  $temp55   
-BNE       $temp48   $temp55   label27   
-LI        42                  $temp56   
-LVAR      $temp56             ch        
-JUMP                          label24   
-LAB                           label27   
-LI        95                  $temp57   
-LVAR      $temp57             ch        
-LAB                           label24   
-LVAR      ch                  $temp58   
-LI        43                  $temp59   
-BNE       $temp58   $temp59   label29   
-LI        100                 $temp60   
-LVAR      $temp60             a2var     
-JUMP                          label28   
-LAB                           label29   
-LI        45                  $temp61   
-BNE       $temp58   $temp61   label30   
-LI        50                  $temp62   
-LVAR      $temp62             a2var     
-JUMP                          label28   
-LAB                           label30   
-LI        42                  $temp63   
-BNE       $temp58   $temp63   label31   
-LI        25                  $temp64   
-LVAR      $temp64             a2var     
-JUMP                          label28   
-LAB                           label31   
-LI        47                  $temp65   
-BNE       $temp58   $temp65   label32   
-LI        10                  $temp66   
-LVAR      $temp66             a2var     
-JUMP                          label28   
-LAB                           label32   
-LI        95                  $temp67   
-BNE       $temp58   $temp67   label33   
-LVAR      x                   $temp68   
-LVAR      x                   $temp69   
-MUL       $temp68   $temp69   $temp68   
-LVAR      $temp68             x         
-LVAR      x                   $temp70   
-LVAR      y                   $temp71   
-SUB       $temp70   $temp71   $temp70   
-LI        0                   $temp72   
-BNE       $temp70   $temp72   label34   
-LI        9                   $temp73   
-LVAR      $temp73             a2var     
-JUMP                          label35   
-LAB                           label34   
+VAR       int                 z         
+VAR       char                tem       
+LI        0                   $temp60   
+LVAR      $temp60             i         
+LI        0                   $temp61   
+LVAR      $temp61             k         
+LVAR      max                 $temp62   
+LVAR      $temp62             z         
+LI        0                   $temp63   
+LI        104                 $temp64   
+SARY      chararray $temp63   $temp64   
+LI        1                   $temp65   
+LI        0                   $temp66   
+SUB       $temp66   $temp65   $temp65   
+LI        101                 $temp67   
+SARY      chararray $temp65   $temp67   
+LI        2                   $temp68   
+LI        108                 $temp69   
+SARY      chararray $temp68   $temp69   
+LI        3                   $temp70   
+LI        108                 $temp71   
+SARY      chararray $temp70   $temp71   
+LI        4                   $temp72   
+LI        111                 $temp73   
+SARY      chararray $temp72   $temp73   
 LI        5                   $temp74   
-LVAR      $temp74             a2var     
-LAB                           label35   
-JUMP                          label28   
-LAB                           label33   
-LVAR      y                   $temp75   
-LVAR      y                   $temp76   
-MUL       $temp75   $temp76   $temp75   
-LVAR      $temp75             y         
-LVAR      x                   $temp77   
-LVAR      y                   $temp78   
-DIV       $temp77   $temp78   $temp77   
-LI        0                   $temp79   
-BNE       $temp77   $temp79   label36   
+LI        95                  $temp75   
+SARY      chararray $temp74   $temp75   
+LI        6                   $temp76   
+LI        119                 $temp77   
+SARY      chararray $temp76   $temp77   
+LI        7                   $temp78   
+LI        111                 $temp79   
+SARY      chararray $temp78   $temp79   
 LI        8                   $temp80   
-LVAR      $temp80             a2var     
-JUMP                          label37   
-LAB                           label36   
-LI        4                   $temp81   
-LVAR      $temp81             a2var     
-LAB                           label37   
-LAB                           label28   
+LI        114                 $temp81   
+SARY      chararray $temp80   $temp81   
+LI        9                   $temp82   
+LI        108                 $temp83   
+SARY      chararray $temp82   $temp83   
+LI        10                  $temp84   
+LI        100                 $temp85   
+SARY      chararray $temp84   $temp85   
+READ                          x         
+READ                          y         
+READ                          op        
+LVAR      op                  $temp86   
+LI        43                  $temp87   
+BNE       $temp86   $temp87   label8    
+LVAR      x                   $temp88   
+LVAR      y                   $temp89   
+ADD       $temp88   $temp89   $temp88   
+LVAR      $temp88             z         
+LVAR      z                   $temp90   
+LI        1                   $temp91   
+BNE       $temp90   $temp91   label10   
+LVAR      k                   $temp92   
+LI        1                   $temp93   
+ADD       $temp92   $temp93   $temp92   
+LVAR      $temp92             k         
+JUMP                          label9    
+LAB                           label10   
+LI        2                   $temp94   
+BNE       $temp90   $temp94   label11   
+LVAR      k                   $temp95   
+LI        2                   $temp96   
+ADD       $temp95   $temp96   $temp95   
+LVAR      $temp95             k         
+JUMP                          label9    
+LAB                           label11   
+LVAR      k                   $temp97   
+LI        3                   $temp98   
+ADD       $temp97   $temp98   $temp97   
+LVAR      $temp97             k         
+LAB                           label9    
+JUMP                          label7    
+LAB                           label8    
+LI        45                  $temp99   
+BNE       $temp86   $temp99   label12   
+LVAR      x                   $temp100  
+LVAR      y                   $temp101  
+SUB       $temp100  $temp101  $temp100  
+LVAR      $temp100            z         
+LVAR      z                   $temp102  
+LI        0                   $temp103  
+BNE       $temp102  $temp103  label13   
+LVAR      k                   $temp104  
+LI        4                   $temp105  
+ADD       $temp104  $temp105  $temp104  
+LVAR      $temp104            k         
+JUMP                          label14   
+LAB                           label13   
+LVAR      k                   $temp106  
+LI        5                   $temp107  
+ADD       $temp106  $temp107  $temp106  
+LVAR      $temp106            k         
+LAB                           label14   
+JUMP                          label7    
+LAB                           label12   
+LVAR      x                   $temp108  
+LVAR      y                   $temp109  
+MUL       $temp108  $temp109  $temp108  
+LVAR      $temp108            z         
+LVAR      z                   $temp110  
+LI        0                   $temp111  
+BLT       $temp110  $temp111  label15   
+LVAR      k                   $temp112  
+LI        6                   $temp113  
+ADD       $temp112  $temp113  $temp112  
+LVAR      $temp112            k         
+JUMP                          label16   
+LAB                           label15   
+LVAR      k                   $temp114  
+LI        7                   $temp115  
+ADD       $temp114  $temp115  $temp114  
+LVAR      $temp114            k         
+LAB                           label16   
+LAB                           label7    
+CALL                          get       
+VOF       get                 $temp116  
+LVAR      $temp116            tem       
+LVAR      tem                 $temp117  
+LI        95                  $temp118  
+BEQ       $temp117  $temp118  label17   
+PC                            1         
+LVAR      tem                 $temp119  
+PI                            $temp119  
+JUMP                          label18   
+LAB                           label17   
+PC                            2         
+LAB                           label18   
+CALL                          testexpr  
+CALL                          testempty 
 REN                                     
-FUNC      int                 itrue     
-LI        1                   $temp82   
-RET                           $temp82   
-FUNC      char                chtrue    
-LI        97                  $temp83   
-RET                           $temp83   
-FUNC      void                empty     
-REN                                     
-FUNC      void                testexpression
-VAR       int                 i         
-ARY       int       10        array     
-VAR       int                 result    
-LVAR      a2var               $temp84   
-LVAR      $temp84             i         
-LI        1                   $temp85   
-LI        10                  $temp86   
-SARY      array     $temp85   $temp86   
-LVAR      neg                 $temp87   
-LI        0                   $temp88   
-SUB       $temp88   $temp87   $temp87   
-LVAR      i                   $temp89   
-LI        2                   $temp90   
-DIV       $temp89   $temp90   $temp89   
-ADD       $temp87   $temp89   $temp87   
-LVAR      i                   $temp91   
-LVAR      zero                $temp92   
-MUL       $temp91   $temp92   $temp91   
-SUB       $temp87   $temp91   $temp87   
-LVAR      $temp87             result    
-LVAR      pos                 $temp93   
-VAR       int                 $temp94   
-CALL                          itrue     
-VOF       itrue               $temp95   
-LARY      array     $temp95   $temp94   
-MUL       $temp93   $temp94   $temp93   
-LI        3                   $temp96   
-MUL       $temp93   $temp96   $temp93   
-LVAR      c                   $temp97   
-MUL       $temp93   $temp97   $temp93   
-LVAR      i                   $temp98   
-LVAR      pos                 $temp99   
-LVAR      pos                 $temp100  
-ADD       $temp99   $temp100  $temp99   
-MUL       $temp98   $temp99   $temp98   
-CALL                          itrue     
-VOF       itrue               $temp101  
-ADD       $temp98   $temp101  $temp98   
-MUL       $temp93   $temp98   $temp93   
-LVAR      result              $temp102  
-MUL       $temp93   $temp102  $temp93   
-LVAR      $temp93             result    
-PC                            12        
-LVAR      result              $temp103  
-PI                            $temp103  
-REN                                     
-FUNC      int                 fibo      
-PARA      int                 n         
-LVAR      n                   $temp104  
-LI        0                   $temp105  
-BNE       $temp104  $temp105  label38   
-LI        0                   $temp106  
-RET                           $temp106  
-JUMP                          label39   
-LAB                           label38   
-LVAR      n                   $temp107  
-LI        1                   $temp108  
-BNE       $temp107  $temp108  label40   
-LI        1                   $temp109  
-RET                           $temp109  
-JUMP                          label41   
-LAB                           label40   
-LVAR      n                   $temp111  
-LI        1                   $temp112  
-SUB       $temp111  $temp112  $temp111  
-PUSH                          $temp111  
-CALL                          fibo      
-VOF       fibo                $temp110  
-LVAR      n                   $temp114  
-LI        2                   $temp115  
-SUB       $temp114  $temp115  $temp114  
-PUSH                          $temp114  
-CALL                          fibo      
-VOF       fibo                $temp113  
-ADD       $temp110  $temp113  $temp110  
-RET                           $temp110  
-LAB                           label41   
-LAB                           label39   
-FUNC      void                main      
-VAR       int                 fn        
-CALL                          testio    
-READ                          a1var     
-LI        104                 $temp116  
-LVAR      $temp116            c1var     
-LVAR      a1var               $temp117  
-PUSH                          $temp117  
-LI        104                 $temp118  
-PUSH                          $temp118  
-CALL                          testif    
-CALL                          testdowhile
-CALL                          testswitch
-CALL                          itrue     
-CALL                          chtrue    
-CALL                          empty     
-CALL                          testexpression
-READ                          fn        
-PC                            13        
-LVAR      fn                  $temp122  
-PUSH                          $temp122  
-CALL                          fibo      
-VOF       fibo                $temp121  
-PI                            $temp121  

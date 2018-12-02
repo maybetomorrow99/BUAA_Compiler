@@ -614,7 +614,7 @@ REN				·µ»Ø¿Õ
 return;	REN
 */
 void MipsGenerator::mipsREN() {
-	cout << symTab.getCurFunc().name << endl;
+	//cout << symTab.getCurFunc().name << endl;
 	if (symTab.getCurFunc().name == "main") {
 		mipsout << "li $v0," << 10 << endl;
 		mipsout << "syscall" << endl;

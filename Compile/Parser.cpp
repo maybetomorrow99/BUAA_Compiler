@@ -758,6 +758,7 @@ SymbolItem Parser::item() {
 		else
 			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, factorSym1.name));
 
+		//参与运算之后类型一定为INTTP
 		symTab.changeVarType(factorSym1.name);
 	}
 
@@ -887,7 +888,8 @@ void Parser::paraTab() {
 			name = curToken.str;
 			value++;
 
-			if (!symTab.inTable(name)) {
+			//此处应该不存在与全局变量重定义问题，参数只考虑与函数内部重名
+			if (!symTab.paraInTable(name)) {
 				symTab.insert(name, PARAKD, type, 0);
 				quaterList.push_back(Quaternary("PARA", (type == INTTP ? "int" : "char"), "", name));
 			}
@@ -912,7 +914,7 @@ void Parser::paraTab() {
 				name = curToken.str;
 				value++;
 
-				if (!symTab.inTable(name)) {
+				if (!symTab.paraInTable(name)) {
 					symTab.insert(name, PARAKD, type, 0);
 					quaterList.push_back(Quaternary("PARA", (type == INTTP ? "int" : "char"), "", name));
 				}
