@@ -89,6 +89,20 @@ bool SymbolTable::paraInTable(string name) {
 }
 
 
+/*
+查找局部变量是否存在
+查找位置包括当前层和当前函数名
+也就是说不允许函数名与局部量同名
+*/
+bool SymbolTable::locInTable(string name) {
+	for (int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name)
+			return true;
+	}
+	return false;
+}
+
+
 SymbolItem SymbolTable::search(string name) {
 	for (int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)

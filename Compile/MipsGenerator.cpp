@@ -88,11 +88,8 @@ void MipsGenerator::genMips() {
 	else if (curq.oper == "LARY") {
 		mipsLARY();
 	}
-	else if (curq.oper == "PC") {
-		mipsPC();
-	}
-	else if (curq.oper == "PI") {
-		mipsPI();
+	else if (curq.oper == "PRT") {
+		mipsPRT();
 	}
 	else if (curq.oper == "READ") {
 		mipsREAD();
@@ -240,7 +237,7 @@ void MipsGenerator::mipsCal() {
 	//读取a
 	if (inReg(op1name)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(op1name);
-		mipsout << "move $t0 $t" << regNum << endl;
+		mipsout << "move $t0, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int op1addr = -getOffset(op1name);
@@ -250,7 +247,7 @@ void MipsGenerator::mipsCal() {
 	//读取b
 	if (inReg(op2name)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(op2name);
-		mipsout << "move $t1 $t" << regNum << endl;
+		mipsout << "move $t1, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int op2addr = -getOffset(op2name);
@@ -391,7 +388,7 @@ void MipsGenerator::mipsLVAR() {
 	}
 	else if (inReg(op1name)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(op1name);
-		mipsout << "move $t0 $t" << regNum << endl;
+		mipsout << "move $t0, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int op1addr = -getOffset(op1name);
@@ -431,7 +428,7 @@ void MipsGenerator::mipsSARY() {
 	}
 	else if (inReg(op2name)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(op2name);
-		mipsout << "move $t0 $t" << regNum << endl;
+		mipsout << "move $t0, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int op2addr = -getOffset(op2name);
@@ -455,7 +452,7 @@ void MipsGenerator::mipsSARY() {
 	//读取等式右边的值到t0,x只能为局部变量
 	if (inReg(resname)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(resname);
-		mipsout << "move $t1 $t" << regNum << endl;
+		mipsout << "move $t1, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int resaddr = -getOffset(resname);
@@ -484,7 +481,7 @@ void MipsGenerator::mipsLARY() {
 	}
 	else if (inReg(op2name)) {		//是在寄存器中的局部变量
 		int regNum = getRegNum(op2name);
-		mipsout << "move $t0 $t" << regNum << endl;
+		mipsout << "move $t0, $t" << regNum << endl;
 	}
 	else {							//是不在寄存器中的局部变量
 		int op2addr = -getOffset(op2name);
@@ -561,6 +558,61 @@ void MipsGenerator::mipsPI() {
 	mipsout << "li $v0, 4" << endl;
 	mipsout << "la $a0," << "$enter" << endl;
 	mipsout << "syscall" << endl;
+}
+
+
+/*
+PRT	√	√	√	输出			
+0 只有整数， 1 只有字符串 2 字符串和整数
+*/
+void MipsGenerator::mipsPRT() {
+	if (curq.op1 == "0") {
+		string name = curq.res;
+		int addr = -getOffset(name);
+		SymbolType type = symTab.search(name).type;
+
+		if (type == INTTP)
+			mipsout << "li $v0, 1" << endl;
+		else
+			mipsout << "li $v0, 11" << endl;
+
+		mipsout << "lw $a0, " << addr << "($fp)" << endl;
+		mipsout << "syscall" << endl;
+
+		mipsout << "li $v0, 4" << endl;
+		mipsout << "la $a0," << "$enter" << endl;
+		mipsout << "syscall" << endl;
+	}
+	else if (curq.op1 == "1") {
+		mipsout << "li $v0, 4" << endl;
+		mipsout << "la $a0, $string" << curq.res << endl;
+		mipsout << "syscall" << endl;
+
+		mipsout << "li $v0, 4" << endl;
+		mipsout << "la $a0," << "$enter" << endl;
+		mipsout << "syscall" << endl;
+	}
+	else {
+		mipsout << "li $v0, 4" << endl;
+		mipsout << "la $a0, $string" << curq.op2 << endl;
+		mipsout << "syscall" << endl;
+
+		string name = curq.res;
+		int addr = -getOffset(name);
+		SymbolType type = symTab.search(name).type;
+
+		if (type == INTTP)
+			mipsout << "li $v0, 1" << endl;
+		else
+			mipsout << "li $v0, 11" << endl;
+
+		mipsout << "lw $a0, " << addr << "($fp)" << endl;
+		mipsout << "syscall" << endl;
+
+		mipsout << "li $v0, 4" << endl;
+		mipsout << "la $a0," << "$enter" << endl;
+		mipsout << "syscall" << endl;
+	}
 }
 
 

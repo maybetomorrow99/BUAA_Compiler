@@ -57,7 +57,7 @@ void main(){
     k = 0;
     z = max;
     chararray[0] = 'h';
-    chararray[-1] = 'e';
+    chararray[1] = 'e';
     chararray[+2] = 'l';
     chararray[3] = 'l';
     chararray[4] = 'o';

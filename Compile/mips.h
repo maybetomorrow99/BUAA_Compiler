@@ -30,6 +30,7 @@ public:
 	void mipsLARY();
 	void mipsPC();
 	void mipsPI();
+	void mipsPRT();
 	void mipsREAD();
 	void mipsRET();
 	void mipsREN();

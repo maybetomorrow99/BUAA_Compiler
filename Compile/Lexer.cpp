@@ -111,6 +111,8 @@ Token Lexer::getToken() {
 	else if (ch == '"') {			//ÅÐ¶ÏÊÇ·ñÊÇ×Ö·û´®
 		ch = nextChar();
 		while (ch == 32 || ch == 33 || (ch >= 35 && ch <= 126)) {
+			if (ch == '\\')			//·ÀÖ¹×ªÒå
+				token.str += ch;
 			token.str += ch;
 			ch = nextChar();
 		}

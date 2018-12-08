@@ -97,7 +97,7 @@ void main(){
     scanf(op);
     switch(op){
         case 1:{
-            printf("test_if");
+            printf("test\n_if");
             var_char_res = test_if(con_int_5, con_int_3);
             printf(var_char_res);
             var_char_res = test_if(con_int_4, con_int_3);

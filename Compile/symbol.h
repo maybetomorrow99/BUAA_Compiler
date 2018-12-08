@@ -36,6 +36,7 @@ public:
 	void insert(string name, SymbolKind kind, SymbolType type, int value);
 	bool inTable(string name);
 	bool paraInTable(string name);
+	bool locInTable(string name);
 	SymbolItem search(string name);
 	SymbolItem searchFunc(string name);
 	int getFuncAddr(string name);

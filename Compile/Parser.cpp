@@ -44,7 +44,7 @@ string Parser::genVar() {
 生成标签
 */
 string Parser::genLab() {
-	string s = "label" + to_string(labelIndex++);
+	string s = "$label" + to_string(labelIndex++);
 	return s;
 }
 
@@ -234,7 +234,7 @@ void Parser::constDef() {
 		getToken();
 		value = intNum();
 
-		if (!symTab.inTable(name)) {
+		if (!symTab.locInTable(name)) {
 			symTab.insert(name, CONSTKD, INTTP, value);
 			quaterList.push_back(Quaternary("CON", "int", to_string(value), name));
 		}
@@ -255,7 +255,7 @@ void Parser::constDef() {
 
 			getToken();
 			value = intNum();
-			if (!symTab.inTable(name)) {
+			if (!symTab.locInTable(name)) {
 				symTab.insert(name, CONSTKD, INTTP, value);
 				quaterList.push_back(Quaternary("CON", "int", to_string(value), name));
 			}
@@ -283,7 +283,7 @@ void Parser::constDef() {
 		}
 		
 		value = curToken.str[0];
-		if (!symTab.inTable(name)) {
+		if (!symTab.locInTable(name)) {
 			symTab.insert(name, CONSTKD, CHARTP, value);
 			quaterList.push_back(Quaternary("CON", "char", to_string(value), name));
 		}
@@ -311,7 +311,7 @@ void Parser::constDef() {
 			}
 
 			value = curToken.str[0];
-			if (!symTab.inTable(name)) {
+			if (!symTab.locInTable(name)) {
 				symTab.insert(name, CONSTKD, CHARTP, value);
 				quaterList.push_back(Quaternary("CON", "char", to_string(value), name));
 			}
@@ -392,7 +392,7 @@ void Parser::varDef() {
 				value = atoi(curToken.str.c_str());
 				getToken();
 				if (curToken.type == RBRK) {
-					if (!symTab.inTable(name)) {
+					if (!symTab.locInTable(name)) {
 						symTab.insert(name, ARRAYKD, type, value);
 						quaterList.push_back(Quaternary("ARY", (type == INTTP ? "int" : "char"), to_string(value), name));
 					}
@@ -405,7 +405,7 @@ void Parser::varDef() {
 			}
 		}
 		else {	//此处未进行错误处理，直接插入符号表
-			if (!symTab.inTable(name)) {
+			if (!symTab.locInTable(name)) {
 				symTab.insert(name, VARKD, type, 0);
 				quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", name));
 			}
@@ -429,7 +429,7 @@ void Parser::varDef() {
 					value = atoi(curToken.str.c_str());
 					getToken();
 					if (curToken.type == RBRK) {
-						if (!symTab.inTable(name)) {
+						if (!symTab.locInTable(name)) {
 							symTab.insert(name, ARRAYKD, type, value);
 							quaterList.push_back(Quaternary("ARY", (type == INTTP ? "int" : "char"), to_string(value), name));
 						}
@@ -443,7 +443,7 @@ void Parser::varDef() {
 				}
 			}
 			else {
-				if (!symTab.inTable(name)) {
+				if (!symTab.locInTable(name)) {
 					symTab.insert(name, VARKD, type, 0);
 					quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", name));
 				}
@@ -1480,18 +1480,20 @@ void Parser::printfState() {
 	getToken();
 	if (curToken.type == STRING) {
 		int indexStr = insertString(curToken.str);
-		quaterList.push_back(Quaternary("PC", "", "", to_string(indexStr)));
 
 		getToken();
 		if (curToken.type == COMMA) {
 			getToken();
 			exprSym = expression();
-			quaterList.push_back(Quaternary("PI", "", "", exprSym.name));
+			quaterList.push_back(Quaternary("PRT", "2", to_string(indexStr), exprSym.name));
+		}
+		else {
+			quaterList.push_back(Quaternary("PRT", "1", "", to_string(indexStr)));
 		}
 	}
 	else {
 		exprSym = expression();
-		quaterList.push_back(Quaternary("PI", "", "", exprSym.name));
+		quaterList.push_back(Quaternary("PRT", "0", "", exprSym.name));
 	}
 
 	if (curToken.type != RPAR) {
