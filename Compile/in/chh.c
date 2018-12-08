@@ -63,7 +63,7 @@ void testDoWhile{
     do{
         n=n-1;
         if(n/1>=1) ;
-        else printf("hi",n);
+        else printf(n);
     }while(n)
 }
 

@@ -147,10 +147,12 @@ SymbolItem SymbolTable::getCurFunc() {
 
 
 /*
-判断是否是全局变量
+判断是否是全局变量，只有在生成mips时候会用到
 */
 bool SymbolTable::isGlobal(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {	//局部变量和全局变量重名，则为局部变量
+	for (int i = curFuncAddr + 1; i < items.size(); i++) {	//局部变量和全局变量重名，则为局部变量
+		if (items[i].kind == FUNCKD)					//***生成四元式的过程中，符号表已经建立完全，用items.size会查到后面的变量
+			break;
 		if (items[i].name == name)
 			return false;
 	}
@@ -240,7 +242,7 @@ void SymbolTable::updateCurFuncAddr(string fname) {
 
 
 /*
-临时变量char参与运算之后转为int，在factor级
+临时变量char参与运算之后转为int，在factor级和expr级
 */
 void SymbolTable::changeVarType(string name) {
 	for (int i = curFuncAddr; i < items.size(); i++) {

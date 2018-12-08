@@ -739,6 +739,9 @@ SymbolItem Parser::expression() {
 			quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, itemSym1.name));
 		else
 			quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, itemSym1.name));
+
+		//参与运算之后类型一定为INTTP
+		symTab.changeVarType(itemSym1.name);
 	}
 	
 	cout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;

@@ -191,7 +191,7 @@ void main()
     }else;
 
     init(2);
-    printf(x);
+    
     if(x!=2) 
     {
         printf("wrong3");
