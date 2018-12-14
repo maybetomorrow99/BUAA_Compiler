@@ -82,6 +82,8 @@ int test_para(int a, int b, int c, int con_int_1, int con_int_2){
 void test_expression{ 
     var_int_array_1[1] = con_int_2 / 1 + 1 + test_para(1, 2, 3, 4, 5);
     printf("The result is ", -con_int_1 - var_int_array_1[1] + +005 + 'a' + test_factorial(3) + -1 * (2 + 1));
+    var_int_2 = con_char_1 + 1;
+    printf(var_int_2);
 }
 
 
@@ -97,7 +99,7 @@ void main(){
     scanf(op);
     switch(op){
         case 1:{
-            printf("test\n_if");
+            printf("test_if\n");
             var_char_res = test_if(con_int_5, con_int_3);
             printf(var_char_res);
             var_char_res = test_if(con_int_4, con_int_3);

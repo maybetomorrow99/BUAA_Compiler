@@ -1,5 +1,7 @@
 #include "error.h"
 
+int errcount = 0;
+
 void error(int errid, int lineNum) {
 	switch (errid) {
 	case 0:  cout << "Unknown" << endl; break;

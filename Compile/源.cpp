@@ -7,15 +7,15 @@ using namespace std;
 
 int main() {
 	Parser parser;
-
 	string srcpath;
-
+	string lexerPath = "./out/lexer.txt";
+	string parserPath = "./out/parser.txt";
 	string symPath = "./out/symbol.txt";
 	string quaterPath = "./out/quater.txt";
 	string asmPath = "./out/result.asm";
 	MipsGenerator generator(asmPath);
 
-	srcpath = "./in/xyt.c";
+	srcpath = "./in/in1.c";
 	//cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {
@@ -24,21 +24,31 @@ int main() {
 	}
 
 	parser.lexer.fin.open(srcpath, ios::in | ios::binary);
-	parser.lexer.fout.open("./out/out.txt");
+	parser.lexer.fout.open(lexerPath);
+	parser.fout.open(parserPath);
 	parser.program();
 
-	cout << "Parser has been completed" << endl;
+	if (parser.lexer.ecount > 0) {
+		cout << "Lexer analysis failed!" << endl;
+		exit(0);
+	}
+	else {
+		cout << "Lexer analysis succeeded." << endl;
+	}
+
+	if (errcount > 0) {
+		cout << "Parser analysis failed!" << endl;
+		exit(0);
+	}
+	else {
+		cout << "Parser analysis succeeded." << endl;
+	}
 
 	symTab.printTable(symPath);
 	printQuater(quaterPath);
 	
-	if (parser.lexer.ecount > 1)
-		cout << "Compile failed!" << endl;
-	else
-		cout << "Compiled successfully" << endl;
-	
 	generator.startWorking();
-	
+	cout << "Compiled successfully" << endl;
 	system("Pause");
 	return 0;
 }

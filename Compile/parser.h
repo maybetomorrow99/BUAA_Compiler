@@ -17,6 +17,7 @@ class Parser {
 public:
 	Parser() { tempIndex = 0; labelIndex = 0; retFlag = false; }
 	Lexer lexer;
+	ofstream fout;					//语法分析结果输出到文件
 
 	void getToken();
 	void program();

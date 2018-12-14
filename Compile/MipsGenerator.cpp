@@ -155,7 +155,7 @@ int MipsGenerator::mipsGlobal() {
 	}
 
 	//×Ö·û´®³£Á¿
-	for (int i = 0; i < stringPool.size(); i++) {
+	for (unsigned int i = 0; i < stringPool.size(); i++) {
 		mipsout << "$string" << i << ": .asciiz \"" << stringPool[i] << "\"" << endl;
 	}
 	mipsout << "$enter: .asciiz \"\\n\"" << endl;
@@ -797,7 +797,7 @@ void MipsGenerator::mipsLAB() {
 void MipsGenerator::startWorking() {
 	int glbIndex;
 	glbIndex = mipsGlobal();
-	for (int i = glbIndex; i < quaterList.size(); i++) {
+	for (unsigned int i = glbIndex; i < quaterList.size(); i++) {
 		curq = quaterList[i];
 		genMips();
 	}

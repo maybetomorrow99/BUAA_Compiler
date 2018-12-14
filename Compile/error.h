@@ -42,4 +42,7 @@
 #define SYMBOL_TABLE_OVERFLOW       38
 #define ARRAY_OVER                  39
 
+
+extern int errcount;
+
 void error(int errid, int lineNum);

@@ -1,665 +1,636 @@
-CON       int       1         a         
-CON       int       2         b         
-CON       char      97        c         
-VAR       int                 x         
-VAR       int                 y         
-VAR       int                 _y1       
-VAR       char                _z1       
-VAR       int                 judge     
-FUNC      void                init      
-PARA      int                 m         
-LVAR      m                   $temp0    
-LVAR      $temp0              x         
-REN                                     
-REN                                     
-FUNC      int                 add       
-PARA      int                 m         
-PARA      int                 n         
-LVAR      m                   $temp1    
-LVAR      n                   $temp2    
-ADD       $temp1    $temp2    $temp1    
-RET                           $temp1    
-FUNC      int                 addx      
-LVAR      x                   $temp3    
+CON       int       0         _const_int_0
+CON       int       1         _const_int_1
+CON       int       -3        _const_int_2
+CON       char      42        _const_char_0
+CON       char      48        _const_char_1
+CON       int       1000      max       
+VAR       int                 error     
+VAR       int                 numbers_to_be_selected
+VAR       int                 amount    
+ARY       int       1000      f         
+VAR       int                 _var_int_0
+ARY       int       1         _var_int_arr_0
+VAR       int                 _var_int_1
+ARY       int       16        _var_int_arr_1
+VAR       char                _var_char_0
+ARY       char      1         _var_char_arr_0
+VAR       char                _var_char_1
+ARY       char      16        _var_char_arr_1
+VAR       char                _char     
+FUNC      void                testdo    
+VAR       int                 i         
+LI        0                   $temp0    
+LVAR      $temp0              i         
+LAB                           $label1   
+LVAR      i                   $temp1    
+LVAR      i                   $temp2    
+SARY      _var_int_arr_1$temp1    $temp2    
+LVAR      i                   $temp3    
 LI        1                   $temp4    
 ADD       $temp3    $temp4    $temp3    
-LVAR      $temp3              x         
-LVAR      x                   $temp5    
-LI        99                  $temp6    
-BEQ       $temp5    $temp6    $label0   
-LI        100                 $temp7    
-LI        0                   $temp8    
-SUB       $temp8    $temp7    $temp7    
-RET                           $temp7    
-JUMP                          $label1   
+LVAR      $temp3              i         
 LAB                           $label0   
-LI        100                 $temp9    
-RET                           $temp9    
-LAB                           $label1   
-FUNC      int                 addx1     
-LVAR      x                   $temp10   
-LI        1                   $temp11   
-ADD       $temp10   $temp11   $temp10   
-LVAR      $temp10             x         
-LI        0                   $temp12   
-RET                           $temp12   
-FUNC      char                tolow     
-PARA      char                c         
-VAR       char                d         
-LVAR      c                   $temp13   
-LVAR      $temp13             d         
-LVAR      d                   $temp14   
-RET                           $temp14   
-FUNC      int                 fib       
-PARA      int                 x         
-LVAR      x                   $temp15   
-LI        1                   $temp16   
-BNE       $temp15   $temp16   $label2   
-LI        1                   $temp17   
-RET                           $temp17   
-JUMP                          $label3   
+LVAR      i                   $temp5    
+LI        15                  $temp6    
+BGT       $temp5    $temp6    $label2   
+JUMP                          $label1   
 LAB                           $label2   
-LVAR      x                   $temp18   
-LI        2                   $temp19   
-BNE       $temp18   $temp19   $label4   
-LI        1                   $temp20   
-RET                           $temp20   
-JUMP                          $label5   
+LI        0                   $temp7    
+LVAR      $temp7              i         
 LAB                           $label4   
-LVAR      x                   $temp21   
-LI        100                 $temp22   
-LI        0                   $temp23   
-SUB       $temp23   $temp22   $temp22   
-BNE       $temp21   $temp22   $label6   
-LI        100                 $temp24   
-LI        0                   $temp25   
-SUB       $temp25   $temp24   $temp24   
-RET                           $temp24   
+LVAR      i                   $temp8    
+VAR       int                 $temp9    
+LI        2                   $temp10   
+LVAR      i                   $temp11   
+MUL       $temp10   $temp11   $temp10   
+LVAR      i                   $temp12   
+SUB       $temp10   $temp12   $temp10   
+LARY      _var_int_arr_1$temp10   $temp9    
+VAR       int                 $temp13   
+LI        9                   $temp14   
+LI        2                   $temp15   
+LI        3                   $temp16   
+MUL       $temp15   $temp16   $temp15   
+ADD       $temp14   $temp15   $temp14   
+LVAR      i                   $temp17   
+SUB       $temp14   $temp17   $temp14   
+LARY      _var_int_arr_1$temp14   $temp13   
+ADD       $temp9    $temp13   $temp9    
+SARY      _var_int_arr_1$temp8    $temp9    
+LVAR      i                   $temp18   
+LI        1                   $temp19   
+ADD       $temp18   $temp19   $temp18   
+LVAR      $temp18             i         
+LAB                           $label3   
+LVAR      i                   $temp20   
+LI        15                  $temp21   
+BGT       $temp20   $temp21   $label5   
+JUMP                          $label4   
+LAB                           $label5   
+VAR       int                 $temp22   
+LI        1                   $temp23   
+LARY      _var_int_arr_1$temp23   $temp22   
+VAR       int                 $temp24   
+LI        5                   $temp25   
+LARY      _var_int_arr_1$temp25   $temp24   
+BNE       $temp22   $temp24   $label6   
 JUMP                          $label7   
 LAB                           $label6   
+PRT       1                   0         
+LI        1                   $temp26   
+LVAR      $temp26             error     
 LAB                           $label7   
-LAB                           $label5   
-LAB                           $label3   
-LVAR      x                   $temp26   
-LI        2                   $temp27   
-BNE       $temp26   $temp27   $label8   
-LI        1                   $temp28   
-RET                           $temp28   
+VAR       int                 $temp27   
+LI        15                  $temp28   
+LARY      _var_int_arr_1$temp28   $temp27   
+LI        30                  $temp29   
+BNE       $temp27   $temp29   $label8   
+PRT       1                   1         
 JUMP                          $label9   
 LAB                           $label8   
+PRT       1                   0         
+LI        1                   $temp30   
+LVAR      $temp30             error     
 LAB                           $label9   
-LVAR      x                   $temp30   
-LI        1                   $temp31   
-SUB       $temp30   $temp31   $temp30   
-PUSH                          $temp30   
-CALL                          fib       
-VOF       fib                 $temp29   
-LVAR      x                   $temp33   
-LI        2                   $temp34   
-SUB       $temp33   $temp34   $temp33   
-PUSH                          $temp33   
-CALL                          fib       
-VOF       fib                 $temp32   
-ADD       $temp29   $temp32   $temp29   
-RET                           $temp29   
-FUNC      void                testif    
-LVAR      x                   $temp35   
-LI        98                  $temp36   
-LI        97                  $temp37   
-SUB       $temp36   $temp37   $temp36   
-BNE       $temp35   $temp36   $label10  
-LI        1                   $temp38   
-LVAR      $temp38             y         
+REN                                     
+FUNC      void                testarithmetic
+CON       int       100       standard  
+CON       int       10        ten       
+VAR       int                 temp      
+LI        -10                 $temp31   
+LI        0                   $temp32   
+SUB       $temp32   $temp31   $temp31   
+LI        10                  $temp33   
+SUB       $temp31   $temp33   $temp31   
+LVAR      ten                 $temp34   
+LVAR      _const_char_1          $temp35   
+LVAR      _const_char_0          $temp36   
+SUB       $temp35   $temp36   $temp35   
+MUL       $temp34   $temp35   $temp34   
+LVAR      _const_int_2          $temp37   
+DIV       $temp34   $temp37   $temp34   
+ADD       $temp31   $temp34   $temp31   
+LVAR      standard            $temp38   
+LVAR      ten                 $temp39   
+LVAR      _const_int_2          $temp40   
+ADD       $temp39   $temp40   $temp39   
+LVAR      _const_int_1          $temp41   
+SUB       $temp39   $temp41   $temp39   
+DIV       $temp38   $temp39   $temp38   
+ADD       $temp31   $temp38   $temp31   
+LVAR      $temp31             temp      
+LVAR      temp                $temp42   
+LI        0                   $temp43   
+BEQ       $temp42   $temp43   $label10  
+PRT       1                   2         
 JUMP                          $label11  
 LAB                           $label10  
-LI        2                   $temp39   
-LVAR      $temp39             y         
+PRT       1                   3         
+LI        1                   $temp44   
+LVAR      $temp44             error     
 LAB                           $label11  
-LVAR      y                   $temp40   
-LI        1                   $temp41   
-BEQ       $temp40   $temp41   $label12  
-LI        0                   $temp42   
-LVAR      $temp42             judge     
+LVAR      standard            $temp45   
+LVAR      _const_int_1          $temp46   
+LI        15                  $temp47   
+MUL       $temp46   $temp47   $temp46   
+ADD       $temp45   $temp46   $temp45   
+LVAR      ten                 $temp48   
+DIV       $temp45   $temp48   $temp45   
+LVAR      $temp45             temp      
+LVAR      temp                $temp49   
+LI        11                  $temp50   
+BNE       $temp49   $temp50   $label12  
+PRT       1                   4         
 JUMP                          $label13  
 LAB                           $label12  
-LAB                           $label13  
-LVAR      x                   $temp43   
-LI        1                   $temp44   
-BLT       $temp43   $temp44   $label14  
-LI        3                   $temp45   
-LVAR      $temp45             y         
-JUMP                          $label15  
-LAB                           $label14  
-LI        4                   $temp46   
-LVAR      $temp46             y         
-LAB                           $label15  
-LVAR      y                   $temp47   
-LI        3                   $temp48   
-BEQ       $temp47   $temp48   $label16  
-LI        0                   $temp49   
-LVAR      $temp49             judge     
-JUMP                          $label17  
-LAB                           $label16  
-LAB                           $label17  
-LVAR      x                   $temp50   
+PRT       1                   5         
 LI        1                   $temp51   
-ADD       $temp50   $temp51   $temp50   
-LVAR      $temp50             x         
-LVAR      x                   $temp52   
-LI        1                   $temp53   
-BGT       $temp52   $temp53   $label18  
-LI        5                   $temp54   
-LVAR      $temp54             y         
+LVAR      $temp51             error     
+LAB                           $label13  
+REN                                     
+FUNC      void                testvalue 
+LI        0                   $temp52   
+LI        0                   $temp53   
+SUB       $temp53   $temp52   $temp52   
+LVAR      $temp52             _var_int_0
+LVAR      _var_int_0          $temp54   
+LVAR      _const_int_0          $temp55   
+BNE       $temp54   $temp55   $label14  
+LVAR      _var_int_0          $temp56   
+LVAR      _const_int_1          $temp57   
+BGE       $temp56   $temp57   $label16  
+LVAR      _var_int_0          $temp58   
+LVAR      _const_int_2          $temp59   
+BLE       $temp58   $temp59   $label18  
+PRT       1                   6         
 JUMP                          $label19  
 LAB                           $label18  
-LI        6                   $temp55   
-LVAR      $temp55             y         
-LAB                           $label19  
-LVAR      y                   $temp56   
-LI        6                   $temp57   
-BEQ       $temp56   $temp57   $label20  
-LI        0                   $temp58   
-LVAR      $temp58             judge     
-JUMP                          $label21  
-LAB                           $label20  
-LAB                           $label21  
-LVAR      x                   $temp59   
+PRT       1                   7         
 LI        1                   $temp60   
-BLE       $temp59   $temp60   $label22  
-LI        7                   $temp61   
-LVAR      $temp61             y         
-JUMP                          $label23  
-LAB                           $label22  
-LI        8                   $temp62   
-LVAR      $temp62             y         
-LAB                           $label23  
-LVAR      y                   $temp63   
-LI        7                   $temp64   
-BEQ       $temp63   $temp64   $label24  
-LI        0                   $temp65   
-LVAR      $temp65             judge     
-JUMP                          $label25  
-LAB                           $label24  
-LAB                           $label25  
-LVAR      x                   $temp66   
-LI        0                   $temp67   
-BGE       $temp66   $temp67   $label26  
-LI        9                   $temp68   
-LVAR      $temp68             y         
-JUMP                          $label27  
-LAB                           $label26  
-LI        10                  $temp69   
-LVAR      $temp69             y         
-LAB                           $label27  
-LVAR      y                   $temp70   
-LI        10                  $temp71   
-BEQ       $temp70   $temp71   $label28  
-LI        0                   $temp72   
-LVAR      $temp72             judge     
-JUMP                          $label29  
-LAB                           $label28  
-LAB                           $label29  
-LI        8                   $temp74   
-PUSH                          $temp74   
-CALL                          fib       
-VOF       fib                 $temp73   
-LI        1                   $temp75   
-SUB       $temp73   $temp75   $temp73   
-LVAR      $temp73             x         
-LVAR      x                   $temp76   
-LI        20                  $temp77   
-BEQ       $temp76   $temp77   $label30  
-LI        11                  $temp78   
-LVAR      $temp78             y         
-JUMP                          $label31  
-LAB                           $label30  
-LI        12                  $temp79   
-LVAR      $temp79             y         
-LAB                           $label31  
-LVAR      y                   $temp80   
-LI        12                  $temp81   
-BEQ       $temp80   $temp81   $label32  
-LI        0                   $temp82   
-LVAR      $temp82             judge     
-JUMP                          $label33  
-LAB                           $label32  
-LAB                           $label33  
-LI        2                   $temp83   
-LVAR      $temp83             x         
+LVAR      $temp60             error     
+LAB                           $label19  
+JUMP                          $label17  
+LAB                           $label16  
+PRT       1                   8         
+LI        1                   $temp61   
+LVAR      $temp61             error     
+LAB                           $label17  
+JUMP                          $label15  
+LAB                           $label14  
+PRT       1                   9         
+LI        1                   $temp62   
+LVAR      $temp62             error     
+LAB                           $label15  
 REN                                     
-FUNC      int                 testcase1 
-PARA      int                 x         
-LVAR      x                   $temp84   
-LI        1                   $temp85   
-BNE       $temp84   $temp85   $label35  
-LI        1                   $temp86   
-RET                           $temp86   
-JUMP                          $label34  
-LAB                           $label35  
-LI        2                   $temp87   
-BNE       $temp84   $temp87   $label36  
-LI        2                   $temp88   
-RET                           $temp88   
-JUMP                          $label34  
+FUNC      void                testcaseinsensitive
+VAR       int                 temp      
+LI        0                   $temp63   
+LI        0                   $temp64   
+SUB       $temp64   $temp63   $temp63   
+LVAR      $temp63             temp      
+LVAR      _const_int_1          $temp65   
+LVAR      $temp65             temp      
+LVAR      temp                $temp66   
+LI        0                   $temp67   
+BNE       $temp66   $temp67   $label21  
+PRT       1                   10        
+LI        1                   $temp68   
+LVAR      $temp68             error     
+JUMP                          $label20  
+LAB                           $label21  
+LI        1                   $temp69   
+BNE       $temp66   $temp69   $label22  
+PRT       1                   11        
+JUMP                          $label20  
+LAB                           $label22  
+PRT       1                   12        
+LI        1                   $temp70   
+LVAR      $temp70             error     
+LAB                           $label20  
+REN                                     
+FUNC      void                testswitch
+PARA      int                 i         
+VAR       int                 temp      
+LVAR      i                   $temp71   
+LVAR      $temp71             temp      
+LI        1                   $temp72   
+LVAR      $temp72             _var_int_1
+LVAR      temp                $temp73   
+LVAR      _const_int_2          $temp74   
+ADD       $temp73   $temp74   $temp73   
+LVAR      _var_int_1          $temp75   
+LVAR      _const_int_1          $temp76   
+MUL       $temp75   $temp76   $temp75   
+ADD       $temp73   $temp75   $temp73   
+LI        1                   $temp77   
+BNE       $temp73   $temp77   $label24  
+PRT       1                   13        
+JUMP                          $label23  
+LAB                           $label24  
+PRT       1                   14        
+LI        1                   $temp78   
+LVAR      $temp78             error     
+LAB                           $label23  
+REN                                     
+FUNC      void                testif    
+LVAR      _const_char_1          $temp79   
+LVAR      _const_char_0          $temp80   
+SUB       $temp79   $temp80   $temp79   
+LI        2                   $temp81   
+LI        3                   $temp82   
+MUL       $temp81   $temp82   $temp81   
+BEQ       $temp79   $temp81   $label25  
+PRT       1                   15        
+LI        1                   $temp83   
+LVAR      $temp83             error     
+JUMP                          $label26  
+LAB                           $label25  
+PRT       1                   16        
+LAB                           $label26  
+REN                                     
+FUNC      void                calrecursive
+PARA      int                 cur_pointer
+PARA      int                 min       
+VAR       int                 i         
+LVAR      cur_pointer          $temp84   
+LVAR      amount              $temp85   
+BNE       $temp84   $temp85   $label27  
+VAR       int                 $temp86   
+LI        0                   $temp87   
+LARY      f         $temp87   $temp86   
+PRT       0                   $temp86   
+LI        1                   $temp88   
+LVAR      $temp88             i         
+LVAR      i                   $temp89   
+LVAR      amount              $temp90   
+BGE       $temp89   $temp90   $label29  
+LAB                           $label32  
+VAR       int                 $temp91   
+LVAR      i                   $temp92   
+LARY      f         $temp92   $temp91   
+PRT       0                   $temp91   
+LVAR      i                   $temp93   
+LI        1                   $temp94   
+ADD       $temp93   $temp94   $temp93   
+LVAR      $temp93             i         
+LAB                           $label31  
+LVAR      i                   $temp95   
+LVAR      amount              $temp96   
+BGE       $temp95   $temp96   $label33  
+JUMP                          $label32  
+LAB                           $label33  
+JUMP                          $label30  
+LAB                           $label29  
+LAB                           $label30  
+PRT       1                   17        
+REN                                     
+JUMP                          $label28  
+LAB                           $label27  
+LAB                           $label28  
+LVAR      min                 $temp97   
+LVAR      $temp97             i         
+LVAR      i                   $temp98   
+LVAR      cur_pointer          $temp99   
+LVAR      numbers_to_be_selected          $temp100  
+ADD       $temp99   $temp100  $temp99   
+LVAR      amount              $temp101  
+SUB       $temp99   $temp101  $temp99   
+LI        1                   $temp102  
+ADD       $temp99   $temp102  $temp99   
+BGT       $temp98   $temp99   $label34  
+LAB                           $label37  
+LVAR      cur_pointer          $temp103  
+LVAR      i                   $temp104  
+SARY      f         $temp103  $temp104  
+LVAR      cur_pointer          $temp105  
+LI        1                   $temp106  
+ADD       $temp105  $temp106  $temp105  
+PUSH                          $temp105  
+LVAR      i                   $temp107  
+LI        1                   $temp108  
+ADD       $temp107  $temp108  $temp107  
+PUSH                          $temp107  
+CALL                          calrecursive
+LVAR      i                   $temp109  
+LI        1                   $temp110  
+ADD       $temp109  $temp110  $temp109  
+LVAR      $temp109            i         
 LAB                           $label36  
-LI        3                   $temp89   
-RET                           $temp89   
-LAB                           $label34  
-FUNC      int                 testcase2 
-PARA      char                x         
-LVAR      x                   $temp90   
-LI        97                  $temp91   
-BNE       $temp90   $temp91   $label38  
-LI        1                   $temp92   
-RET                           $temp92   
+LVAR      i                   $temp111  
+LVAR      cur_pointer          $temp112  
+LVAR      numbers_to_be_selected          $temp113  
+ADD       $temp112  $temp113  $temp112  
+LVAR      amount              $temp114  
+SUB       $temp112  $temp114  $temp112  
+LI        1                   $temp115  
+ADD       $temp112  $temp115  $temp112  
+BGT       $temp111  $temp112  $label38  
 JUMP                          $label37  
 LAB                           $label38  
-LI        2                   $temp93   
-RET                           $temp93   
-LAB                           $label37  
-FUNC      void                test_do_while
-PARA      int                 a         
+JUMP                          $label35  
+LAB                           $label34  
+LAB                           $label35  
+REN                                     
+FUNC      void                initpermutation
+PARA      int                 var       
+PARA      int                 lenth     
+VAR       int                 i         
+LI        0                   $temp116  
+LVAR      $temp116            i         
 LAB                           $label40  
-CALL                          addx1     
+LVAR      i                   $temp117  
+LVAR      var                 $temp118  
+SARY      f         $temp117  $temp118  
+LVAR      i                   $temp119  
+LI        1                   $temp120  
+ADD       $temp119  $temp120  $temp119  
+LVAR      $temp119            i         
 LAB                           $label39  
-LVAR      x                   $temp95   
-LI        3                   $temp96   
-LI        2                   $temp97   
-ADD       $temp96   $temp97   $temp96   
-BGE       $temp95   $temp96   $label41  
+LVAR      i                   $temp121  
+LVAR      lenth               $temp122  
+BGT       $temp121  $temp122  $label41  
 JUMP                          $label40  
 LAB                           $label41  
-LVAR      x                   $temp98   
-LI        5                   $temp99   
-BEQ       $temp98   $temp99   $label42  
-PRT       1                   0         
-LI        0                   $temp100  
-LVAR      $temp100            judge     
+REN                                     
+REN                                     
+FUNC      int                 seqsum    
+PARA      int                 i         
+LVAR      i                   $temp123  
+LI        1                   $temp124  
+BNE       $temp123  $temp124  $label42  
+LI        1                   $temp125  
+RET                           $temp125  
 JUMP                          $label43  
 LAB                           $label42  
+LVAR      i                   $temp126  
+LVAR      i                   $temp128  
+LI        1                   $temp129  
+SUB       $temp128  $temp129  $temp128  
+PUSH                          $temp128  
+CALL                          seqsum    
+VOF       seqsum              $temp127  
+ADD       $temp126  $temp127  $temp126  
+RET                           $temp126  
 LAB                           $label43  
-LI        3                   $temp101  
-LVAR      $temp101            y         
-LAB                           $label45  
-LVAR      x                   $temp102  
-LI        1                   $temp103  
-ADD       $temp102  $temp103  $temp102  
-LVAR      $temp102            x         
-LAB                           $label44  
-LVAR      x                   $temp104  
-LI        2                   $temp105  
-LI        3                   $temp106  
-MUL       $temp105  $temp106  $temp105  
-LI        2                   $temp107  
-LI        1                   $temp108  
-DIV       $temp107  $temp108  $temp107  
-ADD       $temp105  $temp107  $temp105  
-BGE       $temp104  $temp105  $label46  
+FUNC      void                printtable
+PRT       1                   18        
+PRT       1                   19        
+PRT       1                   20        
+PRT       1                   21        
+PRT       1                   22        
+REN                                     
+FUNC      int                 and       
+PARA      int                 a         
+PARA      int                 b         
+LVAR      b                   $temp130  
+LI        4                   $temp131  
+BNE       $temp130  $temp131  $label44  
+LI        0                   $temp132  
+RET                           $temp132  
 JUMP                          $label45  
+LAB                           $label44  
+LVAR      a                   $temp133  
+LI        0                   $temp134  
+BNE       $temp133  $temp134  $label46  
+LI        1                   $temp135  
+RET                           $temp135  
+JUMP                          $label47  
 LAB                           $label46  
-LVAR      x                   $temp109  
-LI        8                   $temp110  
-BEQ       $temp109  $temp110  $label47  
-LI        0                   $temp111  
-LVAR      $temp111            judge     
-JUMP                          $label48  
+LI        0                   $temp136  
+RET                           $temp136  
 LAB                           $label47  
-LAB                           $label48  
-LAB                           $label50  
-LAB                           $label53  
-LVAR      x                   $temp112  
-LI        1                   $temp113  
-SUB       $temp112  $temp113  $temp112  
-LVAR      $temp112            x         
-LAB                           $label52  
-LVAR      x                   $temp114  
-LI        1                   $temp115  
-LI        2                   $temp116  
-LI        3                   $temp117  
-SUB       $temp116  $temp117  $temp116  
-ADD       $temp115  $temp116  $temp115  
-BLT       $temp114  $temp115  $label54  
-JUMP                          $label53  
-LAB                           $label54  
-LVAR      y                   $temp118  
-LI        1                   $temp119  
-SUB       $temp118  $temp119  $temp118  
-LVAR      $temp118            y         
+LAB                           $label45  
+FUNC      char                helpchar  
+VAR       char                temp      
+LI        45                  $temp137  
+LVAR      $temp137            temp      
+LVAR      temp                $temp138  
+RET                           $temp138  
+FUNC      void                typecorrosion
+VAR       int                 temp      
+VAR       char                _char     
+LI        105                 $temp139  
+LVAR      $temp139            _char     
+LI        8                   $temp140  
+LVAR      $temp140            temp      
+LI        72                  $temp141  
+PRT       0                   $temp141  
+LVAR      _char               $temp142  
+PRT       0                   $temp142  
+CALL                          helpchar  
+VOF       helpchar            $temp143  
+PRT       0                   $temp143  
+PRT       1                   23        
+LI        2                   $temp144  
+PRT       0                   $temp144  
+LI        2                   $temp145  
+LI        1009                $temp146  
+MUL       $temp145  $temp146  $temp145  
+LI        1                   $temp147  
+SUB       $temp145  $temp147  $temp145  
+LI        2017                $temp148  
+SUB       $temp145  $temp148  $temp145  
+PRT       0                   $temp145  
+LI        99                  $temp149  
+LI        97                  $temp150  
+SUB       $temp149  $temp150  $temp149  
+LI        98                  $temp151  
+LI        97                  $temp152  
+SUB       $temp151  $temp152  $temp151  
+SUB       $temp149  $temp151  $temp149  
+PRT       0                   $temp149  
+LVAR      temp                $temp153  
+PRT       0                   $temp153  
+REN                                     
+FUNC      void                testemptyfunction
+REN                                     
+FUNC      void                teststructure
+PARA      int                 a         
+PARA      int                 b         
+PARA      char                c         
+PARA      char                d         
+PARA      char                e         
+VAR       int                 t1        
+VAR       int                 t2        
+LVAR      a                   $temp154  
+LVAR      b                   $temp155  
+ADD       $temp154  $temp155  $temp154  
+LVAR      d                   $temp156  
+ADD       $temp154  $temp156  $temp154  
+LVAR      c                   $temp157  
+SUB       $temp154  $temp157  $temp154  
+LVAR      c                   $temp158  
+LVAR      e                   $temp159  
+SUB       $temp158  $temp159  $temp158  
+SUB       $temp154  $temp158  $temp154  
+LI        66666               $temp160  
+BNE       $temp154  $temp160  $label49  
+PRT       1                   24        
+LI        0                   $temp161  
+LVAR      $temp161            t1        
+LI        0                   $temp162  
+LVAR      $temp162            t2        
+JUMP                          $label48  
 LAB                           $label49  
-LVAR      y                   $temp120  
-LI        1                   $temp121  
-BLT       $temp120  $temp121  $label51  
-JUMP                          $label50  
-LAB                           $label51  
-LVAR      x                   $temp122  
-LI        3                   $temp123  
-LI        0                   $temp124  
-SUB       $temp124  $temp123  $temp123  
-BEQ       $temp122  $temp123  $label55  
-PRT       1                   1         
-LI        0                   $temp125  
-LVAR      $temp125            judge     
-JUMP                          $label56  
-LAB                           $label55  
-LAB                           $label56  
-LVAR      y                   $temp126  
-LI        0                   $temp127  
-BEQ       $temp126  $temp127  $label57  
-PRT       1                   2         
-LI        0                   $temp128  
-LVAR      $temp128            judge     
-JUMP                          $label58  
-LAB                           $label57  
-LAB                           $label58  
+LI        0                   $temp163  
+BNE       $temp154  $temp163  $label50  
+PRT       1                   25        
+LI        1                   $temp164  
+LVAR      $temp164            error     
+JUMP                          $label48  
+LAB                           $label50  
+LI        1                   $temp165  
+LVAR      $temp165            error     
+LAB                           $label48  
 REN                                     
 FUNC      void                main      
-CON       int       1         t1        
-CON       int       2         t2        
-CON       char      97        t3        
-CON       int       123       tt1       
-CON       int       -909      tt2       
-VAR       int                 t4        
-VAR       int                 t5        
-ARY       int       100       aa        
-VAR       int                 t6        
-VAR       char                t7        
-VAR       char                t8        
-ARY       char      100       t9        
-LI        1                   $temp129  
-LVAR      $temp129            judge     
-LVAR      t3                  $temp130  
-LVAR      $temp130            t7        
-LI        10                  $temp131  
-LVAR      t7                  $temp133  
-PUSH                          $temp133  
-CALL                          tolow     
-VOF       tolow               $temp132  
-SARY      t9        $temp131  $temp132  
-LI        10                  $temp134  
-LI        5                   $temp136  
-PUSH                          $temp136  
-CALL                          fib       
-VOF       fib                 $temp135  
-SARY      aa        $temp134  $temp135  
-LI        3                   $temp138  
-PUSH                          $temp138  
-CALL                          fib       
-VOF       fib                 $temp137  
-LVAR      $temp137            t4        
-VAR       char                $temp139  
-LI        10                  $temp140  
-LARY      t9        $temp140  $temp139  
-VAR       char                $temp141  
-LI        10                  $temp142  
-LARY      aa        $temp142  $temp141  
-LI        -1                  $temp143  
-MUL       $temp141  $temp143  $temp141  
-LVAR      t4                  $temp144  
-MUL       $temp141  $temp144  $temp141  
-ADD       $temp139  $temp141  $temp139  
-LI        8                   $temp145  
-LI        4                   $temp146  
-DIV       $temp145  $temp146  $temp145  
-DIV       $temp139  $temp145  $temp139  
-LI        48                  $temp147  
-SUB       $temp139  $temp147  $temp139  
-LVAR      tt1                 $temp148  
-ADD       $temp139  $temp148  $temp139  
-LI        -118                $temp149  
-LI        0                   $temp150  
-SUB       $temp150  $temp149  $temp149  
-BEQ       $temp139  $temp149  $label59  
-PRT       1                   3         
-LI        0                   $temp151  
-LVAR      $temp151            judge     
-JUMP                          $label60  
-LAB                           $label59  
-LVAR      tt2                 $temp152  
-LI        48                  $temp154  
-PUSH                          $temp154  
-CALL                          tolow     
-VOF       tolow               $temp153  
-ADD       $temp152  $temp153  $temp152  
-LI        861                 $temp155  
-LI        0                   $temp156  
-SUB       $temp156  $temp155  $temp155  
-BEQ       $temp152  $temp155  $label61  
-LVAR      tt2                 $temp157  
-LI        48                  $temp159  
-PUSH                          $temp159  
-CALL                          tolow     
-VOF       tolow               $temp158  
-ADD       $temp157  $temp158  $temp157  
-PRT       2         4         $temp157  
-LI        0                   $temp160  
-LVAR      $temp160            judge     
+VAR       char                choice    
+VAR       int                 select    
+LI        0                   $temp166  
+LVAR      $temp166            error     
+LI        48                  $temp167  
+LVAR      $temp167            _char     
+LAB                           $label52  
+CALL                          printtable
+READ                          select    
+LVAR      select              $temp168  
+LI        0                   $temp169  
+BNE       $temp168  $temp169  $label55  
+CALL                          testvalue 
+CALL                          testarithmetic
+CALL                          testif    
+LI        1                   $temp170  
+LVAR      _const_int_2          $temp171  
+MUL       $temp170  $temp171  $temp170  
+LI        0                   $temp172  
+SUB       $temp172  $temp170  $temp170  
+PUSH                          $temp170  
+CALL                          testswitch
+JUMP                          $label54  
+LAB                           $label55  
+LI        1                   $temp173  
+BNE       $temp168  $temp173  $label56  
+PRT       1                   26        
+CALL                          typecorrosion
+PRT       1                   27        
+PRT       1                   28        
+PRT       1                   29        
+JUMP                          $label54  
+LAB                           $label56  
+LI        2                   $temp174  
+BNE       $temp168  $temp174  $label57  
+LI        49                  $temp175  
+LVAR      $temp175            _var_char_0
+LI        50                  $temp176  
+LVAR      $temp176            _var_char_1
+LI        12345               $temp177  
+LVAR      $temp177            _var_int_0
+LI        54321               $temp178  
+LVAR      $temp178            _var_int_1
+CALL                          testdo    
+CALL                          testemptyfunction
+LVAR      _var_int_0          $temp179  
+PUSH                          $temp179  
+LVAR      _var_int_1          $temp180  
+PUSH                          $temp180  
+LVAR      _var_char_0          $temp181  
+PUSH                          $temp181  
+LVAR      _var_char_1          $temp182  
+PUSH                          $temp182  
+LVAR      _char               $temp183  
+PUSH                          $temp183  
+CALL                          teststructure
+JUMP                          $label54  
+LAB                           $label57  
+LI        3                   $temp184  
+BNE       $temp168  $temp184  $label58  
+PRT       1                   30        
+PRT       1                   31        
+READ                          choice    
+LVAR      choice              $temp185  
+LI        80                  $temp186  
+BNE       $temp185  $temp186  $label60  
+PRT       1                   32        
+READ                          numbers_to_be_selected
+READ                          amount    
+PRT       1                   17        
+LVAR      amount              $temp187  
+LI        1                   $temp188  
+ADD       $temp187  $temp188  $temp187  
+LVAR      max                 $temp189  
+BLE       $temp187  $temp189  $label61  
+PRT       1                   33        
+REN                                     
 JUMP                          $label62  
 LAB                           $label61  
 LAB                           $label62  
+LI        0                   $temp190  
+PUSH                          $temp190  
+LVAR      amount              $temp191  
+LI        1                   $temp192  
+ADD       $temp191  $temp192  $temp191  
+PUSH                          $temp191  
+CALL                          initpermutation
+LI        0                   $temp193  
+PUSH                          $temp193  
+LI        1                   $temp194  
+PUSH                          $temp194  
+CALL                          calrecursive
+JUMP                          $label59  
 LAB                           $label60  
-LI        2                   $temp161  
-PUSH                          $temp161  
-CALL                          init      
-LVAR      x                   $temp162  
-LI        2                   $temp163  
-BEQ       $temp162  $temp163  $label63  
-PRT       1                   5         
-LI        0                   $temp164  
-LVAR      $temp164            judge     
-JUMP                          $label64  
-LAB                           $label63  
+LI        83                  $temp195  
+BNE       $temp185  $temp195  $label63  
+PRT       1                   34        
+READ                          select    
+LVAR      select              $temp197  
+PUSH                          $temp197  
+CALL                          seqsum    
+VOF       seqsum              $temp196  
+PRT       2         35        $temp196  
+LI        10                  $temp199  
+PUSH                          $temp199  
+CALL                          seqsum    
+VOF       seqsum              $temp198  
+LI        55                  $temp200  
+BNE       $temp198  $temp200  $label64  
+PRT       1                   36        
+JUMP                          $label65  
 LAB                           $label64  
-LI        9                   $temp166  
-LI        3                   $temp167  
-DIV       $temp166  $temp167  $temp166  
-PUSH                          $temp166  
-VAR       char                $temp168  
-LI        10                  $temp169  
-LARY      aa        $temp169  $temp168  
-PUSH                          $temp168  
-CALL                          add       
-VOF       add                 $temp165  
-LI        8                   $temp170  
-BEQ       $temp165  $temp170  $label65  
-PRT       1                   6         
-LI        0                   $temp171  
-LVAR      $temp171            judge     
-JUMP                          $label66  
+LI        1                   $temp201  
+LVAR      $temp201            error     
+PRT       1                   37        
 LAB                           $label65  
-LI        10                  $temp173  
-PUSH                          $temp173  
-CALL                          fib       
-VOF       fib                 $temp172  
-LI        55                  $temp174  
-BEQ       $temp172  $temp174  $label67  
-PRT       1                   7         
-LI        0                   $temp175  
-LVAR      $temp175            judge     
+LI        3                   $temp202  
+LVAR      $temp202            select    
+JUMP                          $label59  
+LAB                           $label63  
+PRT       1                   38        
+LAB                           $label59  
+JUMP                          $label54  
+LAB                           $label58  
+LI        4                   $temp203  
+BNE       $temp168  $temp203  $label66  
+JUMP                          $label54  
+LAB                           $label66  
+PRT       1                   38        
+LAB                           $label54  
+LAB                           $label51  
+LVAR      error               $temp205  
+PUSH                          $temp205  
+LVAR      select              $temp206  
+PUSH                          $temp206  
+CALL                          and       
+VOF       and                 $temp204  
+LI        0                   $temp207  
+BEQ       $temp204  $temp207  $label53  
+JUMP                          $label52  
+LAB                           $label53  
+LVAR      error               $temp208  
+LI        1                   $temp209  
+BLT       $temp208  $temp209  $label67  
+PRT       1                   39        
 JUMP                          $label68  
 LAB                           $label67  
+PRT       1                   40        
 LAB                           $label68  
-LAB                           $label66  
-LVAR      t7                  $temp177  
-PUSH                          $temp177  
-CALL                          tolow     
-VOF       tolow               $temp176  
-LVAR      b                   $temp180  
-LI        0                   $temp181  
-SUB       $temp181  $temp180  $temp180  
-PUSH                          $temp180  
-LI        4                   $temp182  
-LVAR      a                   $temp183  
-MUL       $temp182  $temp183  $temp182  
-PUSH                          $temp182  
-CALL                          add       
-VOF       add                 $temp179  
-PUSH                          $temp179  
-CALL                          fib       
-VOF       fib                 $temp178  
-ADD       $temp176  $temp178  $temp176  
-LVAR      $temp176            x         
-CALL                          addx      
-VOF       addx                $temp184  
-LI        100                 $temp185  
-BEQ       $temp184  $temp185  $label69  
-PRT       1                   8         
-LI        0                   $temp186  
-LVAR      $temp186            judge     
-JUMP                          $label70  
-LAB                           $label69  
-LAB                           $label70  
-LI        1                   $temp187  
-LVAR      $temp187            x         
-CALL                          testif    
-LVAR      x                   $temp189  
-PUSH                          $temp189  
-CALL                          testcase1 
-VOF       testcase1           $temp188  
-LI        2                   $temp190  
-BEQ       $temp188  $temp190  $label71  
-PRT       1                   9         
-LI        0                   $temp191  
-LVAR      $temp191            judge     
-JUMP                          $label72  
-LAB                           $label71  
-LAB                           $label72  
-LI        3                   $temp194  
-PUSH                          $temp194  
-CALL                          fib       
-VOF       fib                 $temp193  
-LI        1                   $temp196  
-PUSH                          $temp196  
-CALL                          testcase1 
-VOF       testcase1           $temp195  
-SUB       $temp193  $temp195  $temp193  
-PUSH                          $temp193  
-LI        1                   $temp197  
-PUSH                          $temp197  
-CALL                          add       
-VOF       add                 $temp192  
-LVAR      $temp192            x         
-LVAR      x                   $temp199  
-LI        1                   $temp200  
-SUB       $temp199  $temp200  $temp199  
-PUSH                          $temp199  
-CALL                          testcase1 
-VOF       testcase1           $temp198  
-LVAR      t1                  $temp201  
-LI        0                   $temp202  
-SUB       $temp202  $temp201  $temp201  
-LVAR      t2                  $temp203  
-ADD       $temp201  $temp203  $temp201  
-BEQ       $temp198  $temp201  $label73  
-PRT       1                   10        
-LI        0                   $temp204  
-LVAR      $temp204            judge     
-JUMP                          $label74  
-LAB                           $label73  
-LAB                           $label74  
-LI        1                   $temp205  
-LI        0                   $temp206  
-SUB       $temp206  $temp205  $temp205  
-LVAR      $temp205            x         
-LVAR      x                   $temp208  
-PUSH                          $temp208  
-CALL                          testcase1 
-VOF       testcase1           $temp207  
-VAR       int                 $temp209  
-LI        10                  $temp210  
-LARY      aa        $temp210  $temp209  
-LI        0                   $temp211  
-SUB       $temp211  $temp209  $temp209  
-LI        6                   $temp213  
-PUSH                          $temp213  
-CALL                          fib       
-VOF       fib                 $temp212  
-ADD       $temp209  $temp212  $temp209  
-BEQ       $temp207  $temp209  $label75  
-PRT       1                   11        
-LI        0                   $temp214  
-LVAR      $temp214            judge     
-JUMP                          $label76  
-LAB                           $label75  
-LAB                           $label76  
-LI        0                   $temp215  
-LVAR      $temp215            x         
-LVAR      x                   $temp216  
-PUSH                          $temp216  
-CALL                          test_do_while
-READ                          t5        
-READ                          t6        
-LVAR      t5                  $temp218  
-LI        1                   $temp219  
-SUB       $temp218  $temp219  $temp218  
-PUSH                          $temp218  
-CALL                          fib       
-VOF       fib                 $temp217  
-LVAR      t6                  $temp220  
-ADD       $temp217  $temp220  $temp217  
-LI        5                   $temp221  
-BEQ       $temp217  $temp221  $label77  
-PRT       1                   12        
-LI        0                   $temp222  
-LVAR      $temp222            judge     
-JUMP                          $label78  
-LAB                           $label77  
-LAB                           $label78  
-LI        97                  $temp223  
-LVAR      $temp223            t8        
-LVAR      t8                  $temp225  
-PUSH                          $temp225  
-CALL                          testcase2 
-VOF       testcase2           $temp224  
-LI        0                   $temp226  
-SUB       $temp226  $temp224  $temp224  
-LVAR      t6                  $temp228  
-PUSH                          $temp228  
-CALL                          fib       
-VOF       fib                 $temp227  
-LI        0                   $temp229  
-SUB       $temp229  $temp227  $temp227  
-BEQ       $temp224  $temp227  $label79  
-PRT       1                   13        
-LI        0                   $temp230  
-LVAR      $temp230            judge     
-JUMP                          $label80  
-LAB                           $label79  
-LAB                           $label80  
-LI        98                  $temp231  
-LVAR      $temp231            t8        
-LVAR      t8                  $temp233  
-PUSH                          $temp233  
-CALL                          testcase2 
-VOF       testcase2           $temp232  
-LVAR      t6                  $temp234  
-BEQ       $temp232  $temp234  $label81  
-PRT       1                   14        
-LI        0                   $temp235  
-LVAR      $temp235            judge     
-JUMP                          $label82  
-LAB                           $label81  
-LAB                           $label82  
-READ                          t8        
-READ                          t7        
-LVAR      t8                  $temp236  
-LI        0                   $temp237  
-SUB       $temp236  $temp237  $temp236  
-LVAR      t7                  $temp238  
-LVAR      t3                  $temp239  
-ADD       $temp238  $temp239  $temp238  
-LI        97                  $temp240  
-SUB       $temp238  $temp240  $temp238  
-BEQ       $temp236  $temp238  $label83  
-PRT       1                   15        
-JUMP                          $label84  
-LAB                           $label83  
-LAB                           $label84  
-LVAR      judge               $temp241  
-LI        0                   $temp242  
-BNE       $temp241  $temp242  $label85  
-PRT       1                   16        
-JUMP                          $label86  
-LAB                           $label85  
-LVAR      x                   $temp243  
-PRT       2         17        $temp243  
-LAB                           $label86  
+PRT       1                   41        

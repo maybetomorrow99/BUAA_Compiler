@@ -2,7 +2,7 @@
 >>>input
 1
 >>>output
-test_if
+test_if\n
 b
 a
 test_factorial
@@ -38,5 +38,5 @@ test_relation
 !=
 ==
 test_expression
-The result is
-86
+The result is 86
+98

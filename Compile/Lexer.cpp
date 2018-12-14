@@ -92,7 +92,7 @@ Token Lexer::getToken() {
 			else {					//字符单引号缺失
 				token.type = ERROR;
 				retract();
-				fout << "ERROR#" << setw(4) << left << ecount++ << ":Missing single quotes " << "'" << token.str << " at line " << lineNum << endl;
+				cout << "ERROR#" << setw(4) << left << ++ecount << ":Missing single quotes " << "'" << token.str << " at line " << lineNum << endl;
 			}
 		}
 		else {
@@ -100,11 +100,11 @@ Token Lexer::getToken() {
 			token.type = ERROR;
 			ch = nextChar();
 			if (ch == '\'') {		//单引号内字符类型非法
-				fout << "ERROR#" << setw(4) << left << ecount++ << ":Illegal character type in single quotes " << "'" << token.str << "'" << " at line " << lineNum << endl;
+				cout << "ERROR#" << setw(4) << left << ++ecount << ":Illegal character type in single quotes " << "'" << token.str << "'" << " at line " << lineNum << endl;
 			}
 			else {
 				retract();
-				fout << "ERROR#" << setw(4) << left << ecount++ << ":Missing single quotes " << "'" << token.str << " at line " << lineNum << endl;
+				cout << "ERROR#" << setw(4) << left << ++ecount << ":Missing single quotes " << "'" << token.str << " at line " << lineNum << endl;
 			}
 		}
 	}
@@ -120,7 +120,7 @@ Token Lexer::getToken() {
 			token.type = STRING;
 		else {						//字符串双引号缺失
 			token.type = ERROR;
-			fout << "ERROR#" << setw(4) << left << ecount++ << ":Missing double quotes " << "\"" << token.str  << " at line " << lineNum << endl;
+			cout << "ERROR#" << setw(4) << left << ++ecount << ":Missing double quotes " << "\"" << token.str  << " at line " << lineNum << endl;
 		}
 	}
 	else if (ch == '<') {
@@ -148,7 +148,7 @@ Token Lexer::getToken() {
 		else {
 			token.type = ERROR;
 			retract();
-			fout << "ERROR#" << setw(4) << left << ecount++ << ":Invalid symbol ! at line " << lineNum << endl;
+			cout << "ERROR#" << setw(4) << left << ++ecount << ":Invalid symbol ! at line " << lineNum << endl;
 		}
 	}
 	else if (ch == '=') {
@@ -203,8 +203,10 @@ Token Lexer::getToken() {
 		token.type = ENDOFFILE;
 	}
 	else {							//非法字符
-		fout << "ERROR#" << setw(4) << left << ecount++ << ":Invalid symbol " << ch << " at line " << lineNum << endl;
+		cout << "ERROR#" << setw(4) << left << ++ecount << ":Invalid symbol " << ch << " at line " << lineNum << endl;
 	}
+
+	printToken(token);
 	return token;
 }
 

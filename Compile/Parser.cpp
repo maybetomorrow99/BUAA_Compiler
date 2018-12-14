@@ -53,7 +53,7 @@ string Parser::genLab() {
 插入常量池中，返回值为对应的字符串
 */
 int Parser::insertString(string str) {
-	for (int i = 0; i < stringPool.size(); i++) {
+	for (unsigned int i = 0; i < stringPool.size(); i++) {
 		if (str == stringPool[i]) {
 			return i;
 		}
@@ -169,7 +169,7 @@ void Parser::program() {
 		error(MISSING_MAIN, lexer.lineNum);
 	}
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is a program" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a program" << endl;
 }
 
 
@@ -211,7 +211,7 @@ void Parser::constDecl() {
 			error(UNKNOWN, lexer.lineNum);
 		}
 	}
-	cout << setw(4) << left << lexer.lineNum<< "This is a constant declaration" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a constant declaration" << endl;
 }
 
 
@@ -327,7 +327,7 @@ void Parser::constDef() {
 		error(MISSING_IDEN, lexer.lineNum);
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a constant definition" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a constant definition" << endl;
 }
 
 
@@ -367,7 +367,7 @@ void Parser::varDecl() {
 		}
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a variable declaration" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a variable declaration" << endl;
 }
 
 
@@ -457,7 +457,7 @@ void Parser::varDef() {
 		error(UNKNOWN, lexer.lineNum);
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a variable definitions" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a variable definitions" << endl;
 }
 
 
@@ -540,7 +540,7 @@ void Parser::funcWithVal() {
 		error(0, lexer.lineNum);
 	}
 	symTab.updateFuncVal();
-	cout << setw(4) << left << lexer.lineNum<< "This is a function definition with return value" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a function definition with return value" << endl;
 }
 
 
@@ -624,7 +624,7 @@ void Parser::funcWithNoVal() {
 	quaterList.push_back(Quaternary("REN", "", "", ""));
 	symTab.updateFuncVal();
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a function definition without return value" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a function definition without return value" << endl;
 }
 
 
@@ -645,7 +645,7 @@ void Parser::declHeader() {
 		error(UNKNOWN, lexer.lineNum);
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a declaration header" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a declaration header" << endl;
 }
 
 
@@ -683,7 +683,7 @@ void Parser::mainFunc() {
 	}
 
 	symTab.updateFuncVal();
-	cout << setw(4) << left << lexer.lineNum<< "This is main function" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is main function" << endl;
 }
 
 
@@ -705,7 +705,7 @@ int Parser::intNum() {
 		error(UNKNOWN, lexer.lineNum);
 	}
 	return sign;
-	//cout << setw(4) << left << lexer.lineNum<< "This is a integer" << endl;
+	//fout << setw(4) << left << lexer.lineNum<< "This is a integer" << endl;
 }
 
 
@@ -744,7 +744,7 @@ SymbolItem Parser::expression() {
 		symTab.changeVarType(itemSym1.name);
 	}
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;
 	return itemSym1;
 }
 
@@ -770,7 +770,7 @@ SymbolItem Parser::item() {
 		symTab.changeVarType(factorSym1.name);
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;
 	return factorSym1;
 }
 
@@ -878,7 +878,7 @@ SymbolItem Parser::factor() {
 	}
 
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is a factor" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a factor" << endl;
 	return factorSym;
 }
 
@@ -941,7 +941,7 @@ void Parser::paraTab() {
 		}
 	}
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a parameters table" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a parameters table" << endl;
 }
 
 
@@ -969,7 +969,7 @@ void Parser::compState() {
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
-	cout << setw(4) << left << lexer.lineNum<< "This is a compound statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a compound statement" << endl;
 }
 
 
@@ -982,7 +982,7 @@ void Parser::stateCol() {
 		curToken.type == SEMI || curToken.type == RETURN) {
 		statement();
 	}
-	cout << setw(4) << left << lexer.lineNum<< "This is a statement column" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a statement column" << endl;
 }
 
 
@@ -1122,7 +1122,7 @@ void Parser::ifState() {
 	statement();
 	quaterList.push_back(Quaternary("LAB", "", "", label2));
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a if statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a if statement" << endl;
 }
 
 
@@ -1170,7 +1170,7 @@ void Parser::condition(string label) {
 		quaterList.push_back(Quaternary("BEQ", exprSym1.name, symTemp0.name, label));
 	}
 
- 	cout << setw(4) << left << lexer.lineNum<< "This is a condition" << endl;
+ 	fout << setw(4) << left << lexer.lineNum<< "This is a condition" << endl;
 }
 
 
@@ -1210,7 +1210,7 @@ void Parser::whileState() {
 
 	getToken();
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is a while statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a while statement" << endl;
 }
 
 
@@ -1263,7 +1263,7 @@ void Parser::switchState() {
 			getToken();
 		} 
 	}
-	cout << setw(4) << left << lexer.lineNum<< "This is a switch statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a switch statement" << endl;
 }
 
 
@@ -1338,7 +1338,7 @@ SymbolItem Parser::funcWithValState() {//TODO:返回值类型没有确定，在上层确定了
 
 	quaterList.push_back(Quaternary("CALL", "", "", idName));
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a function call statement with return value " << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a function call statement with return value " << endl;
 	return retValSym;
 }
 
@@ -1367,7 +1367,7 @@ void Parser::funcWithNoValState() {
 	}
 
 	quaterList.push_back(Quaternary("CALL", "", "", idName));
-	cout << setw(4) << left << lexer.lineNum<< "This is a function call statement without return value " << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a function call statement without return value " << endl;
 }
 
 
@@ -1385,7 +1385,7 @@ void Parser::valParaTab() {	//TODO:检查参数类型
 		quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
 	}
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is a value parameter table" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a value parameter table" << endl;
 }
 
 
@@ -1426,7 +1426,7 @@ void Parser::assignState() {
 		error(0, lexer.lineNum);
 	}
 	
-	cout << setw(4) << left << lexer.lineNum<< "This is a assign statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a assign statement" << endl;
 }
 
 
@@ -1464,7 +1464,7 @@ void Parser::scanfState() {
 	}
 	getToken();
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a scanf statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a scanf statement" << endl;
 }
 
 
@@ -1504,7 +1504,7 @@ void Parser::printfState() {
 	}
 	getToken();
 
-	cout << setw(4) << left << lexer.lineNum<< "This is a printf statement" << endl;
+	fout << setw(4) << left << lexer.lineNum<< "This is a printf statement" << endl;
 }
 
 
@@ -1533,7 +1533,7 @@ void Parser::returnState() {
 		quaterList.push_back(Quaternary("REN", "", "", ""));
 	}
 	retFlag = true;
-	cout << setw(4) << left << lexer.lineNum  << "This is a return statement" << endl;
+	fout << setw(4) << left << lexer.lineNum  << "This is a return statement" << endl;
 }
 
 
@@ -1541,7 +1541,7 @@ void printQuater(string path) {
 	ofstream fout;
 	fout.open(path);
 	//fout << "\nThis is quaternary list " << endl;
-	for (int i = 0; i < quaterList.size(); i++) {
+	for (unsigned int i = 0; i < quaterList.size(); i++) {
 		Quaternary quater = quaterList[i];
 		fout << setw(10) << left << quater.oper;
 		fout << setw(10) << left << quater.op1;

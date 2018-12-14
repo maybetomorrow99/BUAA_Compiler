@@ -41,7 +41,7 @@ public:
 
 class Lexer {
 public:
-	Lexer() { lineNum = 1; count = 1; ecount = 1; };
+	Lexer() { lineNum = 1; count = 1; ecount = 0; };
 	ifstream fin;
 	ofstream fout;
 	int lineNum;					//ÐÐºÅ 
