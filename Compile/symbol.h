@@ -37,6 +37,10 @@ public:
 	bool inTable(string name);
 	bool paraInTable(string name);
 	bool locInTable(string name);
+	bool funcInTable(string name);
+	bool funcDefInTable(string name);
+	bool varInTable(string name);
+
 	SymbolItem search(string name);
 	SymbolItem searchFunc(string name);
 	int getFuncAddr(string name);

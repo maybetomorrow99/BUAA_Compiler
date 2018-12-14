@@ -63,6 +63,15 @@ int Parser::insertString(string str) {
 }
 
 
+/*
+跳读到下一个函数声明
+*/
+void Parser::skipToFunc() {
+	do {
+		getToken();
+	} while (curToken.type != INT || curToken.type != CHAR || curToken.type != VOID);
+}
+
 //除了主程序外，每个子程序段的最后一定是getToken()
 /*
 <程序>    :: = ［<常量说明>］［<变量说明>］{ <有返回值函数定义> | <无返回值函数定义> }<主函数>
@@ -225,6 +234,9 @@ void Parser::constDef() {
 		if (curToken.type != ID) {
 			error(MISSING_IDEN, lexer.lineNum);
 		}
+		
+
+
 		name = curToken.str;
 		getToken();
 		if (curToken.type != EQU) {
@@ -489,13 +501,12 @@ void Parser::funcWithVal() {
 	}
 
 	if (curToken.type == LPAR) {	//有参数
-		if (!symTab.inTable(name)) {
-			symTab.insert(name, FUNCKD, type, 0);
-			quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
-		}
-		else {
+		if (symTab.funcDefInTable(name))
 			error(IDENT_REDEF, lexer.lineNum);
-		}
+
+		symTab.insert(name, FUNCKD, type, 0);
+		quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
+		
 
 		getToken();
 		paraTab();	//参数表中记录了参数个数
@@ -517,13 +528,11 @@ void Parser::funcWithVal() {
 		getToken();
 	}
 	else if (curToken.type == LBRA) {	//无参数
-		if (!symTab.inTable(name)) {
-			symTab.insert(name, FUNCKD, type, 0);
-			quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
-		}
-		else {
+		if (symTab.funcDefInTable(name))
 			error(IDENT_REDEF, lexer.lineNum);
-		}
+		symTab.insert(name, FUNCKD, type, 0);
+		quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
+		
 
 		getToken();
 		compState();
@@ -567,13 +576,10 @@ void Parser::funcWithNoVal() {
 
 	getToken();
 	if (curToken.type == LPAR) {	//有参数
-		if (!symTab.inTable(name)) {
-			symTab.insert(name, FUNCKD, type, 0);
-			quaterList.push_back(Quaternary("FUNC", "void", "", name));
-		}
-		else {
+		if (symTab.funcDefInTable(name))
 			error(IDENT_REDEF, lexer.lineNum);
-		}
+		symTab.insert(name, FUNCKD, type, 0);
+		quaterList.push_back(Quaternary("FUNC", "void", "", name));
 
 		getToken();
 		paraTab();
@@ -595,13 +601,10 @@ void Parser::funcWithNoVal() {
 		getToken();
 	}
 	else if (curToken.type == LBRA) {	//无参数
-		if (!symTab.inTable(name)) {
-			symTab.insert(name, FUNCKD, type, 0);
-			quaterList.push_back(Quaternary("FUNC", "void", "", name));
-		}
-		else {
+		if (symTab.funcDefInTable(name))
 			error(IDENT_REDEF, lexer.lineNum);
-		}
+		symTab.insert(name, FUNCKD, type, 0);
+		quaterList.push_back(Quaternary("FUNC", "void", "", name));
 
 		getToken();
 		compState();
@@ -728,6 +731,7 @@ SymbolItem Parser::expression() {
 		symTab.insert(itemSym2.name, VARKD, INTTP, 0);
 		quaterList.push_back(Quaternary("LI", to_string(0), "", itemSym2.name));
 		quaterList.push_back(Quaternary("SUB", itemSym2.name, itemSym1.name, itemSym1.name));
+		itemSym1.value = -itemSym1.value;			//用于判断数组下标是否越界
 	}
 
 	while (curToken.type == PLUS || curToken.type == MINUS) {
@@ -790,6 +794,7 @@ SymbolItem Parser::factor() {
 		string idName = curToken.str;
 		if (!symTab.inTable(idName)) {
 			error(IDENT_NOT_DEF, lexer.lineNum);
+			skipToFunc();
 		}
 		
 		getToken();
@@ -809,6 +814,8 @@ SymbolItem Parser::factor() {
 
 				if (arrayIndex.type != INTTP)		//数组下标不是int
 					error(ARRAY_INDEX_NOT_INT, lexer.lineNum);
+				if (arrayIndex.value < 0 || arrayIndex.value >= symTab.search(idName).para) //判断是否越界，只有在下标为常量或整数的时候
+					error(ARRAY_OVER, lexer.lineNum);
 
 				//取数组值
 				quaterList.push_back(Quaternary("LARY", idName, arrayIndex.name, factorSym.name));
@@ -846,7 +853,13 @@ SymbolItem Parser::factor() {
 			
 			factorSym.name = genVar();
 			factorSym.type = symTab.search(idName).type;
-			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
+			
+			value = 0;
+			if (symTab.search(idName).kind == CONSTKD)	//如果是常量，直接赋值到临时变量
+				value = symTab.search(idName).value;
+			factorSym.value = value;					//用于判断数组下标是否越界
+
+			symTab.insert(factorSym.name, VARKD, factorSym.type, value);
 			quaterList.push_back(Quaternary("LVAR", idName, "", factorSym.name));
 		}
 
@@ -856,6 +869,7 @@ SymbolItem Parser::factor() {
 		value = intNum();
 		factorSym.name = genVar();
 		factorSym.type = INTTP;
+		factorSym.value = value;
 		symTab.insert(factorSym.name, VARKD, INTTP, value);
 		quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
 	}
@@ -1255,8 +1269,12 @@ void Parser::switchState() {
 	//情况表
 	if (curToken.type == LBRA) {
 		getToken();
+
+		int res;
+		vector<int> existCon;		//常量重复
 		while (curToken.type == CASE) {
-			caseState(exprSym, labelEnd);
+			res = caseState(exprSym, labelEnd, existCon);
+			existCon.push_back(res);
 		}
 
 		//缺省
@@ -1286,15 +1304,25 @@ void Parser::switchState() {
 <情况子语句>  ::=  case<常量>：<语句>
 <常量>   ::=  <整数>|<字符>
 */
-void Parser::caseState(SymbolItem exprSym, string lableEnd) {
+int Parser::caseState(SymbolItem exprSym, string lableEnd, vector<int> existCon) {
 	string label;
 	SymbolItem constSym;
+	int conVal = 0;
 	constSym.name = genVar();
 	label = genLab();
 
 	if (curToken.type == CASE) {
 		getToken();
 		if (curToken.type == SIGCHAR) {
+			if (exprSym.type != CHARTP)		//检查类型
+				error(CASE_CONST_DIFF, lexer.lineNum);
+
+			conVal = curToken.str[0];
+			vector<int>::iterator it;		//检查重复
+			it = find(existCon.begin(), existCon.end(), conVal);
+			if (it != existCon.end())		//常量重复
+				error(CASE_CONST_REPEAT, lexer.lineNum);
+
 			symTab.insert(constSym.name, VARKD, CHARTP, curToken.str[0]);
 			quaterList.push_back(Quaternary("LI", to_string(curToken.str[0]), "", constSym.name));
 
@@ -1302,6 +1330,14 @@ void Parser::caseState(SymbolItem exprSym, string lableEnd) {
 		}
 		else {
 			value = intNum();
+			conVal = value;
+			if (exprSym.type != INTTP)		//检查类型
+				error(CASE_CONST_DIFF, lexer.lineNum);
+
+			vector<int>::iterator it;		//检查重复
+			it = find(existCon.begin(), existCon.end(), conVal);
+			if (it != existCon.end())		//常量重复
+				error(CASE_CONST_REPEAT, lexer.lineNum);
 
 			symTab.insert(constSym.name, VARKD, INTTP, value);
 			quaterList.push_back(Quaternary("LI", to_string(value), "", constSym.name));
@@ -1321,6 +1357,7 @@ void Parser::caseState(SymbolItem exprSym, string lableEnd) {
 		quaterList.push_back(Quaternary("JUMP", "", "", lableEnd));
 		quaterList.push_back(Quaternary("LAB", "", "", label));
 	}
+	return conVal;
 }
 
 
@@ -1339,6 +1376,10 @@ SymbolItem Parser::funcWithValState() {//TODO:返回值类型没有确定，在上层确定了
 	}
 
 	idName = curToken.str;
+	if (!symTab.funcInTable(idName)) {
+		error(IDENT_NOT_DEF, lexer.lineNum);
+	}
+
 	getToken();
 	if (curToken.type == LPAR) {
 		getToken();
@@ -1369,6 +1410,10 @@ void Parser::funcWithNoValState() {
 	}
 
 	idName = curToken.str;
+	if (!symTab.funcInTable(idName)) {
+		error(IDENT_NOT_DEF, lexer.lineNum);
+	}
+
 	getToken();
 	if (curToken.type == LPAR) {
 		getToken();
@@ -1427,6 +1472,10 @@ void Parser::assignState() {
 	}
 
 	string idName = curToken.str;
+	if (!symTab.varInTable(idName)) {
+		error(IDENT_NOT_DEF, lexer.lineNum);
+		skipToFunc();
+	}
 
 	getToken();
 	if (curToken.type == EQU) {
@@ -1454,6 +1503,8 @@ void Parser::assignState() {
 
 		if (arrayIndex.type != INTTP)					//数组下标不是int
 			error(ARRAY_INDEX_NOT_INT, lexer.lineNum);
+		if (arrayIndex.value < 0 || arrayIndex.value >= symTab.search(idName).para) //判断是否越界，只有在下标为常量或整数的时候
+			error(ARRAY_OVER, lexer.lineNum);
 
 		quaterList.push_back(Quaternary("SARY", idName, arrayIndex.name, exprSym.name));
 	}
@@ -1480,7 +1531,12 @@ void Parser::scanfState() {
 	if (curToken.type != ID) {
 		error(MISSING_IDEN, lexer.lineNum);
 	}
-	
+
+	if (!symTab.varInTable(curToken.str)) {
+		error(IDENT_NOT_DEF, lexer.lineNum);
+		skipToFunc();
+	}
+
 	quaterList.push_back(Quaternary("READ", "", "", curToken.str));
 	getToken();
 	while (curToken.type == COMMA) {

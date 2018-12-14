@@ -45,7 +45,7 @@
 #define ARRAY_INDEX_NOT_INT			41
 #define ASSIGN_TYPE_DIFF			42
 #define EXPR_IN_CONDITION_NOT_INT	43
-
+#define CASE_CONST_DIFF				44
 
 extern int errcount;
 

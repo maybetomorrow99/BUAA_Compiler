@@ -41,7 +41,7 @@ public:
 	void condition(string label);
 	void whileState();
 	void switchState();
-	void caseState(SymbolItem exprSym, string labelEnd);
+	int caseState(SymbolItem exprSym, string labelEnd, vector<int> existCon);
 	SymbolItem funcWithValState();
 	void funcWithNoValState();
 	void valParaTab(string fname);
@@ -65,6 +65,8 @@ private:
 	string genLab();
 	bool retFlag;
 	int insertString(string str);
+
+	void skipToFunc();
 
 	string name;		//±íÏî
 	SymbolKind kind;	//const/ var/ para/ array/ func

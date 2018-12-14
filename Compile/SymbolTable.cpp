@@ -77,7 +77,7 @@ bool SymbolTable::inTable(string name) {
 
 
 /*
-查找参数是否已经定义过
+查找参数是否被定义过，检查重定义
 查找位置只包括当前层，也就是说局部变量可以覆盖全局变量和函数
 */
 bool SymbolTable::paraInTable(string name) {
@@ -90,7 +90,7 @@ bool SymbolTable::paraInTable(string name) {
 
 
 /*
-查找局部变量是否存在
+查找局部变量是否被定义过，检查重定义
 查找位置包括当前层和当前函数名
 也就是说不允许函数名与局部量同名
 */
@@ -98,6 +98,59 @@ bool SymbolTable::locInTable(string name) {
 	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return true;
+	}
+	return false;
+}
+
+
+/*
+查找函数名字是否被定义过，检查重定义
+查找位置包括全局层和函数区
+*/
+bool SymbolTable::funcDefInTable(string name) {
+	if (funcIndex.size()) {
+		for (int i = 0; i < funcIndex[0]; i++) {	//全局变量
+			if (items[i].name == name)
+				return true;
+		}
+		for (unsigned int i = 0; i < funcIndex.size(); i++) {	//函数索引表
+			if (items[funcIndex[i]].name == name)
+				return true;
+		}
+	}
+	return false;
+}
+
+
+
+/*
+查找函数是否定义过，检查未定义
+查找位置包括函数区
+*/
+bool SymbolTable::funcInTable(string name) {
+	if (funcIndex.size()) {
+		for (unsigned int i = 0; i < funcIndex.size(); i++) {	//函数索引表
+			if (items[funcIndex[i]].name == name)
+				return true;
+		}
+	}
+	return false;
+}
+
+/*
+查找变量是否定义过，检查未定义
+查找位置包括局部区和全局区
+*/
+bool SymbolTable::varInTable(string name) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name)
+			return true;
+	}
+	if (funcIndex.size()) {
+		for (int i = 0; i < funcIndex[0]; i++) {	//全局变量
+			if (items[i].name == name)
+				return true;
+		}
 	}
 	return false;
 }

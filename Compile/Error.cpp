@@ -50,6 +50,7 @@ void error(int errid, int lineNum) {
 	case 41:  cout << "Array index is not int"; break;
 	case 42:  cout << "Assignment variable type are different"; break;
 	case 43:  cout << "The expression in the condition is not an integer"; break;
+	case 44:  cout << "Case constant type is incorrect"; break;
 	default:  cout << "Unknown";
 	}
 	cout << " at line " << lineNum << endl;
