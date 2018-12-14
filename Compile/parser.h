@@ -44,7 +44,7 @@ public:
 	void caseState(SymbolItem exprSym, string labelEnd);
 	SymbolItem funcWithValState();
 	void funcWithNoValState();
-	void valParaTab();
+	void valParaTab(string fname);
 	void assignState();
 	void scanfState();
 	void printfState();

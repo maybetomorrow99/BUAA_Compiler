@@ -30,7 +30,7 @@ public:
 	SymbolTable() { offset = 0; curFuncAddr = 0; }
 	vector<SymbolItem> items;
 	int curFuncAddr;				//当前函数在符号表中的位置
-	vector<int> funcIndex;			//函数索引表
+	vector<int> funcIndex;			//函数索引表，记录函数在符号表中的位置
 	int offset;
 
 	void insert(string name, SymbolKind kind, SymbolType type, int value);
@@ -41,6 +41,7 @@ public:
 	SymbolItem searchFunc(string name);
 	int getFuncAddr(string name);
 	SymbolItem getCurFunc();
+	SymbolItem getPara(string fname, int index);
 	bool isGlobal(string name);
 	bool isConst(string name);
 	bool isVar(string name);

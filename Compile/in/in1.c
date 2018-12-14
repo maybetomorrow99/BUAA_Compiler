@@ -1,24 +1,19 @@
-int add(int a, int b, int c, int d, int e){
-	return (a + b + c + d + e);
-}
+const int con_int_1 = 11, con_int_2 = 2; 
 
-int rc1{
-	return (('a'));
-} 
-
-char rc2{
-	return ('a'); 
-}
-
-int rc3{
-	return ('a'+'b');	
+int test_para(char a, int b, int c, int con_int_1, int con_int_2){
+    return (a + b + c + con_int_1 + con_int_2);
 }
 
 void main(){
-    printf(add(--1, 2, 3, add(1, 2, 3, 4, ++5), add(1, 2, 3, 4, 5)));
-    printf(rc1);
-    printf(rc2);
-    printf(rc3);
+    int a, b, c, d;
+    char ch;
+    int array[10];
+    a = array[a];
+    a = array[2];
+    array[a] = a;
+    array[con_int_1] = 5;
+    array[3] = 4;
+    array[-1] = 10;
 	return; 
 }
 

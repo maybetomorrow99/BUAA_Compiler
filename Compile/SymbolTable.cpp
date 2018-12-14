@@ -58,7 +58,7 @@ void SymbolTable::insert(string name, SymbolKind kind, SymbolType type, int valu
 查找位置包括当前层，全局变量区和函数区
 */
 bool SymbolTable::inTable(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return true;
 	}
@@ -67,7 +67,7 @@ bool SymbolTable::inTable(string name) {
 			if (items[i].name == name)
 				return true;
 		}
-		for (int i = 0; i < funcIndex.size(); i++) {	//函数索引表
+		for (unsigned int i = 0; i < funcIndex.size(); i++) {	//函数索引表
 			if (items[funcIndex[i]].name == name)
 				return true;
 		}
@@ -81,7 +81,7 @@ bool SymbolTable::inTable(string name) {
 查找位置只包括当前层，也就是说局部变量可以覆盖全局变量和函数
 */
 bool SymbolTable::paraInTable(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return true;
 	}
@@ -95,7 +95,7 @@ bool SymbolTable::paraInTable(string name) {
 也就是说不允许函数名与局部量同名
 */
 bool SymbolTable::locInTable(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return true;
 	}
@@ -104,7 +104,7 @@ bool SymbolTable::locInTable(string name) {
 
 
 SymbolItem SymbolTable::search(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
 			return items[i];
 	}
@@ -118,7 +118,7 @@ SymbolItem SymbolTable::search(string name) {
 
 SymbolItem SymbolTable::searchFunc(string name) {
 	if (isFunc(name)) {
-		for (int i = 0; i < funcIndex.size(); i++) {
+		for (unsigned int i = 0; i < funcIndex.size(); i++) {
 			if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
 				return items[funcIndex[i]];
 			}
@@ -130,7 +130,7 @@ SymbolItem SymbolTable::searchFunc(string name) {
 获取函数在符号表中的位置
 */
 int SymbolTable::getFuncAddr(string name) {
-	for (int i = 0; i < funcIndex.size(); i++) {
+	for (unsigned int i = 0; i < funcIndex.size(); i++) {
 		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
 			return funcIndex[i];
 		}
@@ -147,10 +147,19 @@ SymbolItem SymbolTable::getCurFunc() {
 
 
 /*
+获取函数指定下标的参数，用于判断参数类型是否一致
+*/
+SymbolItem SymbolTable::getPara(string fname, int index) {
+	int funcAddr = getFuncAddr(fname);
+	return items[funcAddr + index];
+}
+
+
+/*
 判断是否是全局变量，只有在生成mips时候会用到
 */
 bool SymbolTable::isGlobal(string name) {
-	for (int i = curFuncAddr + 1; i < items.size(); i++) {	//局部变量和全局变量重名，则为局部变量
+	for (unsigned int i = curFuncAddr + 1; i < items.size(); i++) {	//局部变量和全局变量重名，则为局部变量
 		if (items[i].kind == FUNCKD)					//***生成四元式的过程中，符号表已经建立完全，用items.size会查到后面的变量
 			break;
 		if (items[i].name == name)
@@ -203,7 +212,7 @@ bool SymbolTable::isPara(string name) {
 }
 
 bool SymbolTable::isFunc(string name) {
-	for (int i = 0; i < funcIndex.size(); i++) {
+	for (unsigned int i = 0; i < funcIndex.size(); i++) {
 		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD) {
 			return true;
 		}
@@ -215,7 +224,7 @@ bool SymbolTable::isFunc(string name) {
 更改函数表项的参数个数
 */
 bool SymbolTable::updateFuncPara(string name, int para) {
-	for (int i = 0; i < funcIndex.size(); i++) {
+	for (unsigned int i = 0; i < funcIndex.size(); i++) {
 		if (items[funcIndex[i]].name == name && items[funcIndex[i]].kind == FUNCKD ) {
 			items[funcIndex[i]].para = para;
 			return true;
@@ -245,7 +254,7 @@ void SymbolTable::updateCurFuncAddr(string fname) {
 临时变量char参与运算之后转为int，在factor级和expr级
 */
 void SymbolTable::changeVarType(string name) {
-	for (int i = curFuncAddr; i < items.size(); i++) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name && items[i].type == CHARTP) {
 			items[i].type = INTTP;
 			return;
@@ -257,7 +266,7 @@ void SymbolTable::printTable(string path) {
 	ofstream fout;
 	fout.open(path);
 	fout << "name      kind      type      value     addr      para" << endl;
-	for (int i = 0; i < items.size(); i++) {
+	for (unsigned int i = 0; i < items.size(); i++) {
 		SymbolItem item = items[i];
 		fout << setw(10) << left << item.name;
 		fout << setw(10) << left << KindStr[item.kind];

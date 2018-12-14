@@ -36,6 +36,9 @@ int main() {
 		cout << "Lexer analysis succeeded." << endl;
 	}
 
+	symTab.printTable(symPath);
+	printQuater(quaterPath);
+
 	if (errcount > 0) {
 		cout << "Parser analysis failed!" << endl;
 		exit(0);
@@ -44,9 +47,6 @@ int main() {
 		cout << "Parser analysis succeeded." << endl;
 	}
 
-	symTab.printTable(symPath);
-	printQuater(quaterPath);
-	
 	generator.startWorking();
 	cout << "Compiled successfully" << endl;
 	system("Pause");

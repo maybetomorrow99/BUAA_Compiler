@@ -34,13 +34,17 @@
 #define IDENT_REDEF                 30
 #define IDENT_TOO_LONG              31
 #define STR_IS_WRONG                32
-#define TYP_NOT_MATCH               33
-#define TYPNUM_NOT_MATCH            34
+#define PARA_TYP_NOT_MATCH		    33
+#define PARA_NUM_NOT_MATCH          34
 #define RETURN_VALUE_ERROR          35
 #define CONSTANT_NOT_INITIALIZED    36
 #define VARIABLE_NOT_INITIALIZED    37
 #define SYMBOL_TABLE_OVERFLOW       38
 #define ARRAY_OVER                  39
+#define CASE_CONST_REPEAT			40
+#define ARRAY_INDEX_NOT_INT			41
+#define ASSIGN_TYPE_DIFF			42
+#define EXPR_IN_CONDITION_NOT_INT	43
 
 
 extern int errcount;

@@ -742,6 +742,7 @@ SymbolItem Parser::expression() {
 
 		//参与运算之后类型一定为INTTP
 		symTab.changeVarType(itemSym1.name);
+		itemSym1.type = INTTP;
 	}
 	
 	fout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;
@@ -768,6 +769,7 @@ SymbolItem Parser::item() {
 
 		//参与运算之后类型一定为INTTP
 		symTab.changeVarType(factorSym1.name);
+		factorSym1.type = INTTP;
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;
@@ -804,6 +806,9 @@ SymbolItem Parser::factor() {
 			arrayIndex = expression();
 			if (curToken.type == RBRK) {
 				getToken();
+
+				if (arrayIndex.type != INTTP)		//数组下标不是int
+					error(ARRAY_INDEX_NOT_INT, lexer.lineNum);
 
 				//取数组值
 				quaterList.push_back(Quaternary("LARY", idName, arrayIndex.name, factorSym.name));
@@ -861,10 +866,12 @@ SymbolItem Parser::factor() {
 		quaterList.push_back(Quaternary("LI", to_string(curToken.str[0]), "", factorSym.name));
 		getToken();
 	}
-	else if (curToken.type == LPAR) {		//表达式
+	else if (curToken.type == LPAR) {		//(表达式)
 		getToken();
 		factorSym = expression();
-		symTab.insert(factorSym.name, VARKD, INTTP, 0);	//TODO:此处可能有问题，表达式的类型不一定是整型
+		symTab.changeVarType(factorSym.name);	//此处表达式的返回类型不一定是整型，需要将其转为整型
+		factorSym.type = INTTP;
+		//symTab.insert(factorSym.name, VARKD, INTTP, 0);	
 
 		if (curToken.type == RPAR) {
 			getToken();
@@ -1133,11 +1140,19 @@ void Parser::condition(string label) {
 	SymbolItem exprSym1, exprSym2;
 	int tokenType;
 	exprSym1 = expression();
+
+	if (exprSym1.type != INTTP)
+		error(EXPR_IN_CONDITION_NOT_INT, lexer.lineNum);
+
 	if (curToken.type == LSS || curToken.type == LEQ || curToken.type == GTR ||
 		curToken.type == GEQ || curToken.type == NEQ || curToken.type == EQEQ) {
 		tokenType = curToken.type;
 		getToken();
 		exprSym2 = expression();
+
+		if (exprSym2.type != INTTP)
+			error(EXPR_IN_CONDITION_NOT_INT, lexer.lineNum);
+
 		switch (tokenType) {
 		case LSS:
 			quaterList.push_back(Quaternary("BGE", exprSym1.name, exprSym2.name, label));
@@ -1327,7 +1342,7 @@ SymbolItem Parser::funcWithValState() {//TODO:返回值类型没有确定，在上层确定了
 	getToken();
 	if (curToken.type == LPAR) {
 		getToken();
-		valParaTab();
+		valParaTab(idName);
 		if (curToken.type == RPAR) {
 			getToken();
 		}
@@ -1357,7 +1372,7 @@ void Parser::funcWithNoValState() {
 	getToken();
 	if (curToken.type == LPAR) {
 		getToken();
-		valParaTab();
+		valParaTab(idName);
 		if (curToken.type == RPAR) {
 			getToken();
 		}
@@ -1374,16 +1389,29 @@ void Parser::funcWithNoValState() {
 /*
 <值参数表>   ::= <表达式>{,<表达式>}
 */
-void Parser::valParaTab() {	//TODO:检查参数类型
+void Parser::valParaTab(string fname) {	//TODO:检查参数类型
 	SymbolItem valParaSym;
+	int paraIndex = 0;
+	int paraMax = symTab.searchFunc(fname).para;
+
 	valParaSym = expression();
+	if (valParaSym.type != symTab.getPara(fname, ++paraIndex).type)	//判断参数类型是否一致
+		error(PARA_TYP_NOT_MATCH, lexer.lineNum);
+
 	quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
 
 	while (curToken.type == COMMA) {
 		getToken();
 		valParaSym = expression();
+
+		if (valParaSym.type != symTab.getPara(fname, ++paraIndex).type)	//判断参数类型是否一致
+			error(PARA_TYP_NOT_MATCH, lexer.lineNum);
+
 		quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
 	}
+
+	if (paraIndex != paraMax)
+		error(PARA_NUM_NOT_MATCH, lexer.lineNum);
 	
 	fout << setw(4) << left << lexer.lineNum<< "This is a value parameter table" << endl;
 }
@@ -1405,6 +1433,8 @@ void Parser::assignState() {
 		getToken();
 		exprSym = expression();
 
+		if (exprSym.type != symTab.search(idName).type)
+			error(ASSIGN_TYPE_DIFF, lexer.lineNum);
 		quaterList.push_back(Quaternary("LVAR", exprSym.name, "", idName));
 	}
 	else if (curToken.type == LBRK) {
@@ -1419,6 +1449,11 @@ void Parser::assignState() {
 		}
 		getToken();
 		exprSym = expression();
+		if (exprSym.type != symTab.search(idName).type)
+			error(ASSIGN_TYPE_DIFF, lexer.lineNum);
+
+		if (arrayIndex.type != INTTP)					//数组下标不是int
+			error(ARRAY_INDEX_NOT_INT, lexer.lineNum);
 
 		quaterList.push_back(Quaternary("SARY", idName, arrayIndex.name, exprSym.name));
 	}
