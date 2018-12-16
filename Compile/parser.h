@@ -67,6 +67,7 @@ private:
 	int insertString(string str);
 
 	void skipToFunc();
+	void skipToSemi();
 
 	string name;		//±íÏî
 	SymbolKind kind;	//const/ var/ para/ array/ func

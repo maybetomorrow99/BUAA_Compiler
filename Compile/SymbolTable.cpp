@@ -167,7 +167,10 @@ SymbolItem SymbolTable::search(string name) {
 				return items[i];
 		}
 	}
+	cout << "Symbol Not Found" << endl;
+	return SymbolItem("$notfound", UNDEFINEKD, VOIDTP, 0, 0, 0);
 }
+
 
 SymbolItem SymbolTable::searchFunc(string name) {
 	if (isFunc(name)) {
@@ -177,6 +180,9 @@ SymbolItem SymbolTable::searchFunc(string name) {
 			}
 		}
 	}
+
+	cout << "Symbol Not Found" << endl;
+	return SymbolItem("$notfound", UNDEFINEKD, VOIDTP, 0, 0, 0);
 }
 
 /*
@@ -188,6 +194,9 @@ int SymbolTable::getFuncAddr(string name) {
 			return funcIndex[i];
 		}
 	}
+
+	cout << "Symbol Not Found" << endl;
+	return 0;
 }
 
 

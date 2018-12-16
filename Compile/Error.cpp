@@ -38,7 +38,7 @@ void error(int errid, int lineNum) {
 	case 29:  cout << "Identifier is not defined"; break;
 	case 30:  cout << "Identifier redefinition"; break;
 	case 31:  cout << "The identifier is too long"; break;
-	case 32:  cout << "Program structure order is wrong"; break;
+	case 32:  cout << "Missing return value"; break;
 	case 33:  cout << "Parameter type does not match"; break;
 	case 34:  cout << "The number of parameters does not match"; break;
 	case 35:  cout << "Return value error"; break;

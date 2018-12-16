@@ -69,8 +69,21 @@ int Parser::insertString(string str) {
 void Parser::skipToFunc() {
 	do {
 		getToken();
+		cout << curToken.str << endl;
 	} while (curToken.type != INT || curToken.type != CHAR || curToken.type != VOID);
 }
+
+
+/*
+跳读到下一个分号
+*/
+void Parser::skipToSemi() {
+	do {
+		getToken();
+	} while (curToken.type != SEMI);
+	getToken();
+}
+
 
 //除了主程序外，每个子程序段的最后一定是getToken()
 /*
@@ -540,13 +553,13 @@ void Parser::funcWithVal() {
 			error(MISSING_LEFT_BRACE, lexer.lineNum);
 		}
 
-		getToken();
+		getToken();  
 	}
 	else {
 		error(UNKNOWN, lexer.lineNum);
 	}
 	if (!retFlag) {
-		error(0, lexer.lineNum);
+		error(MISSING_RET_VAL, lexer.lineNum);
 	}
 	symTab.updateFuncVal();
 	fout << setw(4) << left << lexer.lineNum<< "This is a function definition with return value" << endl;
@@ -792,9 +805,11 @@ SymbolItem Parser::factor() {
 		pushToken(curToken);
 		 
 		string idName = curToken.str;
-		if (!symTab.inTable(idName)) {
+		if (!symTab.inTable(idName)) {			//因子中标识符未定义不进行跳读
 			error(IDENT_NOT_DEF, lexer.lineNum);
-			skipToFunc();
+			factorSym.kind = UNDEFINEKD;
+			factorSym.type = VOIDTP;
+			return factorSym;
 		}
 		
 		getToken();
@@ -842,8 +857,8 @@ SymbolItem Parser::factor() {
 			getToken();
 
 			factorSym = funcWithValState();
-			type = symTab.searchFunc(idName).type;
-			symTab.insert(factorSym.name, VARKD, type, 0);
+			factorSym.type = symTab.searchFunc(idName).type;
+			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
 
 			//接受函数返回值
 			quaterList.push_back(Quaternary("VOF", idName, "", factorSym.name));
@@ -1474,7 +1489,7 @@ void Parser::assignState() {
 	string idName = curToken.str;
 	if (!symTab.varInTable(idName)) {
 		error(IDENT_NOT_DEF, lexer.lineNum);
-		skipToFunc();
+		skipToSemi();
 	}
 
 	getToken();
@@ -1534,7 +1549,7 @@ void Parser::scanfState() {
 
 	if (!symTab.varInTable(curToken.str)) {
 		error(IDENT_NOT_DEF, lexer.lineNum);
-		skipToFunc();
+		skipToSemi();
 	}
 
 	quaterList.push_back(Quaternary("READ", "", "", curToken.str));
@@ -1614,6 +1629,10 @@ void Parser::returnState() {
 
 		if (curToken.type == RPAR) {
 			getToken();
+
+			if (retValSym.type != symTab.getCurFunc().type)		//检查返回值类型是否匹配
+				error(RETURN_VALUE_ERROR, lexer.lineNum);
+
 			quaterList.push_back(Quaternary("RET", "", "", retValSym.name));
 		}
 		else {

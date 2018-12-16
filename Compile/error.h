@@ -33,7 +33,7 @@
 #define IDENT_NOT_DEF               29
 #define IDENT_REDEF                 30
 #define IDENT_TOO_LONG              31
-#define STR_IS_WRONG                32
+#define MISSING_RET_VAL				32
 #define PARA_TYP_NOT_MATCH		    33
 #define PARA_NUM_NOT_MATCH          34
 #define RETURN_VALUE_ERROR          35
