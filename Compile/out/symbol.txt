@@ -1,26 +1,123 @@
 name      kind      type      value     addr      para
-con_int_1 const     int       -1        0         0         
+con_int_1 const     int       1         0         0         
 con_int_2 const     int       2         4         0         
-con_char_1const     char      98        8         0         
+con_char_1const     char      97        8         0         
+con_char_2const     char      98        12        0         
+var_int_1 var       int       0         16        0         
+var_int_2 var       int       0         20        0         
+var_int_array_1array     int       0         24        101       
+var_int_array_2array     int       0         428       101       
+var_char_1var       char      0         832       0         
+var_char_arrayarray     char      0         836       101       
+test_if   func      char      28        0         2         
+a         para      int       0         4         0         
+b         para      int       0         8         0         
+$temp0    var       int       0         12        0         
+$temp1    var       int       0         16        0         
+$temp2    var       char      97        20        0         
+$temp3    var       char      98        24        0         
+test_factorialfunc      int       36        0         1         
+n         para      int       0         4         0         
+$temp4    var       int       0         8         0         
+$temp5    var       int       0         12        0         
+$temp6    var       int       1         16        0         
+$temp7    var       int       0         20        0         
+$temp9    var       int       0         24        0         
+$temp10   var       int       1         28        0         
+$temp8    var       int       0         32        0         
+test_whilefunc      int       36        0         0         
+var_int_1 var       int       0         4         0         
+$temp11   var       int       3         8         0         
+$temp12   var       int       0         12        0         
+$temp13   var       int       1         16        0         
+$temp14   var       int       0         20        0         
+$temp15   var       int       0         24        0         
+$temp16   var       int       0         28        0         
+$temp17   var       int       666       32        0         
+test_switch_charfunc      void      20        0         1         
+c         para      char      0         4         0         
+$temp18   var       char      0         8         0         
+$temp19   var       char      97        12        0         
+$temp20   var       char      98        16        0         
+test_relationfunc      void      56        0         1         
+n         para      int       0         4         0         
+$temp21   var       int       0         8         0         
+$temp22   var       int       3         12        0         
+$temp23   var       int       0         16        0         
+$temp24   var       int       4         20        0         
+$temp25   var       int       0         24        0         
+$temp26   var       int       5         28        0         
+$temp27   var       int       0         32        0         
+$temp28   var       int       6         36        0         
+$temp29   var       int       0         40        0         
+$temp30   var       int       7         44        0         
+$temp31   var       int       0         48        0         
+$temp32   var       int       8         52        0         
 test_para func      int       44        0         5         
-a         para      char      0         4         0         
+a         para      int       0         4         0         
 b         para      int       0         8         0         
 c         para      int       0         12        0         
 con_int_1 para      int       0         16        0         
 con_int_2 para      int       0         20        0         
-$temp0    var       int       0         24        0         
-$temp1    var       int       0         28        0         
-$temp2    var       int       0         32        0         
-$temp3    var       int       0         36        0         
-$temp4    var       int       0         40        0         
-foo       func      char      8         0         0         
-$temp5    var       char      97        4         0         
-foo1      func      char      8         0         0         
-$temp6    var       int       97        4         0         
-foo2      func      int       8         0         0         
-$temp7    var       int       1         4         0         
-foo3      func      int       8         0         0         
-$temp8    var       char      98        4         0         
-test_p    func      void      12        0         2         
-b         para      int       0         4         0         
-c         para      char      0         8         0         
+$temp33   var       int       0         24        0         
+$temp34   var       int       0         28        0         
+$temp35   var       int       0         32        0         
+$temp36   var       int       0         36        0         
+$temp37   var       int       0         40        0         
+test_expressionfunc      void      100       0         0         
+$temp38   var       int       1         4         0         
+$temp39   var       int       2         8         0         
+$temp40   var       int       1         12        0         
+$temp41   var       int       1         16        0         
+$temp43   var       int       1         20        0         
+$temp44   var       int       2         24        0         
+$temp45   var       int       3         28        0         
+$temp46   var       int       4         32        0         
+$temp47   var       int       5         36        0         
+$temp42   var       int       0         40        0         
+$temp48   var       int       1         44        0         
+$temp49   var       int       0         48        0         
+$temp50   var       int       0         52        0         
+$temp51   var       int       1         56        0         
+$temp52   var       int       5         60        0         
+$temp53   var       char      97        64        0         
+$temp55   var       int       3         68        0         
+$temp54   var       int       0         72        0         
+$temp56   var       int       -1        76        0         
+$temp57   var       int       2         80        0         
+$temp58   var       int       1         84        0         
+$temp59   var       int       97        88        0         
+$temp60   var       int       1         92        0         
+$temp61   var       int       0         96        0         
+main      func      void      128       0         0         
+con_int_3 const     int       3         4         0         
+con_int_4 const     int       44        8         0         
+con_int_5 const     int       -555      12        0         
+var_int_resvar       int       0         16        0         
+var_char_resvar       char      0         20        0         
+var_int_3 var       int       0         24        0         
+var_int_4 var       int       0         28        0         
+op        var       int       0         32        0         
+$temp62   var       int       4         36        0         
+$temp63   var       int       0         40        0         
+$temp64   var       int       1         44        0         
+$temp66   var       int       -555      48        0         
+$temp67   var       int       3         52        0         
+$temp65   var       char      0         56        0         
+$temp68   var       char      0         60        0         
+$temp70   var       int       44        64        0         
+$temp71   var       int       3         68        0         
+$temp69   var       char      0         72        0         
+$temp72   var       char      0         76        0         
+$temp74   var       int       0         80        0         
+$temp73   var       int       0         84        0         
+$temp75   var       int       0         88        0         
+$temp76   var       int       2         92        0         
+$temp77   var       int       0         96        0         
+$temp78   var       int       0         100       0         
+$temp79   var       char      97        104       0         
+$temp80   var       char      98        108       0         
+$temp81   var       char      99        112       0         
+$temp82   var       int       3         116       0         
+$temp83   var       int       1         120       0         
+$temp84   var       int       8         124       0         

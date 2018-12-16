@@ -140,11 +140,11 @@ void test{
             switch(i){
                 case 10:
                 char_test = 'A';
-                case '9':
+                case 9:
                 char_test = 'B';
                 case 8:
                 char_test = 'C';
-                case '7':
+                case 7:
                 char_test = 'D';
                 case 6:
                 char_test = 'E';
@@ -155,7 +155,7 @@ void test{
             switch(2 * i / 2 + '0' - 0){
                 case 0:
                 char_test = 'A';
-                case '0':
+                case 48:
                 char_test = '0';
                 default:
                 char_test = 'G';

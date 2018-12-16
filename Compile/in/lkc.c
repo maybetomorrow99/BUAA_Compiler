@@ -8,6 +8,8 @@ int add(int A1, int b, int c, int d, char k){
 }
 
 char get{
+    const int A1 = 100;
+    const char A2 ='c';
     return (chararray[-k+2*k]);
 }
 

@@ -15,7 +15,7 @@ extern string TypeStr[];
 
 class SymbolItem {
 public:
-	SymbolItem(){}
+	SymbolItem() { value = 0; addr = 0; para = 0; }
 	string name;		//±íÏîÃû×Ö
 	SymbolKind kind;	//const/ var/ para/ array/ func
 	SymbolType type;	//void/ int/ char/ string

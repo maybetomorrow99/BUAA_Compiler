@@ -1,57 +1,357 @@
 1   This is a constant definition
 2   This is a constant definition
-3   This is a constant declaration
-3   This is a parameters table
-4   This is a factor
-4   This is a item
-4   This is a factor
-4   This is a item
-4   This is a factor
-4   This is a item
-4   This is a factor
-4   This is a item
-4   This is a factor
-4   This is a item
-4   This is an expression
-4   This is a return statement
-5   This is a statement column
-5   This is a compound statement
-6   This is a function definition with return value
-7   This is a factor
-7   This is a item
-7   This is an expression
-7   This is a return statement
-8   This is a statement column
-8   This is a compound statement
-10  This is a function definition with return value
-11  This is a factor
-11  This is a item
-11  This is an expression
-11  This is a factor
-11  This is a item
-11  This is an expression
-11  This is a return statement
-12  This is a statement column
-12  This is a compound statement
-14  This is a function definition with return value
-15  This is a factor
-15  This is a item
-15  This is an expression
-15  This is a return statement
-16  This is a statement column
-16  This is a compound statement
-18  This is a function definition with return value
+4   This is a constant declaration
+4   This is a variable definitions
+5   This is a variable definitions
+6   This is a variable definitions
+8   This is a variable declaration
+8   This is a parameters table
+9   This is a factor
+9   This is a item
+9   This is an expression
+9   This is a factor
+9   This is a item
+9   This is an expression
+9   This is a condition
+10  This is a factor
+10  This is a item
+10  This is an expression
+10  This is a return statement
+12  This is a factor
+12  This is a item
+12  This is an expression
+12  This is a return statement
+13  This is a if statement
+13  This is a statement column
+13  This is a compound statement
+15  This is a function definition with return value
+15  This is a parameters table
+16  This is a factor
+16  This is a item
+16  This is an expression
+16  This is a factor
+16  This is a item
+16  This is an expression
+16  This is a condition
+17  This is a factor
+17  This is a item
+17  This is an expression
+17  This is a return statement
+19  This is a factor
+19  This is a factor
+19  This is a item
+19  This is a factor
+19  This is a item
+19  This is an expression
+19  This is a value parameter table
+19  This is a function call statement with return value 
 19  This is a factor
 19  This is a item
 19  This is an expression
 19  This is a return statement
+20  This is a if statement
 20  This is a statement column
 20  This is a compound statement
-21  This is a function definition with return value
-21  This is a parameters table
-23  This is a assign statement
+24  This is a function definition with return value
+25  This is a variable definitions
+26  This is a variable declaration
+26  This is a factor
+26  This is a item
+26  This is an expression
 26  This is a assign statement
-26  This is a statement column
-26  This is a compound statement
-26  This is a function definition without return value
-26  This is a program
+28  This is a factor
+28  This is a item
+28  This is a factor
+28  This is a item
+28  This is an expression
+28  This is a assign statement
+29  This is a factor
+29  This is a item
+29  This is an expression
+29  This is a printf statement
+30  This is a statement column
+30  This is a factor
+30  This is a item
+30  This is an expression
+30  This is a condition
+31  This is a while statement
+31  This is a factor
+31  This is a item
+31  This is an expression
+31  This is a return statement
+32  This is a statement column
+32  This is a compound statement
+35  This is a function definition with return value
+35  This is a parameters table
+36  This is a factor
+36  This is a item
+36  This is an expression
+38  This is a printf statement
+39  This is a printf statement
+40  This is a statement column
+42  This is a printf statement
+43  This is a statement column
+45  This is a printf statement
+46  This is a statement column
+48  This is a switch statement
+48  This is a statement column
+48  This is a compound statement
+51  This is a function definition without return value
+51  This is a parameters table
+52  This is a factor
+52  This is a item
+52  This is an expression
+52  This is a factor
+52  This is a item
+52  This is an expression
+52  This is a condition
+53  This is a printf statement
+56  This is a if statement
+56  This is a factor
+56  This is a item
+56  This is an expression
+56  This is a factor
+56  This is a item
+56  This is an expression
+56  This is a condition
+57  This is a printf statement
+60  This is a if statement
+60  This is a factor
+60  This is a item
+60  This is an expression
+60  This is a factor
+60  This is a item
+60  This is an expression
+60  This is a condition
+61  This is a printf statement
+64  This is a if statement
+64  This is a factor
+64  This is a item
+64  This is an expression
+64  This is a factor
+64  This is a item
+64  This is an expression
+64  This is a condition
+65  This is a printf statement
+68  This is a if statement
+68  This is a factor
+68  This is a item
+68  This is an expression
+68  This is a factor
+68  This is a item
+68  This is an expression
+68  This is a condition
+69  This is a printf statement
+72  This is a if statement
+72  This is a factor
+72  This is a item
+72  This is an expression
+72  This is a factor
+72  This is a item
+72  This is an expression
+72  This is a condition
+73  This is a printf statement
+75  This is a if statement
+75  This is a statement column
+75  This is a compound statement
+78  This is a function definition without return value
+78  This is a parameters table
+79  This is a factor
+79  This is a item
+79  This is a factor
+79  This is a item
+79  This is a factor
+79  This is a item
+79  This is a factor
+79  This is a item
+79  This is a factor
+79  This is a item
+79  This is an expression
+79  This is a return statement
+80  This is a statement column
+80  This is a compound statement
+82  This is a function definition with return value
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a factor
+83  This is a factor
+83  This is a item
+83  This is a factor
+83  This is a item
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a value parameter table
+83  This is a function call statement with return value 
+83  This is a factor
+83  This is a item
+83  This is an expression
+83  This is a assign statement
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a item
+84  This is an expression
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a item
+84  This is an expression
+84  This is a value parameter table
+84  This is a function call statement with return value 
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a factor
+84  This is a item
+84  This is a factor
+84  This is a item
+84  This is an expression
+84  This is a factor
+84  This is a item
+84  This is an expression
+84  This is a printf statement
+85  This is a factor
+85  This is a item
+85  This is a factor
+85  This is a item
+85  This is an expression
+85  This is a assign statement
+86  This is a factor
+86  This is a item
+86  This is an expression
+86  This is a printf statement
+87  This is a statement column
+87  This is a compound statement
+90  This is a function definition without return value
+91  This is a constant definition
+92  This is a constant declaration
+92  This is a variable definitions
+93  This is a variable definitions
+94  This is a variable definitions
+95  This is a variable definitions
+97  This is a variable declaration
+97  This is a factor
+97  This is a item
+97  This is an expression
+97  This is a assign statement
+99  This is a scanf statement
+100 This is a factor
+100 This is a item
+100 This is an expression
+102 This is a printf statement
+103 This is a factor
+103 This is a item
+103 This is an expression
+103 This is a factor
+103 This is a item
+103 This is an expression
+103 This is a value parameter table
+103 This is a function call statement with return value 
+103 This is a factor
+103 This is a item
+103 This is an expression
+103 This is a assign statement
+104 This is a factor
+104 This is a item
+104 This is an expression
+104 This is a printf statement
+105 This is a factor
+105 This is a item
+105 This is an expression
+105 This is a factor
+105 This is a item
+105 This is an expression
+105 This is a value parameter table
+105 This is a function call statement with return value 
+105 This is a factor
+105 This is a item
+105 This is an expression
+105 This is a assign statement
+106 This is a factor
+106 This is a item
+106 This is an expression
+106 This is a printf statement
+108 This is a printf statement
+109 This is a factor
+109 This is a item
+109 This is an expression
+109 This is a value parameter table
+109 This is a function call statement with return value 
+109 This is a factor
+109 This is a item
+109 This is an expression
+109 This is a assign statement
+110 This is a factor
+110 This is a item
+110 This is an expression
+110 This is a printf statement
+111 This is a statement column
+113 This is a printf statement
+114 This is a function call statement with return value 
+114 This is a factor
+114 This is a item
+114 This is an expression
+114 This is a assign statement
+115 This is a factor
+115 This is a item
+115 This is an expression
+115 This is a printf statement
+117 This is a printf statement
+118 This is a factor
+118 This is a item
+118 This is an expression
+118 This is a value parameter table
+118 This is a function call statement without return value 
+119 This is a factor
+119 This is a item
+119 This is an expression
+119 This is a value parameter table
+119 This is a function call statement without return value 
+120 This is a factor
+120 This is a item
+120 This is an expression
+120 This is a value parameter table
+120 This is a function call statement without return value 
+121 This is a statement column
+123 This is a printf statement
+124 This is a scanf statement
+125 This is a factor
+125 This is a item
+125 This is an expression
+125 This is a value parameter table
+125 This is a function call statement without return value 
+126 This is a scanf statement
+127 This is a factor
+127 This is a item
+127 This is an expression
+127 This is a value parameter table
+127 This is a function call statement without return value 
+129 This is a printf statement
+130 This is a function call statement without return value 
+131 This is a statement column
+133 This is a printf statement
+134 This is a statement column
+136 This is a switch statement
+136 This is a return statement
+137 This is a statement column
+137 This is a compound statement
+137 This is main function
+137 This is a program
