@@ -46,6 +46,7 @@
 #define ASSIGN_TYPE_DIFF			42
 #define EXPR_IN_CONDITION_NOT_INT	43
 #define CASE_CONST_DIFF				44
+#define ASSIGN_CONST				45
 
 extern int errcount;
 

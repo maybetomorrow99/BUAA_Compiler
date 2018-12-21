@@ -124,7 +124,7 @@ void Parser::program() {
 			}
 		}
 		else {
-			error(UNKNOWN, lexer.lineNum);
+			error(MISSING_IDEN, lexer.lineNum);
 		}
 	}
 	
@@ -211,6 +211,9 @@ void Parser::constDecl() {
 			else {
 				error(MISSING_SEMI, lexer.lineNum);
 			}
+		}
+		else {
+			error(UNKNOWN, lexer.lineNum);
 		}
 		
 	}
@@ -809,6 +812,7 @@ SymbolItem Parser::factor() {
 			error(IDENT_NOT_DEF, lexer.lineNum);
 			factorSym.kind = UNDEFINEKD;
 			factorSym.type = VOIDTP;
+			getToken();							//任何一个子程序返回前都要getToken()
 			return factorSym;
 		}
 		
@@ -910,7 +914,7 @@ SymbolItem Parser::factor() {
 		}
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(EXPRESSION_ERRO, lexer.lineNum);
 	}
 
 	
@@ -1499,6 +1503,10 @@ void Parser::assignState() {
 
 		if (exprSym.type != symTab.search(idName).type)
 			error(ASSIGN_TYPE_DIFF, lexer.lineNum);
+		
+		if (symTab.search(idName).kind == CONSTKD)
+			error(ASSIGN_CONST, lexer.lineNum);
+
 		quaterList.push_back(Quaternary("LVAR", exprSym.name, "", idName));
 	}
 	else if (curToken.type == LBRK) {
@@ -1615,7 +1623,7 @@ void Parser::printfState() {
 
 
 /*
-<返回语句>   ::=  return[‘(’<表达式>‘)’]
+<返回语句>   ::=     [‘(’<表达式>‘)’]
 */
 void Parser::returnState() {
 	SymbolItem retValSym;

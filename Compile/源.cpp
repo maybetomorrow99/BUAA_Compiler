@@ -15,8 +15,8 @@ int main() {
 	string asmPath = "./out/result.asm";
 	MipsGenerator generator(asmPath);
 
-	//srcpath = "./in/in1.c";
-	cin >> srcpath;
+	srcpath = "./in/in1.c";
+	//cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {
 		cout << "File doesn't exist!" << endl;
@@ -30,7 +30,6 @@ int main() {
 
 	if (parser.lexer.ecount > 0) {
 		cout << "Lexer analysis failed!" << endl;
-		exit(0);
 	}
 	else {
 		cout << "Lexer analysis succeeded." << endl;
@@ -41,14 +40,14 @@ int main() {
 
 	if (errcount > 0) {
 		cout << "Parser analysis failed!" << endl;
-		exit(0);
 	}
 	else {
 		cout << "Parser analysis succeeded." << endl;
+		generator.startWorking();
+
+		cout << "Compiled successfully" << endl;
 	}
 
-	generator.startWorking();
-	cout << "Compiled successfully" << endl;
 	system("Pause");
 	return 0;
 }
