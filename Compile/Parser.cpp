@@ -213,7 +213,7 @@ void Parser::constDecl() {
 			}
 		}
 		else {
-			error(UNKNOWN, lexer.lineNum);
+			error(MISSING_TYPE, lexer.lineNum);
 		}
 		
 	}
@@ -233,7 +233,7 @@ void Parser::constDecl() {
 			}
 		}
 		else {
-			error(UNKNOWN, lexer.lineNum);
+			error(MISSING_TYPE, lexer.lineNum);
 		}
 	}
 	fout << setw(4) << left << lexer.lineNum<< "This is a constant declaration" << endl;
@@ -482,7 +482,7 @@ void Parser::varDef() {
 		}
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_TYPE, lexer.lineNum);
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a variable definitions" << endl;
@@ -513,7 +513,7 @@ void Parser::funcWithVal() {
 		}
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_TYPE, lexer.lineNum);
 	}
 
 	if (curToken.type == LPAR) {	//有参数
@@ -559,7 +559,7 @@ void Parser::funcWithVal() {
 		getToken();  
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_LEFT_BRACE, lexer.lineNum);
 	}
 	if (!retFlag) {
 		error(MISSING_RET_VAL, lexer.lineNum);
@@ -578,7 +578,7 @@ void Parser::funcWithNoVal() {
 	string fname;
 
 	if (curToken.type != VOID) {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_TYPE, lexer.lineNum);
 	}
 
 	type = VOIDTP;
@@ -631,7 +631,7 @@ void Parser::funcWithNoVal() {
 		getToken();
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_LEFT_BRACE, lexer.lineNum);
 	}
 
 
@@ -661,7 +661,7 @@ void Parser::declHeader() {
 		}
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_TYPE, lexer.lineNum);
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a declaration header" << endl;
@@ -673,7 +673,7 @@ void Parser::declHeader() {
 */
 void Parser::mainFunc() {
 	if (curToken.type != VOID) {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_TYPE, lexer.lineNum);
 	}
 	getToken();
 	if (curToken.type != MAIN) {
@@ -721,7 +721,7 @@ int Parser::intNum() {
 		getToken();
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(MISSING_INTEGER, lexer.lineNum);
 	}
 	return sign;
 	//fout << setw(4) << left << lexer.lineNum<< "This is a integer" << endl;
@@ -952,6 +952,13 @@ void Parser::paraTab() {
 			error(MISSING_IDEN, lexer.lineNum);
 		}
 	}
+	else if (curToken.type == RPAR) {
+		error(FUNC_WITH_PARE, lexer.lineNum);
+	}
+	else {
+		error(MISSING_TYPE, lexer.lineNum);
+	}
+	
 	while (curToken.type == COMMA) {
 		getToken();
 		if (curToken.type == INT || curToken.type == CHAR) {
@@ -977,7 +984,7 @@ void Parser::paraTab() {
 			}
 		}
 		else {
-			error(UNKNOWN, lexer.lineNum);
+			error(MISSING_TYPE, lexer.lineNum);
 		}
 	}
 
@@ -1007,7 +1014,7 @@ void Parser::compState() {
 		//语句列为空
 	}
 	else {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	fout << setw(4) << left << lexer.lineNum<< "This is a compound statement" << endl;
 }
@@ -1125,7 +1132,7 @@ void Parser::statement() {
 		getToken();
 		break;
 	default:
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 		break;
 	}
 }
@@ -1139,7 +1146,7 @@ void Parser::ifState() {
 	label1 = genLab();
 	label2 = genLab();
 	if (curToken.type != IF) {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	getToken();
 	if (curToken.type != LPAR) {
@@ -1231,7 +1238,7 @@ void Parser::whileState() {
 	label2 = genLab();
 	label3 = genLab();
 	if (curToken.type != DO) {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	
 	quaterList.push_back(Quaternary("LAB", "", "", label2));
@@ -1273,7 +1280,7 @@ void Parser::switchState() {
 	labelEnd = genLab();
 
 	if (curToken.type != SWITCH) {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	getToken();
 	if (curToken.type != LPAR) {
@@ -1298,7 +1305,7 @@ void Parser::switchState() {
 
 		//缺省
 		if (curToken.type != DEFAULT) {
-			error(UNKNOWN, lexer.lineNum);
+			error(MISSING_DEFAULT, lexer.lineNum);
 		}
 		getToken();
 		if (curToken.type != COLON) {
@@ -1401,6 +1408,9 @@ SymbolItem Parser::funcWithValState() {//TODO:返回值类型没有确定，在上层确定了
 
 	getToken();
 	if (curToken.type == LPAR) {
+		if (symTab.searchFunc(idName).para == 0)
+			error(FUNC_WITH_PARE, lexer.lineNum);
+
 		getToken();
 		valParaTab(idName);
 		if (curToken.type == RPAR) {
@@ -1435,6 +1445,9 @@ void Parser::funcWithNoValState() {
 
 	getToken();
 	if (curToken.type == LPAR) {
+		if (symTab.searchFunc(idName).para == 0)
+			error(FUNC_WITH_PARE, lexer.lineNum);
+
 		getToken();
 		valParaTab(idName);
 		if (curToken.type == RPAR) {
@@ -1544,7 +1557,7 @@ void Parser::assignState() {
 */
 void Parser::scanfState() {
 	if (curToken.type != SCANF) {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	getToken();
 	if (curToken.type != LPAR) {
@@ -1588,7 +1601,7 @@ void Parser::scanfState() {
 void Parser::printfState() {
 	SymbolItem exprSym;
 	if (curToken.type != PRINTF) {
-		error(UNKNOWN, lexer.lineNum);
+		error(STATEMENT_ERROR, lexer.lineNum);
 	}
 	getToken();
 	if (curToken.type != LPAR) {

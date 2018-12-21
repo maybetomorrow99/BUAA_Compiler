@@ -1,1 +1,8 @@
 name      kind      type      value     addr      para
+a         var       int       0         0         0         
+test      func      void      8         0         0         
+$temp0    var       char      97        4         0         
+b         func      int       12        0         0         
+$temp1    var       char      98        4         0         
+$temp2    var       int       1         8         0         
+main      func      void      4         0         0         

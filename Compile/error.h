@@ -13,7 +13,7 @@
 #define MISSING_IDEN                9
 #define MISSING_EQUAL_SIGN          10
 #define MISSING_CHAR                11
-#define MISSING_RESERVED_WORDS      12
+#define MISSING_TYPE				12
 #define MISSING_RIGHT_PARENTHESIS   13
 #define MISSING_RIGHT_BRACKET       14
 #define MISSING_RIGHT_BRACE         15
@@ -47,7 +47,10 @@
 #define EXPR_IN_CONDITION_NOT_INT	43
 #define CASE_CONST_DIFF				44
 #define ASSIGN_CONST				45
-
+#define MISSING_INTEGER				46
+#define FUNC_WITH_PARE				47
+#define MISSING_DEFAULT				48
+#define STATEMENT_ERROR				49
 extern int errcount;
 
 void error(int errid, int lineNum);

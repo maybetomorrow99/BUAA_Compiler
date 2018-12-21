@@ -18,7 +18,7 @@ void error(int errid, int lineNum) {
 	case 9:  cout << "Missing identifier"; break;
 	case 10:  cout << "Missing equal sign"; break;
 	case 11:  cout << "Missing character"; break;
-	case 12:  cout << "Missing reserved words"; break;
+	case 12:  cout << "Missing type"; break;
 	case 13:  cout << "Missing right parenthesis"; break;
 	case 14:  cout << "Missing right bracket"; break;
 	case 15:  cout << "Missing right brace"; break;
@@ -52,6 +52,10 @@ void error(int errid, int lineNum) {
 	case 43:  cout << "The expression in the condition is not an integer"; break;
 	case 44:  cout << "Case constant type is incorrect"; break;
 	case 45:  cout << "Assign to const"; break;
+	case 46:  cout << "Missing integer"; break;
+	case 47:  cout << "Parameterless function with parentheses"; break;
+	case 48:  cout << "Missing default"; break;
+	case 49:  cout << "Statement error"; break;
 	default:  cout << "Unknown";
 	}
 	cout << " at line " << lineNum << endl;

@@ -1,0 +1,14 @@
+VAR       int                 a         
+FUNC      void                test      
+LI        97                  $temp0    
+PRT       0                   $temp0    
+REN                                     
+FUNC      int                 b         
+LI        98                  $temp1    
+PRT       0                   $temp1    
+LI        1                   $temp2    
+RET                           $temp2    
+FUNC      void                main      
+CALL                          b         
+CALL                          test      
+REN                                     

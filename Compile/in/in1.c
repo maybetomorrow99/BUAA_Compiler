@@ -1,11 +1,15 @@
-const aint  = 3;
+int a;
 
-char test(int a){
-	a = 5;
-	return (('a'));
-} 
+void test{
+	printf('a');
+}
 
+int b{
+	printf('b');
+	return ((1));
+	}
 void main(){
-	printf("love", a);
+	b;
+	test;
 	return;	
 }
