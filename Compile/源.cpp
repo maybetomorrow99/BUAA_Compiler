@@ -1,7 +1,7 @@
-#include "stdafx.h"
 #include "lexer.h"
 #include "parser.h"
 #include "mips.h"
+#include "dag.h"
 
 using namespace std;
 
@@ -35,6 +35,7 @@ int main() {
 		cout << "Lexer analysis succeeded." << endl;
 	}
 
+	dagInit();
 	symTab.printTable(symPath);
 	printQuater(quaterPath);
 

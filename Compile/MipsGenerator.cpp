@@ -48,7 +48,7 @@ int MipsGenerator::getOffset(string name) {
 根据四元式生成Mips代码
 */
 void MipsGenerator::genMips() {
-	mipsout << "#" << curq.toString() << endl;
+	mipsout << "# " << curq.toString() << endl;
 	if (curq.oper == "CON") {
 		mipsCON();
 	}
@@ -305,7 +305,7 @@ void MipsGenerator::mipsCALL() {
 	int para = symTab.searchFunc(fname).para;
 
 	//此时参数已经使sp的位置下降
-	for (int i = 8; i <= 25; i++) {	//保存临时寄存器等
+	for (int i = 4; i <= 25; i++) {	//保存临时寄存器等
 		mipsout << "sw $" << i << ", " << -i * 4 << "($sp)" << endl;
 	}
 	mipsout << "sw $fp ," << -30 * 4 << "($sp)" << endl;
@@ -313,7 +313,7 @@ void MipsGenerator::mipsCALL() {
 
 	mipsout << "jal " << fname << endl;
 
-	for (int i = 8; i <=25 ; i++) {
+	for (int i = 4; i <=25 ; i++) {
 		mipsout << "lw $" << i << ", " << -para * 4 - i * 4 << "($sp)" << endl;
 	}
 	mipsout << "lw $fp ," << -para * 4 - 30 * 4 << "($sp)" << endl;
@@ -541,6 +541,7 @@ void MipsGenerator::mipsPC() {
 PI			√	输出整数或字符
 printf(x)	PI x
 x为临时变量
+TODO:x可能为任意变量，此处需要修改
 */
 void MipsGenerator::mipsPI() {
 	string name = curq.res;

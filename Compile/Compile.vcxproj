@@ -118,6 +118,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dag.cpp" />
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="MipsGenerator.cpp" />
@@ -127,6 +128,7 @@
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dag.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="mips.h" />

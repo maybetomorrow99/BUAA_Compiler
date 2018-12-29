@@ -734,20 +734,27 @@ int Parser::intNum() {
 返回值为一个新的变量
 */
 SymbolItem Parser::expression() {
-	SymbolItem itemSym1, itemSym2;
+	SymbolItem itemSym1, itemSym2, resSym;
 	int sign = 0;
 	if (curToken.type == PLUS || curToken.type == MINUS) {
 		sign = curToken.type;
 		getToken();
 	}
 	itemSym1 = item();
+	resSym = itemSym1;
 	if (sign == MINUS) {
 		itemSym2.name = genVar();
 		itemSym2.type = INTTP;
 		symTab.insert(itemSym2.name, VARKD, INTTP, 0);
 		quaterList.push_back(Quaternary("LI", to_string(0), "", itemSym2.name));
-		quaterList.push_back(Quaternary("SUB", itemSym2.name, itemSym1.name, itemSym1.name));
-		itemSym1.value = -itemSym1.value;			//用于判断数组下标是否越界
+
+		resSym.name = genVar();
+		resSym.type = INTTP;
+		symTab.insert(resSym.name, VARKD, INTTP, 0);
+
+		quaterList.push_back(Quaternary("SUB", itemSym2.name, itemSym1.name, resSym.name));
+		resSym.value = resSym.value;			//用于判断数组下标是否越界
+		itemSym1 = resSym;
 	}
 
 	while (curToken.type == PLUS || curToken.type == MINUS) {
@@ -755,18 +762,23 @@ SymbolItem Parser::expression() {
 		getToken();
 		itemSym2 = item();
 
+		resSym.name = genVar();
+		resSym.type = INTTP;
+		symTab.insert(resSym.name, VARKD, resSym.type, 0);
+
 		if (sign == PLUS)
-			quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, itemSym1.name));
+			quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, resSym.name));
 		else
-			quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, itemSym1.name));
+			quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, resSym.name));
 
 		//参与运算之后类型一定为INTTP
-		symTab.changeVarType(itemSym1.name);
-		itemSym1.type = INTTP;
+		//symTab.changeVarType(itemSym1.name);
+		//itemSym1.type = INTTP;
+		itemSym1 = resSym;
 	}
 	
 	fout << setw(4) << left << lexer.lineNum<< "This is an expression" << endl;
-	return itemSym1;
+	return resSym;
 }
 
 
@@ -774,26 +786,32 @@ SymbolItem Parser::expression() {
 <项>     ::= <因子>{<乘法运算符><因子>}
 */
 SymbolItem Parser::item() {
-	SymbolItem factorSym1, factorSym2;
+	SymbolItem factorSym1, factorSym2, resSym;
 	factorSym1 = factor();
+	resSym = factorSym1;
 	while (curToken.type == MULT || curToken.type == DIV) {
 		int sign = curToken.type;
 		getToken();
 		factorSym2 = factor();
 
+		resSym.name = genVar();
+		resSym.type = INTTP;
+		symTab.insert(resSym.name, VARKD, resSym.type, 0);
+
 		//进行一次运算
 		if (sign == MULT)
-			quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, factorSym1.name));
+			quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, resSym.name));
 		else
-			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, factorSym1.name));
+			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, resSym.name));
 
 		//参与运算之后类型一定为INTTP
-		symTab.changeVarType(factorSym1.name);
-		factorSym1.type = INTTP;
+		//symTab.changeVarType(factorSym1.name);
+		//factorSym1.type = INTTP;
+		factorSym1 = resSym;
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a item" << endl;
-	return factorSym1;
+	return resSym;
 }
 
 
@@ -825,7 +843,7 @@ SymbolItem Parser::factor() {
 			factorSym.name = genVar();
 			factorSym.type = symTab.search(idName).type;
 			symTab.insert(factorSym.name, VARKD, factorSym.type, 0);
-			quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", factorSym.name));
+			//quaterList.push_back(Quaternary("VAR", (type == INTTP ? "int" : "char"), "", factorSym.name));
 
 			arrayIndex = expression();
 			if (curToken.type == RBRK) {
@@ -869,7 +887,10 @@ SymbolItem Parser::factor() {
 		}
 		else {					//<标识符>
 			clearToken();
-			
+
+			//此处直接返回，不要用间接变量存
+			return symTab.search(idName);	
+
 			factorSym.name = genVar();
 			factorSym.type = symTab.search(idName).type;
 			

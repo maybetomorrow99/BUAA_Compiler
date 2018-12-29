@@ -1,14 +1,35 @@
-VAR       int                 a         
-FUNC      void                test      
-LI        97                  $temp0    
-PRT       0                   $temp0    
-REN                                     
-FUNC      int                 b         
-LI        98                  $temp1    
-PRT       0                   $temp1    
-LI        1                   $temp2    
-RET                           $temp2    
 FUNC      void                main      
-CALL                          b         
-CALL                          test      
+VAR       int                 a         
+VAR       int                 b         
+VAR       int                 c         
+VAR       int                 d         
+ARY       int       10        array     
+LI        1                   $temp0    
+LI        0                   $temp1    
+SUB       $temp1    $temp0    $temp2    
+LI        2                   $temp3    
+ADD       $temp2    $temp3    a         
+LI        2                   b         
+LI        3                   c         
+LI        1                   $temp7    
+LI        0                   $temp8    
+SUB       $temp8    $temp7    d         
+ADD       a         b         $temp10   
+ADD       $temp10   c         c         
+PRT       0                   c         
+MUL       a         b         $temp12   
+MUL       $temp12   c         $temp13   
+MUL       a         b         $temp14   
+ADD       $temp13   $temp14   $temp15   
+LI        1                   $temp16   
+ADD       a         $temp16   $temp17   
+ADD       $temp15   $temp17   c         
+PRT       0                   c         
+ADD       a         b         $temp19   
+ADD       a         b         $temp20   
+ADD       $temp19   $temp20   $temp21   
+LI        1                   $temp22   
+ADD       a         $temp22   $temp23   
+ADD       $temp21   $temp23   d         
+PRT       0                   d         
 REN                                     

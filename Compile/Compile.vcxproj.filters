@@ -36,6 +36,9 @@
     <ClCompile Include="MipsGenerator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Dag.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lexer.h">
@@ -57,6 +60,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="mips.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dag.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
