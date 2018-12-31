@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 #include "parser.h"
 
 
@@ -11,5 +10,11 @@ void dagInit();
 
 class Node {
 public:
+	string name;
+	int id;
+	Node* lchild;
+	Node* rchild;
+	bool is_mid;
+	vector<string> var_names;
 	
 };

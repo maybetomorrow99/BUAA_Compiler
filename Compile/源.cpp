@@ -36,6 +36,8 @@ int main() {
 	}
 
 	dagInit();
+
+	generator.referCount();
 	symTab.printTable(symPath);
 	printQuater(quaterPath);
 
@@ -44,7 +46,7 @@ int main() {
 	}
 	else {
 		cout << "Parser analysis succeeded." << endl;
-		generator.startWorking();
+		//generator.startWorking();
 
 		cout << "Compiled successfully" << endl;
 	}

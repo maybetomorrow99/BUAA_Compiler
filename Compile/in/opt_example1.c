@@ -1,23 +1,11 @@
 const int con = 10;
 
-void testmap{
-	int a, b, c;
-	a = 1 + 2;
-	b = 2;
-	c = 3;
-	b = 2;
-	c = 3;
-	c = 3;	
-}
-
-
 void main(){
-	const int loc_con = 20;
 	int a, b, c, d;
 	int array[10];
 	char ch;
 	a = 10;
-	a = a + 2;
+	a = -1 + 2;
 	b = 2;
 	c = 3;	
 	d = -1;
@@ -31,6 +19,5 @@ void main(){
 	printf(d);
 	ch = 'a';
 	printf(ch);
-	a = c + loc_con + 3 - 1 + (20 * ( 5 - 1) + 30 / 2) * 2 + b;
 	return;
 }

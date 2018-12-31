@@ -745,15 +745,22 @@ SymbolItem Parser::expression() {
 	if (sign == MINUS) {
 		itemSym2.name = genVar();
 		itemSym2.type = INTTP;
+		itemSym2.value = 0;
 		symTab.insert(itemSym2.name, VARKD, INTTP, 0);
-		quaterList.push_back(Quaternary("LI", to_string(0), "", itemSym2.name));
+		//quaterList.push_back(Quaternary("LI", to_string(0), "", itemSym2.name));
 
 		resSym.name = genVar();
 		resSym.type = INTTP;
 		symTab.insert(resSym.name, VARKD, INTTP, 0);
 
-		quaterList.push_back(Quaternary("SUB", itemSym2.name, itemSym1.name, resSym.name));
-		resSym.value = resSym.value;			//用于判断数组下标是否越界
+		if (itemSym1.value) {
+			quaterList.push_back(Quaternary("SUB", "0", to_string(itemSym1.value), resSym.name));
+		}
+		else {
+			quaterList.push_back(Quaternary("SUB", "0", itemSym1.name, resSym.name));
+		}
+
+		resSym.value = -resSym.value;			//用于判断数组下标是否越界
 		itemSym1 = resSym;
 	}
 
@@ -764,12 +771,42 @@ SymbolItem Parser::expression() {
 
 		resSym.name = genVar();
 		resSym.type = INTTP;
+		resSym.value = 0;	//需要初始化以保证在后续值中不会出问题
 		symTab.insert(resSym.name, VARKD, resSym.type, 0);
 
-		if (sign == PLUS)
-			quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, resSym.name));
-		else
-			quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, resSym.name));
+		if (sign == PLUS) {
+			if (itemSym1.value) {
+				if (itemSym2.value) {
+					//TODO:此处该不该注释掉，是将来从四元式中移除还是一开始就不生成
+					//quaterList.push_back(Quaternary("ADD", to_string(itemSym1.value), to_string(itemSym2.value), resSym.name));
+					resSym.value = itemSym1.value + itemSym2.value;
+				}
+				else
+					quaterList.push_back(Quaternary("ADD", to_string(itemSym1.value), itemSym2.name, resSym.name));
+			}
+			else {
+				if (itemSym2.value)
+					quaterList.push_back(Quaternary("ADD", itemSym1.name, to_string(itemSym2.value), resSym.name));
+				else
+					quaterList.push_back(Quaternary("ADD", itemSym1.name, itemSym2.name, resSym.name));
+			}
+		}
+		else {
+			if (itemSym1.value) {
+				if (itemSym2.value) {
+					//quaterList.push_back(Quaternary("SUB", to_string(itemSym1.value), to_string(itemSym2.value), resSym.name));
+					resSym.value = itemSym1.value - itemSym2.value;
+				}
+				else
+					quaterList.push_back(Quaternary("SUB", to_string(itemSym1.value), itemSym2.name, resSym.name));
+			}
+			else {
+				if (itemSym2.value)
+					quaterList.push_back(Quaternary("SUB", itemSym1.name, to_string(itemSym2.value), resSym.name));
+				else
+					quaterList.push_back(Quaternary("SUB", itemSym1.name, itemSym2.name, resSym.name));
+			}
+		}
 
 		//参与运算之后类型一定为INTTP
 		//symTab.changeVarType(itemSym1.name);
@@ -796,14 +833,42 @@ SymbolItem Parser::item() {
 
 		resSym.name = genVar();
 		resSym.type = INTTP;
+		resSym.value = 0;
 		symTab.insert(resSym.name, VARKD, resSym.type, 0);
 
 		//进行一次运算
-		if (sign == MULT)
-			quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, resSym.name));
-		else
-			quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, resSym.name));
-
+		if (sign == MULT) {
+			if (factorSym1.value) {
+				if (factorSym2.value) {
+					//quaterList.push_back(Quaternary("MUL", to_string(factorSym1.value), to_string(factorSym2.value), resSym.name));
+					resSym.value = factorSym1.value * factorSym2.value;
+				}
+				else
+					quaterList.push_back(Quaternary("MUL", to_string(factorSym1.value), factorSym2.name, resSym.name));
+			}
+			else {
+				if (factorSym2.value)
+					quaterList.push_back(Quaternary("MUL", factorSym1.name, to_string(factorSym2.value), resSym.name));
+				else
+					quaterList.push_back(Quaternary("MUL", factorSym1.name, factorSym2.name, resSym.name));
+			}
+		}
+		else {
+			if (factorSym1.value) {
+				if (factorSym2.value) {
+					//quaterList.push_back(Quaternary("DIV", to_string(factorSym1.value), to_string(factorSym2.value), resSym.name));
+					resSym.value = factorSym1.value / factorSym2.value;
+				}
+				else
+					quaterList.push_back(Quaternary("DIV", to_string(factorSym1.value), factorSym2.name, resSym.name));
+			}
+			else {
+				if (factorSym2.value)
+					quaterList.push_back(Quaternary("DIV", factorSym1.name, to_string(factorSym2.value), resSym.name));
+				else
+					quaterList.push_back(Quaternary("DIV", factorSym1.name, factorSym2.name, resSym.name));
+			}
+		}
 		//参与运算之后类型一定为INTTP
 		//symTab.changeVarType(factorSym1.name);
 		//factorSym1.type = INTTP;
@@ -911,7 +976,7 @@ SymbolItem Parser::factor() {
 		factorSym.type = INTTP;
 		factorSym.value = value;
 		symTab.insert(factorSym.name, VARKD, INTTP, value);
-		quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
+		//quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
 	}
 	else if (curToken.type == SIGCHAR) {	//字符
 		factorSym.name = genVar();
@@ -1540,8 +1605,11 @@ void Parser::assignState() {
 		
 		if (symTab.search(idName).kind == CONSTKD)
 			error(ASSIGN_CONST, lexer.lineNum);
-
-		quaterList.push_back(Quaternary("LVAR", exprSym.name, "", idName));
+		
+		if (exprSym.value != 0)	//常数直接赋值
+			quaterList.push_back(Quaternary("LI", to_string(exprSym.value), "", idName));
+		else
+			quaterList.push_back(Quaternary("LVAR", exprSym.name, "", idName));
 	}
 	else if (curToken.type == LBRK) {
 		getToken();

@@ -1,8 +1,105 @@
 #include "mips.h"
+#include "dag.h"
+#define IS_VAR(name) ((name[0] >= 'a' && name[0] <= 'z') || name[0] == '_')
+
+typedef pair<string, int> PAIR;
 
 MipsGenerator::MipsGenerator(string asmPath) {
 	mipsout.open(asmPath);
 }
+
+
+/*
+降序排列用
+*/
+bool cmp_by_value(const PAIR& lhs, const PAIR& rhs) {
+	return lhs.second > rhs.second;
+}
+
+
+/*
+引用计数，在每个函数计数结束后，进行排序
+*/
+void MipsGenerator::referCount() {
+	string oper;
+	string fname;
+	vector<string> ref;
+	map<string, int> refCountMap;
+	
+	for (unsigned int i = 0; i < quaterList.size(); i++) {
+		ref.clear();
+		oper = quaterList[i].oper;
+		if (oper == "FUNC") {
+			
+			//cout << fname;
+			vector<PAIR> refCountVec(refCountMap.begin(), refCountMap.end());
+			sort(refCountVec.begin(), refCountVec.end(), cmp_by_value);
+			/*for (unsigned int j = 0; j < refCountVec.size(); j++) {
+				cout << refCountVec[j].first << " : " << refCountVec[j].second << endl;
+			}*/
+			
+			funcRefCountMap[fname] = refCountVec;
+
+			symTab.updateCurFuncAddr(quaterList[i].res);
+			fname = quaterList[i].res;
+			refCountMap.clear();
+		}
+		// 1 2 res
+		else if (oper == "ADD" || oper == "SUB" || oper == "MUL" || oper == "DIV") {
+			ref.push_back(quaterList[i].op1);
+			ref.push_back(quaterList[i].op2);
+			ref.push_back(quaterList[i].res);
+		}
+		// 1   res
+		else if (oper == "LVAR") {
+			ref.push_back(quaterList[i].op1);
+			ref.push_back(quaterList[i].res);
+		}
+		//   2 res
+		else if (oper == "SARY" || oper == "LARY") {
+			ref.push_back(quaterList[i].op2);
+			ref.push_back(quaterList[i].res);
+		}
+		// 1 2
+		else if (oper == "BGT" || oper == "BGE" || oper == "BEQ"
+			|| oper == "BLE" || oper == "BLT" || oper == "BNE") {
+			ref.push_back(quaterList[i].op1);
+			ref.push_back(quaterList[i].op2);
+		}
+		//    res
+		else if (oper == "PUSH" || oper == "VOF" || oper == "LI" 
+			|| oper == "PRT" || oper == "READ" || oper == "RET") {
+			ref.push_back(quaterList[i].res);
+		}
+		
+		for (unsigned int j = 0; j < ref.size(); j++) {
+			if (IS_VAR(ref[j])) {
+				int kind = symTab.search(ref[j]).kind;
+				if (kind != ARRAYKD && kind != CONSTKD)
+					refCountMap[ref[j]] += 1;
+			}
+		}
+	}
+
+	cout << fname;
+	vector<PAIR> refCountVec(refCountMap.begin(), refCountMap.end());
+	sort(refCountVec.begin(), refCountVec.end(), cmp_by_value);
+	/*for (unsigned int j = 0; j < refCountVec.size(); j++) {
+		cout << refCountVec[j].first << " : " << refCountVec[j].second << endl;
+	}*/
+
+	funcRefCountMap[fname] = refCountVec;
+
+	for (map < string, vector<PAIR> >::iterator it = funcRefCountMap.begin(); it != funcRefCountMap.end(); it++) {
+		cout << it->first << ":" << endl;
+		refCountVec = it->second;
+		for (unsigned int i = 0; i < refCountVec.size(); ++i) {
+			cout << refCountVec[i].first << ":" << refCountVec[i].second << endl;
+		}
+	}
+}
+
+
 
 /*
 判断该局部变量是否在寄存器中
@@ -20,6 +117,40 @@ bool MipsGenerator::inReg(string name) {
 	return false;
 }
 
+
+
+/*
+检测局部变量是否在寄存器中，通过检查引用计数得知结果
+*/
+bool MipsGenerator::varInReg(string name) {
+	vector<PAIR> refCountVec;
+	refCountVec = funcRefCountMap[name];
+	if (refCountVec.size() <= 8)
+		return true;
+	else {
+		for (unsigned int i = 0; i < refCountVec.size(); ++i) {
+			if (refCountVec[i].first == name)
+				return true;
+			//cout << refCountVec[i].first << ":" << refCountVec[i].second << endl;
+		}
+	}
+	return false;
+}
+
+
+/*
+获取局部变量对应的全局寄存器编号，此时已经确认局部变量在寄存器中
+*/
+int MipsGenerator::getVarReg(string name) {
+	vector<PAIR> refCountVec;
+	refCountVec = funcRefCountMap[name];
+	for (unsigned int i = 0; i < refCountVec.size(); ++i) {
+		if (refCountVec[i].first == name) {
+			return i;
+		}
+	}
+	return 0;
+}
 
 /*
 变量寄存器从t2开始
@@ -563,7 +694,7 @@ void MipsGenerator::mipsPI() {
 
 
 /*
-PRT	√	√	√	输出			
+PRT	 	√	√	输出			
 0 只有整数， 1 只有字符串 2 字符串和整数
 */
 void MipsGenerator::mipsPRT() {

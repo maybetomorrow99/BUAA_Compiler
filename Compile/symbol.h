@@ -55,6 +55,7 @@ public:
 	bool updateFuncPara(string name, int para);
 	void updateFuncVal();
 	void updateCurFuncAddr(string fname);
+	void updateVarPara(string name);
 	void changeVarType(string name);
 	void printTable(string path);
 

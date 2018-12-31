@@ -1,35 +1,51 @@
+CON       int       10        con       
+FUNC      void                testmap   
+VAR       int                 a         
+VAR       int                 b         
+VAR       int                 c         
+LI        3                   a         
+LI        2                   b         
+LI        3                   c         
+LI        2                   b         
+LI        3                   c         
+LI        3                   c         
+REN                                     
 FUNC      void                main      
+CON       int       20        loc_con   
 VAR       int                 a         
 VAR       int                 b         
 VAR       int                 c         
 VAR       int                 d         
 ARY       int       10        array     
-LI        1                   $temp0    
-LI        0                   $temp1    
-SUB       $temp1    $temp0    $temp2    
-LI        2                   $temp3    
-ADD       $temp2    $temp3    a         
+VAR       char                ch        
+LI        10                  a         
+ADD       a         2         a         
 LI        2                   b         
 LI        3                   c         
-LI        1                   $temp7    
-LI        0                   $temp8    
-SUB       $temp8    $temp7    d         
-ADD       a         b         $temp10   
-ADD       $temp10   c         c         
+SUB       0         1         $temp15   
+LI        -1                  d         
+ADD       a         b         $temp16   
+ADD       $temp16   c         c         
 PRT       0                   c         
-MUL       a         b         $temp12   
-MUL       $temp12   c         $temp13   
-MUL       a         b         $temp14   
-ADD       $temp13   $temp14   $temp15   
-LI        1                   $temp16   
-ADD       a         $temp16   $temp17   
-ADD       $temp15   $temp17   c         
-PRT       0                   c         
-ADD       a         b         $temp19   
-ADD       a         b         $temp20   
+MUL       a         b         $temp18   
+MUL       $temp18   c         $temp19   
+MUL       a         b         $temp20   
 ADD       $temp19   $temp20   $temp21   
-LI        1                   $temp22   
-ADD       a         $temp22   $temp23   
-ADD       $temp21   $temp23   d         
+ADD       a         1         $temp23   
+ADD       $temp21   $temp23   $temp24   
+ADD       $temp24   5         c         
+PRT       0                   c         
+ADD       a         b         $temp29   
+ADD       a         b         $temp30   
+ADD       $temp29   $temp30   $temp31   
+ADD       a         1         $temp33   
+ADD       $temp31   $temp33   d         
 PRT       0                   d         
+LI        97                  ch        
+PRT       0                   ch        
+ADD       c         20        $temp36   
+ADD       $temp36   3         $temp38   
+SUB       $temp38   1         $temp40   
+ADD       $temp40   190       $temp52   
+ADD       $temp52   b         a         
 REN                                     

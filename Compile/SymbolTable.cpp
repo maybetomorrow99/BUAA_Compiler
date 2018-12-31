@@ -155,7 +155,9 @@ bool SymbolTable::varInTable(string name) {
 	return false;
 }
 
-
+/*
+查找变量，返回表项
+*/
 SymbolItem SymbolTable::search(string name) {
 	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
 		if (items[i].name == name)
@@ -167,7 +169,7 @@ SymbolItem SymbolTable::search(string name) {
 				return items[i];
 		}
 	}
-	cout << "Symbol Not Found" << endl;
+	cout << name << " Symbol Not Found" << endl;
 	return SymbolItem("$notfound", UNDEFINEKD, VOIDTP, 0, 0, 0);
 }
 
@@ -195,7 +197,7 @@ int SymbolTable::getFuncAddr(string name) {
 		}
 	}
 
-	cout << "Symbol Not Found" << endl;
+	cout << name << "Func Symbol Not Found" << endl;
 	return 0;
 }
 
@@ -311,6 +313,16 @@ void SymbolTable::updateCurFuncAddr(string fname) {
 	curFuncAddr = getFuncAddr(fname);
 }
 
+
+/*
+更新变量的value，表示局部变量的引用次数，此处不包含对数组的引用
+*/
+void SymbolTable::updateVarPara(string name) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name && items[i].kind == VARKD)
+			items[i].para++;
+	}
+}
 
 /*
 临时变量char参与运算之后转为int，在factor级和expr级

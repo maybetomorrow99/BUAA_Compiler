@@ -5,9 +5,16 @@
 class MipsGenerator {
 public:
 	ofstream mipsout;
+	map < string, vector<pair<string, int> > > funcRefCountMap;
 	MipsGenerator(string asmPath);
 
+	void referCount();
+
 	bool inReg(string name);
+
+	bool varInReg(string name);
+
+	int getVarReg(string name);
 
 	int getRegNum(string name);
 
@@ -46,4 +53,16 @@ public:
 	void startWorking();
 private:
 	Quaternary curq;		//当前四元式
+};
+
+class Reg {
+public:
+	string name;
+	int kind;
+	bool busy;
+};
+
+class RegPool {
+	Reg regs[10];
+	bool isFull;
 };
