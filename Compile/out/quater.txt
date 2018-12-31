@@ -1,4 +1,5 @@
 CON       int       10        con       
+VAR       int                 glb       
 FUNC      void                testmap   
 VAR       int                 a         
 VAR       int                 b         
@@ -18,34 +19,34 @@ VAR       int                 c
 VAR       int                 d         
 ARY       int       10        array     
 VAR       char                ch        
-LI        10                  a         
+ADD       10        glb       a         
 ADD       a         2         a         
 LI        2                   b         
 LI        3                   c         
-SUB       0         1         $temp15   
+SUB       0         1         $temp16   
 LI        -1                  d         
-ADD       a         b         $temp16   
-ADD       $temp16   c         c         
+ADD       a         b         $temp17   
+ADD       $temp17   c         c         
 PRT       0                   c         
-MUL       a         b         $temp18   
-MUL       $temp18   c         $temp19   
-MUL       a         b         $temp20   
-ADD       $temp19   $temp20   $temp21   
-ADD       a         1         $temp23   
-ADD       $temp21   $temp23   $temp24   
-ADD       $temp24   5         c         
+MUL       a         b         $temp19   
+MUL       $temp19   c         $temp20   
+MUL       a         b         $temp21   
+ADD       $temp20   $temp21   $temp22   
+ADD       a         1         $temp24   
+ADD       $temp22   $temp24   $temp25   
+ADD       $temp25   5         c         
 PRT       0                   c         
-ADD       a         b         $temp29   
 ADD       a         b         $temp30   
-ADD       $temp29   $temp30   $temp31   
-ADD       a         1         $temp33   
-ADD       $temp31   $temp33   d         
+ADD       a         b         $temp31   
+ADD       $temp30   $temp31   $temp32   
+ADD       a         1         $temp34   
+ADD       $temp32   $temp34   d         
 PRT       0                   d         
 LI        97                  ch        
 PRT       0                   ch        
-ADD       c         20        $temp36   
-ADD       $temp36   3         $temp38   
-SUB       $temp38   1         $temp40   
-ADD       $temp40   190       $temp52   
-ADD       $temp52   b         a         
+ADD       c         20        $temp37   
+ADD       $temp37   3         $temp39   
+SUB       $temp39   1         $temp41   
+ADD       $temp41   190       $temp53   
+ADD       $temp53   b         a         
 REN                                     

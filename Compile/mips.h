@@ -1,24 +1,34 @@
 #pragma once
-#include "stdafx.h"
 #include "parser.h"
+#include "reg.h"
 
 class MipsGenerator {
 public:
 	ofstream mipsout;
 	map < string, vector<pair<string, int> > > funcRefCountMap;
+	RegPool regpool;
+
 	MipsGenerator(string asmPath);
 
 	void referCount();
+
+	void writeToMem(int index);
 
 	bool inReg(string name);
 
 	bool varInReg(string name);
 
-	int getVarReg(string name);
+	int getVarRegNum(string name);
+
+	string getReg(string name);
 
 	int getRegNum(string name);
 
 	int getOffset(string name);
+
+	int applyReg(string name);
+
+	string getRegWithVal(string name);
 
 	void genMips();
 	int mipsGlobal();
@@ -26,7 +36,8 @@ public:
 	void mipsVAR();
 	void mipsARY();
 	void mipsFUNC();
-	void mipsCal();
+	void mipsCalADDSUB();
+	void mipsCalMULDIV();
 	void mipsPARA();
 	void mipsCALL();
 	void mipsPUSH();
@@ -53,16 +64,4 @@ public:
 	void startWorking();
 private:
 	Quaternary curq;		//当前四元式
-};
-
-class Reg {
-public:
-	string name;
-	int kind;
-	bool busy;
-};
-
-class RegPool {
-	Reg regs[10];
-	bool isFull;
 };

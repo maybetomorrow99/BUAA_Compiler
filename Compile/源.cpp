@@ -15,7 +15,7 @@ int main() {
 	string asmPath = "./out/result.asm";
 	MipsGenerator generator(asmPath);
 
-	srcpath = "./in/in1.c";
+	srcpath = "./in/in.c";
 	//cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {
@@ -46,7 +46,7 @@ int main() {
 	}
 	else {
 		cout << "Parser analysis succeeded." << endl;
-		//generator.startWorking();
+		generator.startWorking();
 
 		cout << "Compiled successfully" << endl;
 	}

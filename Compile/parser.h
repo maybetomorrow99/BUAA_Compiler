@@ -1,17 +1,13 @@
 #pragma once
-#include "stdafx.h"
+#include "global.h"
 #include "lexer.h"
 #include "error.h"
-#include "symbol.h"
-#include "quaternary.h"
 
 void parser_test();
 
 void printQuater(string path);
 
-extern SymbolTable symTab;
-extern vector<Quaternary> quaterList;
-extern vector<string> stringPool;
+
 
 class Parser {
 public:

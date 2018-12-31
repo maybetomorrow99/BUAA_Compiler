@@ -124,16 +124,19 @@
     <ClCompile Include="MipsGenerator.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Quaternary.cpp" />
+    <ClCompile Include="Reg.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
     <ClCompile Include="源.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dag.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="mips.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="quaternary.h" />
+    <ClInclude Include="reg.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="symbol.h" />
   </ItemGroup>
