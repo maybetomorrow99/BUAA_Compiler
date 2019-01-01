@@ -12,7 +12,6 @@ public:
 
 	void referCount();
 
-	void writeToMem(int index);
 
 	bool inReg(string name);
 
@@ -30,6 +29,12 @@ public:
 
 	string getRegWithVal(string name);
 
+	void reg2Mem(int index);
+
+	void clearRegs(int option);
+
+	void recovery();
+
 	void genMips();
 	int mipsGlobal();
 	void mipsCON();
@@ -46,8 +51,6 @@ public:
 	void mipsLVAR();
 	void mipsSARY();
 	void mipsLARY();
-	void mipsPC();
-	void mipsPI();
 	void mipsPRT();
 	void mipsREAD();
 	void mipsRET();

@@ -1,7 +1,7 @@
 #include "mips.h"
 #include "dag.h"
 #define IS_VAR(name) ((name[0] >= 'a' && name[0] <= 'z') || name[0] == '_')
-#define IS_NUM(name) (name[0] >= '0' && name[0] <= '9')
+#define IS_NUM(name) ((name[0] >= '0' && name[0] <= '9') || name[0] == '-')
 #define IS_TEMP(name) (name[0] == '$')
 
 typedef pair<string, int> PAIR;
@@ -82,7 +82,7 @@ void MipsGenerator::referCount() {
 		}
 		
 		for (unsigned int j = 0; j < ref.size(); j++) {
-			if (IS_VAR(ref[j])) {
+			if (IS_VAR(ref[j]) && !symTab.isGlobal(ref[j])) {
 				int kind = symTab.search(ref[j]).kind;
 				if (kind != ARRAYKD && kind != CONSTKD)
 					refCountMap[ref[j]] += 1;
@@ -106,40 +106,19 @@ void MipsGenerator::referCount() {
 
 
 /*
-将该编号对应的临时寄存器写回内存
-*/
-void MipsGenerator::writeToMem(int index) {
-	
-}
-
-/*
-判断该局部变量是否在寄存器中
-目前，将所有的临时变量放在内存中，将局部变量/常量（不包括参数）的前8个放在寄存器中，对应寄存器t2-t9
-*/
-bool MipsGenerator::inReg(string name) {
-	if (name[0] == '$')
-		return false;
-	int addr = symTab.search(name).addr;
-	int para = symTab.getCurFunc().para;
-	SymbolKind kind = symTab.search(name).kind;
-	if ((kind == VARKD || kind == CONSTKD) && addr < para * 4 + 8 * 4) {
-		return true;
-	}
-	return false;
-}
-
-
-
-/*
 检测局部变量是否在寄存器中，通过检查引用计数得知结果
 */
 bool MipsGenerator::varInReg(string name) {
+	if (symTab.isConst(name)) {
+		return false;
+	}
+
 	vector<PAIR> refCountVec;
-	refCountVec = funcRefCountMap[name];
+	refCountVec = funcRefCountMap[symTab.getCurFunc().name];
 	if (refCountVec.size() <= 8)
 		return true;
 	else {
-		for (unsigned int i = 0; i < refCountVec.size(); ++i) {
+		for (int i = 0; i < 8; ++i) {
 			if (refCountVec[i].first == name)
 				return true;
 			//cout << refCountVec[i].first << ":" << refCountVec[i].second << endl;
@@ -160,19 +139,7 @@ int MipsGenerator::getVarRegNum(string name) {
 			return i;
 		}
 	}
-	return 0;
-}
-
-
-/*
-变量寄存器从t2开始
-将局部变量/常量的前8个放入寄存器中
-因为在符号表中函数表项还占有一个位置，所以要先-4
-*/
-int MipsGenerator::getRegNum(string name) {
-	int addr = symTab.search(name).addr;
-	int para = symTab.getCurFunc().para;
-	return 2 + (addr - 4 - para * 4) / 4;
+	return -1;
 }
 
 
@@ -186,6 +153,7 @@ int MipsGenerator::getOffset(string name) {
 	return symTab.search(name).addr + 32 * 4 - 4;	
 }
 
+
 /*
 申请一个临时寄存器
 */
@@ -193,10 +161,9 @@ int MipsGenerator::applyReg(string name) {
 	int index;
 	if (regpool.isFull) {
 		index = regpool.findLongestReg();
-		cout << "find" << index;
 		//将该寄存器中的值写回内存
+		reg2Mem(index);
 		index = regpool.applyReg(name);
-		cout << "res" << index << endl;
 	}
 	else {
 		index = regpool.applyReg(name);
@@ -220,7 +187,7 @@ string MipsGenerator::getRegWithVal(string name) {
 	if (IS_NUM(name)) {	//临时数字
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
-			mipsout << "li " << name << ", $t" << index << endl;
+			mipsout << "li $t" << index << ", "<< name << endl;
 		}
 		return "$t" + to_string(index);
 	}
@@ -235,8 +202,8 @@ string MipsGenerator::getRegWithVal(string name) {
 	else if (symTab.isGlobal(name)) {	//全局变量
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
-			mipsout << "la $t" << index << ", " << name << endl;
-			mipsout << "lw $t" << index << ", 0($t" << index << ")" << endl;
+			mipsout << "la $v1, " << name << endl;
+			mipsout << "lw $t" << index << ", 0($v1)" << endl;
 		}
 		return "$t" + to_string(index);
 	}
@@ -261,11 +228,17 @@ string MipsGenerator::getRegWithVal(string name) {
 传入名字，将该变量名所对应的寄存器返回，此处用于存值，返回的每个寄存器中的值认为是无意义的
 如果有，返回$寄存器，
 如果没有在寄存器中，申请一个新的寄存器
-如果是临时变量、局部变量，寄存器中对应的就是变量的值，全局变量也是
+如果是临时变量、局部变量，寄存器中对应的就是变量的值，全局变量也是，这个只是为了有个对应
 */
 string MipsGenerator::getReg(string name) {
 	int index;
-	if (IS_TEMP(name)) {	//临时变量
+	if (IS_NUM(name)) {			//此处其实不会存值，用于随便申请的一次性寄存器
+		if ((index = regpool.searchReg(name)) == -1) {
+			index = applyReg(name);
+		}
+		return "$t" + to_string(index);
+	}
+	else if (IS_TEMP(name)) {	//临时变量
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
 		}
@@ -274,7 +247,6 @@ string MipsGenerator::getReg(string name) {
 	else if (symTab.isGlobal(name)) {	//全局变量
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
-			mipsout << "la $t" << index << name << endl;
 		}
 		return "$t" + to_string(index);
 	}
@@ -292,6 +264,97 @@ string MipsGenerator::getReg(string name) {
 	}
 }
 
+
+/*
+将寄存器中的内容写入到内存当中
+int kind;	//0-数字， 1-临时变量， 2-局部变量， 3-全局变量
+*/
+void MipsGenerator::reg2Mem(int index) {
+	Reg reg = regpool.regs[index];
+	int addr;
+	if (reg.kind == 1) {
+		addr = -getOffset(reg.name);
+		mipsout << "sw $t" << index << ", " << addr << "($fp)" << endl;
+	}
+	else if (reg.kind == 2) {
+		addr = -getOffset(reg.name);
+		mipsout << "sw $t" << index << ", " << addr << "($fp)" << endl;
+	}
+	else if(reg.kind == 3){
+		mipsout << "la $v1, " << reg.name << endl;
+		mipsout << "sw $t" << index << ", 0($v1)" << endl;
+	}
+}
+
+/*
+清空寄存器
+option = 0， 清空 $8-25寄存器, 不存入内存，在函数声明开始时使用
+option = 1, 清空 $8-25寄存器, 将相应内容存入内存中, 在调用其他函数之前使用
+option = 2, 清空 $8-$25寄存器, 将全局变量存入内存,其余不存入，函数返回时使用
+option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(func一开始分配的保留, 函数内跨块使用)
+*/
+void MipsGenerator::clearRegs(int option) {
+	string fname = symTab.getCurFunc().name;
+	string name;
+	int addr;
+	unsigned int maxVarNum;
+	if (option == 0) {
+
+	}
+	else if (option == 1) {
+		//遍历引用计数表
+		vector<PAIR> refCountVec;
+		refCountVec = funcRefCountMap[symTab.getCurFunc().name];
+		maxVarNum = ((refCountVec.size() < 8)) ? refCountVec.size() : 8;
+		for (unsigned int i = 0; i < maxVarNum; ++i) {
+			name = refCountVec[i].first;
+			addr = -getOffset(name);
+			mipsout << "sw $s" << i << ", " << addr << "($fp)" << endl;
+		}
+
+		for (int i = 0; i < 10; i++) {
+			if (regpool.regs[i].busy) {
+				reg2Mem(i);
+			}
+		}
+	}
+	else if (option == 2) {
+		for (int i = 0; i < 10; i++) {
+			if (regpool.regs[i].busy && regpool.regs[i].kind == 3) {
+				reg2Mem(i);
+			}
+		}
+	}
+	else {	//option == 3
+		for (int i = 0; i < 10; i++) {
+			if (regpool.regs[i].busy && regpool.regs[i].kind == 3) {
+				reg2Mem(i);
+			}
+		}
+	}
+	regpool.clearRegs();
+}
+
+
+/*
+恢复现场，将引用计数的前八个返回到寄存器中
+*/
+void MipsGenerator::recovery() {
+	string fname = symTab.getCurFunc().name;
+	string name;
+	int addr;
+	unsigned int maxVarNum;
+
+	//遍历引用计数表
+	vector<PAIR> refCountVec;
+	refCountVec = funcRefCountMap[symTab.getCurFunc().name];
+	maxVarNum = ((refCountVec.size() < 8)) ? refCountVec.size() : 8;
+	for (unsigned int i = 0; i < maxVarNum; ++i) {
+		name = refCountVec[i].first;
+		addr = -getOffset(name);
+		mipsout << "lw $s" << i << ", " << addr << "($fp)" << endl;
+	}
+}
 
 /*
 根据四元式生成Mips代码
@@ -464,7 +527,21 @@ void MipsGenerator::mipsFUNC() {
 	//分配栈空间
 	mipsout << "add $fp, $sp, " << para * 4 << endl;
 	mipsout << "subi $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
-	//mipsout << "sw $ra, 0($sp)" << endl;	//TODO:保存ra是用跳转？
+	
+	//给有寄存器的参数赋初始值
+	unsigned int maxVarNum;
+	string name;
+	int addr;
+	vector<PAIR> refCountVec;
+	refCountVec = funcRefCountMap[symTab.getCurFunc().name];
+	maxVarNum = ((refCountVec.size() < 8)) ? refCountVec.size() : 8;
+	for (unsigned int i = 0; i < maxVarNum; ++i) {
+		name = refCountVec[i].first;
+		if (symTab.isPara(name)) {
+			addr = -getOffset(name);
+			mipsout << "lw $s" << i << ", " << addr << "($fp)" << endl;
+		}
+	}
 }
 
 
@@ -505,10 +582,10 @@ void MipsGenerator::mipsCalADDSUB() {
 
 	if (curq.oper == "ADD") {
 		if (IS_NUM(op1name)) {
-			mipsout << "add " << reg3 << ", " << reg2 << ", " << op1name << endl;
+			mipsout << "addi " << reg3 << ", " << reg2 << ", " << op1name << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "add " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "addi " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
 			mipsout << "add " << reg3 << ", " << reg1 << ", " << reg2 << endl;
@@ -516,32 +593,17 @@ void MipsGenerator::mipsCalADDSUB() {
 	}
 	else if (curq.oper == "SUB") {
 		if (IS_NUM(op1name)) {
-			mipsout << "sub " << reg3 << ", " << reg2 << ", " << op1name << endl;
+			reg1 = getRegWithVal(op1name);
+			mipsout << "sub " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "sub " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "subi " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
 			mipsout << "sub " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 	}
 
-	//值目前在寄存器中，到时候会有人存回去
-	//读取等式左边并赋值
-	/*
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t" << regNum << ", $t0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
-	}
-	*/
 }
 
 /*
@@ -582,22 +644,7 @@ void MipsGenerator::mipsCalMULDIV() {
 	}
 
 
-	//值目前在寄存器中，到时候会有人存回去
-	//读取等式左边并赋值
-	/*
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t" << regNum << ", $t0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
-	}
-	*/
+
 }
 
 /*
@@ -619,19 +666,26 @@ void MipsGenerator::mipsCALL() {
 	int para = symTab.searchFunc(fname).para;
 
 	//此时参数已经使sp的位置下降
-	for (int i = 4; i <= 25; i++) {	//保存临时寄存器等
-		mipsout << "sw $" << i << ", " << -i * 4 << "($sp)" << endl;
-	}
+	//for (int i = 4; i <= 25; i++) {	//保存临时寄存器等
+	//	mipsout << "sw $" << i << ", " << -i * 4 << "($sp)" << endl;
+	//}
+
+	mipsout << "#clearRegs(1)" << endl;
+	clearRegs(1);
 	mipsout << "sw $fp ," << -30 * 4 << "($sp)" << endl;
 	mipsout << "sw $ra ," << -31 * 4 << "($sp)" << endl;
 
 	mipsout << "jal " << fname << endl;
 
-	for (int i = 4; i <=25 ; i++) {
-		mipsout << "lw $" << i << ", " << -para * 4 - i * 4 << "($sp)" << endl;
-	}
+	
 	mipsout << "lw $fp ," << -para * 4 - 30 * 4 << "($sp)" << endl;
 	mipsout << "lw $ra ," << -para * 4 - 31 * 4 << "($sp)" << endl;
+	recovery();
+
+	/*for (int i = 4; i <= 25; i++) {
+		mipsout << "lw $" << i << ", " << -para * 4 - i * 4 << "($sp)" << endl;
+	}*/
+
 }
 
 
@@ -639,12 +693,12 @@ void MipsGenerator::mipsCALL() {
 PUSH			√	函数传参
 x = tar(a, b)  ==> PUSH a
 */
-void MipsGenerator::mipsPUSH() {	//TODO:a一定是临时变量
+void MipsGenerator::mipsPUSH() {
 	string name = curq.res;
-	int addr = -getOffset(name);
+	string reg;
 	
-	mipsout << "lw $t0, " << addr << "($fp)" << endl;
-	mipsout << "sw $t0, ($sp)" << endl;
+	reg = getRegWithVal(name);
+	mipsout << "sw " << reg << ", ($sp)" << endl;
 	mipsout << "subi $sp, $sp, 4" << endl;
 }
 
@@ -656,19 +710,23 @@ x = tar(a, b)	VOF tar x
 */
 void MipsGenerator::mipsVOF() {
 	string resname = curq.res;
+	string reg;
+	reg = getReg(resname);
+	
+	mipsout << "move " << reg << ", $v0" << endl;
 
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $v0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $" << regNum << ", $v0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
-	}
+	//if (symTab.isGlobal(resname)) {	//是全局变量
+	//	mipsout << "la $t1, " << resname << endl;
+	//	mipsout << "sw $v0, 0($t1)" << endl;
+	//}
+	//else if (inReg(resname)) {		//是在寄存器中的局部变量
+	//	int regNum = getRegNum(resname);
+	//	mipsout << "move $" << regNum << ", $v0" << endl;
+	//}
+	//else {							//不在寄存器中的局部变量
+	//	int resaddr = -getOffset(resname);
+	//	mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
+	//}
 }
 
 
@@ -693,37 +751,20 @@ LVAR √		√
 void MipsGenerator::mipsLVAR() {
 	string op1name = curq.op1;
 	string resname = curq.res;
-
+	string reg1;
+	string reg3;
 	//读取等式右边
-	if (symTab.isGlobal(op1name)) {	//是全局变量
-		mipsout << "la $t1, " << op1name << endl;
-		mipsout << "lw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(op1name)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(op1name);
-		mipsout << "move $t0, $t" << regNum << endl;
-	}
-	else {							//是不在寄存器中的局部变量
-		int op1addr = -getOffset(op1name);
-		mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	}
+	reg1 = getRegWithVal(op1name);
 
 	//读取等式左边
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t" << regNum<< ", $t0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
-	}
+	reg3 = getReg(resname);
+
+	mipsout << "move " << reg3 << ", " << reg1 << endl;
+
 }
 
 
+//TODO: 数组有问题
 /*
 SARY √	√	√	数组元素赋值
 array[i] = x ==> SARY array i x
@@ -733,47 +774,31 @@ void MipsGenerator::mipsSARY() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string resname = curq.res;
+	string reg1;
+	string reg2;
+	string reg3;
 
-	//读取i到t0
-	if (symTab.isGlobal(op2name)) {	//是全局变量
-		mipsout << "la $t1, " << op2name << endl;
-		mipsout << "lw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(op2name)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(op2name);
-		mipsout << "move $t0, $t" << regNum << endl;
-	}
-	else {							//是不在寄存器中的局部变量
-		int op2addr = -getOffset(op2name);
-		mipsout << "lw $t0, " << op2addr << "($fp)" << endl;
-	}
+	//读取i到reg2
+	reg2 = getRegWithVal(op2name);
+	mipsout << "mul " << reg2 << ", " << reg2 << ", 4" << endl;
 
-	//将t0改为相对数组偏移量
-	mipsout << "mul $t0, $t0, 4" << endl;
-
-	//读取array地址并加上偏移，最终地址为t0
-	if (symTab.isGlobal(op1name)) {	//是全局变量
-		mipsout << "la $t1, " << op1name << endl;
-		mipsout << "add $t0, $t0, $t1 " << endl;
+	//读取数组地址到reg1
+	reg1 = getReg("000");
+	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
+		mipsout << "la " << reg1 << ", " << op1name << endl;
+		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi $t1, $fp, " << op1addr << endl;
-		mipsout << "sub $t0, $t1, $t0" << endl;
+		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
 
-	//读取等式右边的值到t0,x只能为局部变量
-	if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t1, $t" << regNum << endl;
-	}
-	else {							//是不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "lw $t1, " << resaddr << "($fp)" << endl;
-	}
-
-	//赋值
-	mipsout << "sw $t1, ($t0)" << endl;
+	//取值x到reg3，并给数组赋值
+	reg3 = getRegWithVal(resname);
+	mipsout << "sw " << reg3 << ", (" << reg1 << ")" << endl;
 }
 
 
@@ -786,92 +811,31 @@ void MipsGenerator::mipsLARY() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string resname = curq.res;
+	string reg1;
+	string reg2;
+	string reg3;
 
-	//读取i到t0
-	if (symTab.isGlobal(op2name)) {	//是全局变量
-		mipsout << "la $t1, " << op2name << endl;
-		mipsout << "lw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(op2name)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(op2name);
-		mipsout << "move $t0, $t" << regNum << endl;
-	}
-	else {							//是不在寄存器中的局部变量
-		int op2addr = -getOffset(op2name);
-		mipsout << "lw $t0, " << op2addr << "($fp)" << endl;
-	}
+	//读取i到reg2
+	reg2 = getRegWithVal(op2name);
+	mipsout << "mul " << reg2 << ", " << reg2 << ", 4" << endl;
 
-	//将t0改为相对数组偏移量
-	mipsout << "mul $t0, $t0, 4" << endl;
-
-	//读取array地址并加上偏移，最终地址为t0
-	if (symTab.isGlobal(op1name)) {	//是全局变量
-		mipsout << "la $t1, " << op1name << endl;
-		mipsout << "add $t0, $t0, $t1 " << endl;
+	//读取数组地址到reg1
+	reg1 = getReg("000");
+	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
+		mipsout << "la " << reg1 << ", " << op1name << endl;
+		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi $t1, $fp, " << op1addr << endl;
-		mipsout << "sub $t0, $t1, $t0" << endl;
+		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
 
-	//取值到t0
-	mipsout << "lw $t0, ($t0)" << endl;
-
-	//读取等式左边并赋值
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $t0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t" << regNum << ", $t0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $t0, " << resaddr << "($fp)" << endl;
-	}
-
-}
-
-
-/*
-PC			√	输出字符串
-printf("hello")	PC 1
-*/
-void MipsGenerator::mipsPC() {
-	mipsout << "li $v0, 4" << endl;
-	mipsout << "la $a0, $string" << curq.res << endl;
-	mipsout << "syscall" << endl;
-
-	mipsout << "li $v0, 4" << endl;
-	mipsout << "la $a0," << "$enter" << endl;
-	mipsout << "syscall" << endl;
-}
-
-
-/*
-PI			√	输出整数或字符
-printf(x)	PI x
-x为临时变量
-TODO:x可能为任意变量，此处需要修改
-*/
-void MipsGenerator::mipsPI() {
-	string name = curq.res;
-	int addr = -getOffset(name);
-	SymbolType type = symTab.search(name).type;
-	
-	if (type == INTTP)
-		mipsout << "li $v0, 1" << endl;
-	else
-		mipsout << "li $v0, 11" << endl;
-
-	mipsout << "lw $a0, " << addr << "($fp)" << endl;
-	mipsout << "syscall" << endl;
-	
-	mipsout << "li $v0, 4" << endl;
-	mipsout << "la $a0," << "$enter" << endl;
-	mipsout << "syscall" << endl;
+	//取值x到reg3
+	reg3 = getReg(resname);
+	mipsout << "lw " << reg3 << ", (" << reg1 << ")" << endl;
 }
 
 
@@ -882,15 +846,23 @@ PRT	 	√	√	输出
 void MipsGenerator::mipsPRT() {
 	if (curq.op1 == "0") {
 		string name = curq.res;
-		int addr = -getOffset(name);
-		SymbolType type = symTab.search(name).type;
-
-		if (type == INTTP)
+		if (IS_NUM(name)) {
 			mipsout << "li $v0, 1" << endl;
-		else
-			mipsout << "li $v0, 11" << endl;
+			mipsout << "li $a0, " << name << endl;
+		}
+		else {
+			SymbolType type = symTab.search(name).type;
+			string reg;
 
-		mipsout << "lw $a0, " << addr << "($fp)" << endl;
+			if (type == INTTP)
+				mipsout << "li $v0, 1" << endl;
+			else
+				mipsout << "li $v0, 11" << endl;
+
+			reg = getRegWithVal(name);
+			mipsout << "move $a0, " << reg << endl;
+		}
+		
 		mipsout << "syscall" << endl;
 
 		mipsout << "li $v0, 4" << endl;
@@ -903,7 +875,7 @@ void MipsGenerator::mipsPRT() {
 		mipsout << "syscall" << endl;
 
 		mipsout << "li $v0, 4" << endl;
-		mipsout << "la $a0," << "$enter" << endl;
+		mipsout << "la $a0, " << "$enter" << endl;
 		mipsout << "syscall" << endl;
 	}
 	else {
@@ -912,19 +884,20 @@ void MipsGenerator::mipsPRT() {
 		mipsout << "syscall" << endl;
 
 		string name = curq.res;
-		int addr = -getOffset(name);
 		SymbolType type = symTab.search(name).type;
+		string reg;
 
 		if (type == INTTP)
 			mipsout << "li $v0, 1" << endl;
 		else
 			mipsout << "li $v0, 11" << endl;
 
-		mipsout << "lw $a0, " << addr << "($fp)" << endl;
+		reg = getRegWithVal(name);
+		mipsout << "move $a0, " << reg << endl;
 		mipsout << "syscall" << endl;
 
 		mipsout << "li $v0, 4" << endl;
-		mipsout << "la $a0," << "$enter" << endl;
+		mipsout << "la $a0, " << "$enter" << endl;
 		mipsout << "syscall" << endl;
 	}
 }
@@ -937,26 +910,16 @@ scanf(a)	RI a
 void MipsGenerator::mipsREAD() {
 	string resname = curq.res;
 	SymbolType type = symTab.search(resname).type;
-	
+	string reg;
+
 	if (type == INTTP)
 		mipsout << "li $v0, 5" << endl;
 	else
 		mipsout << "li $v0, 12" << endl;
 	mipsout << "syscall" << endl;
 
-	//读取等式左边
-	if (symTab.isGlobal(resname)) {	//是全局变量
-		mipsout << "la $t1, " << resname << endl;
-		mipsout << "sw $v0, 0($t1)" << endl;
-	}
-	else if (inReg(resname)) {		//是在寄存器中的局部变量
-		int regNum = getRegNum(resname);
-		mipsout << "move $t" << regNum << ", $v0" << endl;
-	}
-	else {							//不在寄存器中的局部变量
-		int resaddr = -getOffset(resname);
-		mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
-	}
+	reg = getReg(resname);
+	mipsout << "move " << reg << ", $v0" << endl;
 }
 
 
@@ -966,10 +929,18 @@ return a; ==> RET a
 */
 void MipsGenerator::mipsRET() {
 	string name = curq.res;
-	int addr = -getOffset(name);
 	int fsize = symTab.getCurFunc().value;
 	int para = symTab.getCurFunc().para;
-	mipsout << "lw $v0, " << addr << "($fp)" << endl;
+	string reg;
+
+	if (IS_NUM(name))
+		mipsout << "li $v0, " << name << endl;
+	else {
+		reg = getRegWithVal(name);
+		mipsout << "move $v0, " << reg << endl;
+	}
+
+	clearRegs(2);
 	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
@@ -988,6 +959,8 @@ void MipsGenerator::mipsREN() {
 	}
 	int fsize = symTab.getCurFunc().value;
 	int para = symTab.getCurFunc().para;
+
+	clearRegs(2);
 	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
@@ -1001,11 +974,9 @@ void MipsGenerator::mipsBGT() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "bgt $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "bgt " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
 
@@ -1017,11 +988,10 @@ void MipsGenerator::mipsBGE() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "bge $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "bge " << reg1 << ", " << reg2 << ", " << label << endl;
+	
 }
 
 
@@ -1033,11 +1003,9 @@ void MipsGenerator::mipsBEQ() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "beq $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "beq " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
 
@@ -1049,11 +1017,9 @@ void MipsGenerator::mipsBLE() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "ble $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "ble " << reg1 << ", " << reg2 << ", " << label << endl;;
 }
 
 
@@ -1065,11 +1031,9 @@ void MipsGenerator::mipsBLT() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "blt $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "blt " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
 
@@ -1081,11 +1045,9 @@ void MipsGenerator::mipsBNE() {
 	string op1name = curq.op1;
 	string op2name = curq.op2;
 	string label = curq.res;
-	int op1addr = -getOffset(op1name);
-	int op2addr = -getOffset(op2name);
-	mipsout << "lw $t0, " << op1addr << "($fp)" << endl;
-	mipsout << "lw $t1, " << op2addr << "($fp)" << endl;
-	mipsout << "bne $t0, $t1, " << label << endl;
+	string reg1 = getRegWithVal(op1name);
+	string reg2 = getRegWithVal(op2name);
+	mipsout << "bne " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
 
@@ -1114,5 +1076,13 @@ void MipsGenerator::startWorking() {
 	for (unsigned int i = glbIndex; i < quaterList.size(); i++) {
 		curq = quaterList[i];
 		genMips();
+		for (unsigned int j = 0; j < blockIndex.size(); j++) {
+			if (i + 1 == blockIndex[j] && i + 1 < quaterList.size() 
+				&& quaterList[i + 1].oper != "CALL" && quaterList[i + 1].oper != "RET"
+				&& quaterList[i + 1].oper != "REN") {
+				mipsout << "#clearRegs(3)" << endl;
+				clearRegs(3);
+			}
+		}
 	}
 }

@@ -15,7 +15,7 @@ int main() {
 	string asmPath = "./out/result.asm";
 	MipsGenerator generator(asmPath);
 
-	srcpath = "./in/in.c";
+	srcpath = "./in/bxy.c";
 	//cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {
@@ -40,6 +40,8 @@ int main() {
 	generator.referCount();
 	symTab.printTable(symPath);
 	printQuater(quaterPath);
+
+	divideBlock();
 
 	if (errcount > 0) {
 		cout << "Parser analysis failed!" << endl;

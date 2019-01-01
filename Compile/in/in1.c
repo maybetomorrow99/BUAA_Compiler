@@ -17,6 +17,7 @@ void main(){
 	int a, b, c, d;
 	int array[10];
 	char ch;
+	glb = 4;
 	a = 10 + glb;
 	a = a + 2;
 	b = 2;

@@ -1,12 +1,17 @@
 #include "reg.h"
-#define IS_NUM(name) (name[0] >= '0' && name[0] <= '9')
+#define IS_NUM(name) ((name[0] >= '0' && name[0] <= '9') || name[0] == '-')
 #define IS_TEMP(name) (name[0] == '$')
 
 /*
 Çå¿Õ$t0-$t9
 */
 void RegPool::clearRegs() {
-
+	for (int i = 0; i < capacity; i++) {
+		regs[i].name = "";
+		regs[i].kind = 0;
+		regs[i].busy = false;
+	}
+	isFull = false;
 }
 
 

@@ -914,13 +914,17 @@ SymbolItem Parser::factor() {
 			if (curToken.type == RBRK) {
 				getToken();
 
+				
 				if (arrayIndex.type != INTTP)		//数组下标不是int
 					error(ARRAY_INDEX_NOT_INT, lexer.lineNum);
 				if (arrayIndex.value < 0 || arrayIndex.value >= symTab.search(idName).para) //判断是否越界，只有在下标为常量或整数的时候
 					error(ARRAY_OVER, lexer.lineNum);
 
 				//取数组值
-				quaterList.push_back(Quaternary("LARY", idName, arrayIndex.name, factorSym.name));
+				if (arrayIndex.value)
+					quaterList.push_back(Quaternary("LARY", idName, to_string(arrayIndex.value), factorSym.name));
+				else
+					quaterList.push_back(Quaternary("LARY", idName, arrayIndex.name, factorSym.name));
 			}
 			else {
 				error(MISSING_RIGHT_BRACKET, lexer.lineNum);
@@ -976,7 +980,9 @@ SymbolItem Parser::factor() {
 		factorSym.type = INTTP;
 		factorSym.value = value;
 		symTab.insert(factorSym.name, VARKD, INTTP, value);
-		//quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
+		//在value为0的时候得赋值
+		if (value == 0)
+			quaterList.push_back(Quaternary("LI", to_string(value), "", factorSym.name));
 	}
 	else if (curToken.type == SIGCHAR) {	//字符
 		factorSym.name = genVar();
@@ -988,7 +994,7 @@ SymbolItem Parser::factor() {
 	else if (curToken.type == LPAR) {		//(表达式)
 		getToken();
 		factorSym = expression();
-		symTab.changeVarType(factorSym.name);	//此处表达式的返回类型不一定是整型，需要将其转为整型
+		//symTab.changeVarType(factorSym.name);	//此处表达式的返回类型不一定是整型，需要将其转为整型
 		factorSym.type = INTTP;
 		//symTab.insert(factorSym.name, VARKD, INTTP, 0);	
 
@@ -1264,8 +1270,10 @@ void Parser::ifState() {
 */
 void Parser::condition(string label) {
 	SymbolItem exprSym1, exprSym2;
+	string exprStr1, exprStr2;	//此处表达式可能是常量
 	int tokenType;
 	exprSym1 = expression();
+	exprStr1 = (exprSym1.value) ? to_string(exprSym1.value) : exprSym1.name;
 
 	if (exprSym1.type != INTTP)
 		error(EXPR_IN_CONDITION_NOT_INT, lexer.lineNum);
@@ -1276,39 +1284,42 @@ void Parser::condition(string label) {
 		getToken();
 		exprSym2 = expression();
 
+		exprStr2 = (exprSym2.value) ? to_string(exprSym2.value) : exprSym2.name;
+
 		if (exprSym2.type != INTTP)
 			error(EXPR_IN_CONDITION_NOT_INT, lexer.lineNum);
 
 		switch (tokenType) {
 		case LSS:
-			quaterList.push_back(Quaternary("BGE", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BGE", exprStr1, exprStr2, label));
 			break;
 		case LEQ:
-			quaterList.push_back(Quaternary("BGT", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BGT", exprStr1, exprStr2, label));
 			break;
 		case GTR:
-			quaterList.push_back(Quaternary("BLE", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BLE", exprStr1, exprStr2, label));
 			break;
 		case GEQ:
-			quaterList.push_back(Quaternary("BLT", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BLT", exprStr1, exprStr2, label));
 			break;
 		case NEQ:
-			quaterList.push_back(Quaternary("BEQ", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BEQ", exprStr1, exprStr2, label));
 			break;
 		case EQEQ:
-			quaterList.push_back(Quaternary("BNE", exprSym1.name, exprSym2.name, label));
+			quaterList.push_back(Quaternary("BNE", exprStr1, exprStr2, label));
 			break;
 		default:
 			break;
 		}
 	}
 	else {
+		/*
 		SymbolItem symTemp0;
 		symTemp0.name = genVar();
 		symTemp0.type = INTTP;
 		symTab.insert(symTemp0.name, VARKD, INTTP, 0);
-		quaterList.push_back(Quaternary("LI", to_string(0), "", symTemp0.name));
-		quaterList.push_back(Quaternary("BEQ", exprSym1.name, symTemp0.name, label));
+		quaterList.push_back(Quaternary("LI", to_string(0), "", symTemp0.name));*/
+		quaterList.push_back(Quaternary("BEQ", exprStr1, "0", label));
 	}
 
  	fout << setw(4) << left << lexer.lineNum<< "This is a condition" << endl;
@@ -1373,7 +1384,7 @@ void Parser::switchState() {
 		error(MISSING_LEFT_PARENTHESIS, lexer.lineNum);
 	}
 	getToken();
-	exprSym  = expression();
+	exprSym  = expression();	//TODO:这没问题吗，没有显示赋值
 	if (curToken.type != RPAR) {
 		error(MISSING_RIGHT_PARENTHESIS, lexer.lineNum);
 	}
@@ -1457,7 +1468,10 @@ int Parser::caseState(SymbolItem exprSym, string lableEnd, vector<int> existCon)
 
 
 		if (curToken.type == COLON) {
-			quaterList.push_back(Quaternary("BNE", exprSym.name, constSym.name, label));
+			if (exprSym.value)
+				quaterList.push_back(Quaternary("BNE", to_string(exprSym.value), constSym.name, label));
+			else
+				quaterList.push_back(Quaternary("BNE", exprSym.name, constSym.name, label));
 			
 			getToken();
 			statement();
@@ -1561,7 +1575,10 @@ void Parser::valParaTab(string fname) {	//TODO:检查参数类型
 	if (valParaSym.type != symTab.getPara(fname, ++paraIndex).type)	//判断参数类型是否一致
 		error(PARA_TYP_NOT_MATCH, lexer.lineNum);
 
-	quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
+	if (valParaSym.value)
+		quaterList.push_back(Quaternary("PUSH", "", "", to_string(valParaSym.value)));
+	else
+		quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
 
 	while (curToken.type == COMMA) {
 		getToken();
@@ -1570,7 +1587,10 @@ void Parser::valParaTab(string fname) {	//TODO:检查参数类型
 		if (valParaSym.type != symTab.getPara(fname, ++paraIndex).type)	//判断参数类型是否一致
 			error(PARA_TYP_NOT_MATCH, lexer.lineNum);
 
-		quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));
+		if (valParaSym.value)
+			quaterList.push_back(Quaternary("PUSH", "", "", to_string(valParaSym.value)));
+		else
+			quaterList.push_back(Quaternary("PUSH", "", "", valParaSym.name));	
 	}
 
 	if (paraIndex != paraMax)
@@ -1600,8 +1620,9 @@ void Parser::assignState() {
 		getToken();
 		exprSym = expression();
 
-		if (exprSym.type != symTab.search(idName).type)
+		if (exprSym.type != symTab.search(idName).type) {
 			error(ASSIGN_TYPE_DIFF, lexer.lineNum);
+		}
 		
 		if (symTab.search(idName).kind == CONSTKD)
 			error(ASSIGN_CONST, lexer.lineNum);
@@ -1631,7 +1652,11 @@ void Parser::assignState() {
 		if (arrayIndex.value < 0 || arrayIndex.value >= symTab.search(idName).para) //判断是否越界，只有在下标为常量或整数的时候
 			error(ARRAY_OVER, lexer.lineNum);
 
-		quaterList.push_back(Quaternary("SARY", idName, arrayIndex.name, exprSym.name));
+		
+		//TODO:正确否
+		string exprStr = (exprSym.value) ? to_string(exprSym.value) : exprSym.name;
+		string indexStr = (arrayIndex.value) ? to_string(arrayIndex.value) : arrayIndex.name;
+		quaterList.push_back(Quaternary("SARY", idName, indexStr, exprStr));
 	}
 	else {
 		error(0, lexer.lineNum);
@@ -1704,7 +1729,10 @@ void Parser::printfState() {
 		if (curToken.type == COMMA) {
 			getToken();
 			exprSym = expression();
-			quaterList.push_back(Quaternary("PRT", "2", to_string(indexStr), exprSym.name));
+			if (exprSym.value)
+				quaterList.push_back(Quaternary("PRT", "2", to_string(indexStr), to_string(exprSym.value)));
+			else
+				quaterList.push_back(Quaternary("PRT", "2", to_string(indexStr), exprSym.name));
 		}
 		else {
 			quaterList.push_back(Quaternary("PRT", "1", "", to_string(indexStr)));
@@ -1712,7 +1740,10 @@ void Parser::printfState() {
 	}
 	else {
 		exprSym = expression();
-		quaterList.push_back(Quaternary("PRT", "0", "", exprSym.name));
+		if (exprSym.value)
+			quaterList.push_back(Quaternary("PRT", "0", "", to_string(exprSym.value)));
+		else
+			quaterList.push_back(Quaternary("PRT", "0", "", exprSym.name));
 	}
 
 	if (curToken.type != RPAR) {
@@ -1743,7 +1774,10 @@ void Parser::returnState() {
 			if (retValSym.type != symTab.getCurFunc().type)		//检查返回值类型是否匹配
 				error(RETURN_VALUE_ERROR, lexer.lineNum);
 
-			quaterList.push_back(Quaternary("RET", "", "", retValSym.name));
+			if (retValSym.value)
+				quaterList.push_back(Quaternary("RET", "", "", to_string(retValSym.value)));
+			else
+				quaterList.push_back(Quaternary("RET", "", "", retValSym.name));
 		}
 		else {
 			error(MISSING_RIGHT_PARENTHESIS, lexer.lineNum);
