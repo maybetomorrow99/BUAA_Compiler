@@ -59,4 +59,6 @@ public:
 	void changeVarType(string name);
 	void printTable(string path);
 
+	void setupSwitchPara(string name);
+
 };

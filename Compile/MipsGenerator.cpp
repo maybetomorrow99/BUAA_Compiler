@@ -291,7 +291,8 @@ void MipsGenerator::reg2Mem(int index) {
 option = 0， 清空 $8-25寄存器, 不存入内存，在函数声明开始时使用
 option = 1, 清空 $8-25寄存器, 将相应内容存入内存中, 在调用其他函数之前使用
 option = 2, 清空 $8-$25寄存器, 将全局变量存入内存,其余不存入，函数返回时使用
-option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(func一开始分配的保留, 函数内跨块使用)
+option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(func一开始分配的保留, 函数内跨块使用)，
+			将t寄存器中的局部变量，全局变量，和switch变量，将其写入内存
 */
 void MipsGenerator::clearRegs(int option) {
 	string fname = symTab.getCurFunc().name;
@@ -326,10 +327,17 @@ void MipsGenerator::clearRegs(int option) {
 		}
 	}
 	else {	//option == 3
+		mipsout << "#clearReg(3)" << endl;
 		for (int i = 0; i < 10; i++) {
-			if (regpool.regs[i].busy && regpool.regs[i].kind == 3) {
-				reg2Mem(i);
+			if (regpool.regs[i].busy) {
+				if (regpool.regs[i].kind == 2 || regpool.regs[i].kind == 3) {
+					reg2Mem(i);
+				}
+				else if (regpool.regs[i].kind == 1 && symTab.search(regpool.regs[i].name).para == 1) {
+					reg2Mem(i);
+				}
 			}
+			
 		}
 	}
 	regpool.clearRegs();
@@ -525,8 +533,8 @@ void MipsGenerator::mipsFUNC() {
 	mipsout << fname << ":" << endl;
 
 	//分配栈空间
-	mipsout << "add $fp, $sp, " << para * 4 << endl;
-	mipsout << "subi $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
+	mipsout << "addu $fp, $sp, " << para * 4 << endl;
+	mipsout << "subiu $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
 	
 	//给有寄存器的参数赋初始值
 	unsigned int maxVarNum;
@@ -582,25 +590,25 @@ void MipsGenerator::mipsCalADDSUB() {
 
 	if (curq.oper == "ADD") {
 		if (IS_NUM(op1name)) {
-			mipsout << "addi " << reg3 << ", " << reg2 << ", " << op1name << endl;
+			mipsout << "addiu " << reg3 << ", " << reg2 << ", " << op1name << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "addi " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "addiu " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
-			mipsout << "add " << reg3 << ", " << reg1 << ", " << reg2 << endl;
+			mipsout << "addu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 	}
 	else if (curq.oper == "SUB") {
 		if (IS_NUM(op1name)) {
 			reg1 = getRegWithVal(op1name);
-			mipsout << "sub " << reg3 << ", " << reg1 << ", " << reg2 << endl;
+			mipsout << "subu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "subi " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "subiu " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
-			mipsout << "sub " << reg3 << ", " << reg1 << ", " << reg2 << endl;
+			mipsout << "subu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 	}
 
@@ -699,7 +707,7 @@ void MipsGenerator::mipsPUSH() {
 	
 	reg = getRegWithVal(name);
 	mipsout << "sw " << reg << ", ($sp)" << endl;
-	mipsout << "subi $sp, $sp, 4" << endl;
+	mipsout << "subiu $sp, $sp, 4" << endl;
 }
 
 
@@ -791,7 +799,7 @@ void MipsGenerator::mipsSARY() {
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "addiu " << reg1 << ", $fp, " << op1addr << endl;
 		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
 		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
@@ -828,7 +836,7 @@ void MipsGenerator::mipsLARY() {
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "addiu " << reg1 << ", $fp, " << op1addr << endl;
 		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
 		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
 	}
@@ -941,7 +949,7 @@ void MipsGenerator::mipsRET() {
 	}
 
 	clearRegs(2);
-	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "addiu $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
 
@@ -961,7 +969,7 @@ void MipsGenerator::mipsREN() {
 	int para = symTab.getCurFunc().para;
 
 	clearRegs(2);
-	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "addiu $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
 
@@ -976,6 +984,7 @@ void MipsGenerator::mipsBGT() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "bgt " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
@@ -990,6 +999,7 @@ void MipsGenerator::mipsBGE() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "bge " << reg1 << ", " << reg2 << ", " << label << endl;
 	
 }
@@ -1005,6 +1015,7 @@ void MipsGenerator::mipsBEQ() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "beq " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
@@ -1019,6 +1030,7 @@ void MipsGenerator::mipsBLE() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "ble " << reg1 << ", " << reg2 << ", " << label << endl;;
 }
 
@@ -1033,6 +1045,7 @@ void MipsGenerator::mipsBLT() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "blt " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
@@ -1047,6 +1060,7 @@ void MipsGenerator::mipsBNE() {
 	string label = curq.res;
 	string reg1 = getRegWithVal(op1name);
 	string reg2 = getRegWithVal(op2name);
+	clearRegs(3);
 	mipsout << "bne " << reg1 << ", " << reg2 << ", " << label << endl;
 }
 
@@ -1056,6 +1070,7 @@ JUMP			√	无条件跳转
 JUMP Lable1
 */
 void MipsGenerator::mipsJUMP() {
+	clearRegs(3);
 	mipsout << "j " << curq.res << endl;
 }
 
@@ -1065,6 +1080,7 @@ LAB			√	设置标签
 LAB Lable1
 */
 void MipsGenerator::mipsLAB() {
+	clearRegs(3);
 	mipsout << curq.res << ":" << endl;
 }
 
@@ -1075,14 +1091,17 @@ void MipsGenerator::startWorking() {
 	glbIndex = mipsGlobal();
 	for (unsigned int i = glbIndex; i < quaterList.size(); i++) {
 		curq = quaterList[i];
-		genMips();
+		
 		for (unsigned int j = 0; j < blockIndex.size(); j++) {
 			if (i + 1 == blockIndex[j] && i + 1 < quaterList.size() 
 				&& quaterList[i + 1].oper != "CALL" && quaterList[i + 1].oper != "RET"
 				&& quaterList[i + 1].oper != "REN") {
-				mipsout << "#clearRegs(3)" << endl;
-				clearRegs(3);
+				//mipsout << "#clearRegs(3)" << endl;
+				//clearRegs(3);
+				//break;
+				//此处先不清空了
 			}
 		}
+		genMips();
 	}
 }

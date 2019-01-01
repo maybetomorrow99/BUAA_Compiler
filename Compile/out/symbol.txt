@@ -81,7 +81,7 @@ $temp52   var       int       1         16        0
 $temp53   var       int       1         20        0         
 $temp54   var       int       1         24        0         
 testcaseinsensitivefunc      void      36        0         0         
-temp      var       int       0         4         0         
+temp      var       int       0         4         1         
 $temp55   var       int       0         8         0         
 $temp56   var       int       0         12        0         
 $temp57   var       int       0         16        0         
@@ -95,7 +95,7 @@ temp      var       int       0         8         0
 $temp62   var       int       1         12        0         
 $temp63   var       int       0         16        0         
 $temp64   var       int       0         20        0         
-$temp65   var       int       0         24        0         
+$temp65   var       int       0         24        1         
 $temp66   var       int       1         28        0         
 $temp67   var       int       1         32        0         
 testif    func      void      24        0         0         
@@ -190,7 +190,7 @@ $temp127  var       int       0         32        0
 $temp128  var       int       0         36        0         
 $temp129  var       int       0         40        0         
 $temp130  var       int       0         44        0         
-$temp131  var       int       0         48        0         
+$temp131  var       int       0         48        1         
 $temp132  var       int       66666     52        0         
 $temp133  var       int       0         56        0         
 $temp134  var       int       0         60        0         
@@ -198,8 +198,8 @@ $temp135  var       int       0         64        0
 $temp136  var       int       1         68        0         
 $temp137  var       int       1         72        0         
 main      func      void      140       0         0         
-choice    var       char      0         4         0         
-select    var       int       0         8         0         
+choice    var       char      0         4         1         
+select    var       int       0         8         1         
 $temp138  var       int       0         12        0         
 $temp139  var       char      48        16        0         
 $temp140  var       int       0         20        0         

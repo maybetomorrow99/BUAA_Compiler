@@ -1385,6 +1385,7 @@ void Parser::switchState() {
 	}
 	getToken();
 	exprSym  = expression();	//TODO:这没问题吗，没有显示赋值
+	symTab.setupSwitchPara(exprSym.name);
 	if (curToken.type != RPAR) {
 		error(MISSING_RIGHT_PARENTHESIS, lexer.lineNum);
 	}

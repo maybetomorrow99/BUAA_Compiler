@@ -350,3 +350,14 @@ void SymbolTable::printTable(string path) {
 		fout << setw(10) << left << item.para << endl;
 	}
 }
+
+
+/*
+设置swithc中表达式变量的para为1，表示是一个特殊的临时变量
+*/
+void SymbolTable::setupSwitchPara(string name) {
+	for (unsigned int i = curFuncAddr; i < items.size(); i++) {
+		if (items[i].name == name)
+			items[i].para = 1;
+	}
+}
