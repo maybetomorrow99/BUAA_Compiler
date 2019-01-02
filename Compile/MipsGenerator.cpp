@@ -534,7 +534,7 @@ void MipsGenerator::mipsFUNC() {
 
 	//分配栈空间
 	mipsout << "addu $fp, $sp, " << para * 4 << endl;
-	mipsout << "subiu $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
+	mipsout << "subi $sp, $sp, " << fsize - para * 4 + 32 * 4 << endl;
 	
 	//给有寄存器的参数赋初始值
 	unsigned int maxVarNum;
@@ -590,10 +590,10 @@ void MipsGenerator::mipsCalADDSUB() {
 
 	if (curq.oper == "ADD") {
 		if (IS_NUM(op1name)) {
-			mipsout << "addiu " << reg3 << ", " << reg2 << ", " << op1name << endl;
+			mipsout << "addi " << reg3 << ", " << reg2 << ", " << op1name << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "addiu " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "addi " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
 			mipsout << "addu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
@@ -605,7 +605,7 @@ void MipsGenerator::mipsCalADDSUB() {
 			mipsout << "subu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
 		}
 		else if (IS_NUM(op2name)) {
-			mipsout << "subiu " << reg3 << ", " << reg1 << ", " << op2name << endl;
+			mipsout << "subi " << reg3 << ", " << reg1 << ", " << op2name << endl;
 		}
 		else {
 			mipsout << "subu " << reg3 << ", " << reg1 << ", " << reg2 << endl;
@@ -707,7 +707,7 @@ void MipsGenerator::mipsPUSH() {
 	
 	reg = getRegWithVal(name);
 	mipsout << "sw " << reg << ", ($sp)" << endl;
-	mipsout << "subiu $sp, $sp, 4" << endl;
+	mipsout << "subi $sp, $sp, 4" << endl;
 }
 
 
@@ -788,20 +788,20 @@ void MipsGenerator::mipsSARY() {
 
 	//读取i到reg2
 	reg2 = getRegWithVal(op2name);
-	mipsout << "mul " << reg2 << ", " << reg2 << ", 4" << endl;
+	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
 	reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
 		mipsout << "la " << reg1 << ", " << op1name << endl;
 		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
-		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
+		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addiu " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
 		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
-		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
+		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3，并给数组赋值
@@ -825,20 +825,20 @@ void MipsGenerator::mipsLARY() {
 
 	//读取i到reg2
 	reg2 = getRegWithVal(op2name);
-	mipsout << "mul " << reg2 << ", " << reg2 << ", 4" << endl;
+	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
 	reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
 		mipsout << "la " << reg1 << ", " << op1name << endl;
 		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
-		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
+		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addiu " << reg1 << ", $fp, " << op1addr << endl;
+		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
 		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
-		mipsout << "div " << reg2 << ", " << reg2 << ", 4" << endl;
+		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3
@@ -949,7 +949,7 @@ void MipsGenerator::mipsRET() {
 	}
 
 	clearRegs(2);
-	mipsout << "addiu $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
 
@@ -969,7 +969,7 @@ void MipsGenerator::mipsREN() {
 	int para = symTab.getCurFunc().para;
 
 	clearRegs(2);
-	mipsout << "addiu $sp, $sp, " << fsize + 32 * 4 << endl;
+	mipsout << "addi $sp, $sp, " << fsize + 32 * 4 << endl;
 	mipsout << "jr $ra" << endl;
 }
 

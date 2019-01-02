@@ -1,20 +1,12 @@
 int glb;
+int a[100];
 
 void test{
-    int int_test;
-    char char_test; 
-    i = 48;
-    switch(i){
-        case 0:
-        char_test = 'A';
-        case 48:{
-			
-        	char_test = '0';
-        }
-        default:
-        char_test = 'G';
-    }
-    printf(char_test);
+	glb = 2;
+	a[2] = 1;
+	printf(a[glb]);
+    a[glb] = 3;
+    printf(a[2]);
 
 }
 
