@@ -1,18 +1,21 @@
-int glb;
-int a[100];
 
-void test{
-	glb = 2;
-	a[2] = 1;
-	printf(a[glb]);
-    a[glb] = 3;
-    printf(a[2]);
 
-}
-
-void main() 
-{
-    
-    test;
-    
+void main(){
+	const int loc_con = 20;
+	int a, b, c, i;
+	i = 2;
+	a = 1;
+	b = 3;
+	
+	b = a * i;
+	c = i + i;
+	a = a * i;
+	a = a + b + c;
+	a = 5;
+	b = a;
+	c = b;
+	printf(a);
+	
+	
+	return;
 }

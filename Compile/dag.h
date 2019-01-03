@@ -10,11 +10,13 @@ void dagInit();
 
 class Node {
 public:
+	Node() { oper = ""; name = ""; lchild = NULL; rchild = NULL; is_mid = false; }
 	string name;
+	string oper;
 	int id;
 	Node* lchild;
 	Node* rchild;
 	bool is_mid;
-	vector<string> var_names;
+	vector<Node> parents;
 	
 };

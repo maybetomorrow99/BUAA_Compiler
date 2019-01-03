@@ -15,7 +15,7 @@ int main() {
 	string asmPath = "./out/result.asm";
 	MipsGenerator generator(asmPath);
 
-	srcpath = "./in/in.c";
+	srcpath = "./in/bxy.c";
 	//cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {

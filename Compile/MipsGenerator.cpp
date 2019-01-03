@@ -184,6 +184,7 @@ TODO:此处先不考虑数组
 string MipsGenerator::getRegWithVal(string name) {
 	int index;
 	int addr;
+	string arrayAddrReg;
 	if (IS_NUM(name)) {	//临时数字
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
@@ -202,8 +203,11 @@ string MipsGenerator::getRegWithVal(string name) {
 	else if (symTab.isGlobal(name)) {	//全局变量
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
-			mipsout << "la $v1, " << name << endl;
-			mipsout << "lw $t" << index << ", 0($v1)" << endl;
+			//mipsout << "la $v1, " << name << endl;
+			//mipsout << "lw $t" << index << ", 0($v1)" << endl;
+			arrayAddrReg = getReg("000");
+			mipsout << "la " << arrayAddrReg << ", " << name << endl;
+			mipsout << "lw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
 		}
 		return "$t" + to_string(index);
 	}
@@ -272,6 +276,7 @@ int kind;	//0-数字， 1-临时变量， 2-局部变量， 3-全局变量
 void MipsGenerator::reg2Mem(int index) {
 	Reg reg = regpool.regs[index];
 	int addr;
+	string arrayAddrReg;
 	if (reg.kind == 1) {
 		addr = -getOffset(reg.name);
 		mipsout << "sw $t" << index << ", " << addr << "($fp)" << endl;
@@ -281,8 +286,11 @@ void MipsGenerator::reg2Mem(int index) {
 		mipsout << "sw $t" << index << ", " << addr << "($fp)" << endl;
 	}
 	else if(reg.kind == 3){
-		mipsout << "la $v1, " << reg.name << endl;
-		mipsout << "sw $t" << index << ", 0($v1)" << endl;
+		//mipsout << "la $v1, " << reg.name << endl;
+		//mipsout << "sw $t" << index << ", 0($v1)" << endl;
+		arrayAddrReg = getReg("000");
+		mipsout << "la " << arrayAddrReg << ", " << reg.name << endl;
+		mipsout << "sw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
 	}
 }
 
@@ -291,7 +299,7 @@ void MipsGenerator::reg2Mem(int index) {
 option = 0， 清空 $8-25寄存器, 不存入内存，在函数声明开始时使用
 option = 1, 清空 $8-25寄存器, 将相应内容存入内存中, 在调用其他函数之前使用
 option = 2, 清空 $8-$25寄存器, 将全局变量存入内存,其余不存入，函数返回时使用
-option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(func一开始分配的保留, 函数内跨块使用)，
+option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(函数内跨块使用)，
 			将t寄存器中的局部变量，全局变量，和switch变量，将其写入内存
 */
 void MipsGenerator::clearRegs(int option) {
