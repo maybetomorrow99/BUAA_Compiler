@@ -69,19 +69,28 @@ int Parser::insertString(string str) {
 void Parser::skipToFunc() {
 	do {
 		getToken();
-		cout << curToken.str << endl;
 	} while (curToken.type != INT || curToken.type != CHAR || curToken.type != VOID);
 }
 
 
 /*
-跳读到下一个分号
+跳读到下一个分号的下一个
 */
 void Parser::skipToSemi() {
 	do {
 		getToken();
 	} while (curToken.type != SEMI);
 	getToken();
+}
+
+
+/*
+跳读到下一个分号，停在分号
+*/
+void Parser::skipToSemiStop() {
+	do {
+		getToken();
+	} while (curToken.type != SEMI);
 }
 
 
@@ -145,7 +154,7 @@ void Parser::program() {
 				}
 				else {
 					//int f后没有括号
-					error(0, lexer.lineNum);
+					error(MISSING_RIGHT_BRACE, lexer.lineNum);
 				}
 			}
 			else {
@@ -249,6 +258,8 @@ void Parser::constDef() {
 		getToken();
 		if (curToken.type != ID) {
 			error(MISSING_IDEN, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 		
 
@@ -268,12 +279,16 @@ void Parser::constDef() {
 		}
 		else {
 			error(IDENT_REDEF, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 
 		while (curToken.type == COMMA) {
 			getToken();
 			if (curToken.type != ID) {
 				error(MISSING_IDEN, lexer.lineNum);
+				skipToSemi();
+				return;
 			}
 			name = curToken.str;
 			getToken();
@@ -289,6 +304,8 @@ void Parser::constDef() {
 			}
 			else {
 				error(IDENT_REDEF, lexer.lineNum);
+				skipToSemi();
+				return;
 			}
 		}							
 	}
@@ -298,16 +315,22 @@ void Parser::constDef() {
 		if (curToken.type != ID) {
 			//error
 			error(MISSING_IDEN, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 		name = curToken.str;
 
 		getToken();
 		if (curToken.type != EQU) {
 			error(MISSING_EQUAL_SIGN, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 		getToken();
 		if (curToken.type != SIGCHAR) {
 			error(MISSING_CHAR, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 		
 		value = curToken.str[0];
@@ -325,6 +348,8 @@ void Parser::constDef() {
 			if (curToken.type != ID) {
 				//error
 				error(MISSING_IDEN, lexer.lineNum);
+				skipToSemi();
+				return;
 			}
 			name = curToken.str;
 
@@ -336,6 +361,8 @@ void Parser::constDef() {
 			getToken();
 			if (curToken.type != SIGCHAR) {
 				error(MISSING_CHAR, lexer.lineNum);
+				skipToSemi();
+				return;
 			}
 
 			value = curToken.str[0];
@@ -353,6 +380,8 @@ void Parser::constDef() {
 	else {
 		//error
 		error(MISSING_IDEN, lexer.lineNum);
+		skipToSemi();
+		return;
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a constant definition" << endl;
@@ -392,6 +421,11 @@ void Parser::varDecl() {
 					break;
 				}
 			}
+			else {
+				error(MISSING_IDEN, lexer.lineNum);
+				skipToSemi();
+				return;
+			}
 		}
 	}
 
@@ -410,6 +444,8 @@ void Parser::varDef() {
 		getToken();
 		if (curToken.type != ID) {
 			error(MISSING_IDEN, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 		name = curToken.str;
 
@@ -447,6 +483,8 @@ void Parser::varDef() {
 			if (curToken.type != ID) {
 				//error
 				error(MISSING_IDEN, lexer.lineNum);
+				skipToSemi();
+				return;
 			}
 			name = curToken.str;
 
@@ -463,6 +501,7 @@ void Parser::varDef() {
 						}
 						else {
 							error(IDENT_REDEF, lexer.lineNum);
+
 						}
 
 						getToken();
@@ -483,6 +522,8 @@ void Parser::varDef() {
 	}
 	else {
 		error(MISSING_TYPE, lexer.lineNum);
+		skipToSemi();
+		return;
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a variable definitions" << endl;
@@ -517,8 +558,12 @@ void Parser::funcWithVal() {
 	}
 
 	if (curToken.type == LPAR) {	//有参数
-		if (symTab.funcDefInTable(name))
+		if (symTab.funcDefInTable(name)) {
 			error(IDENT_REDEF, lexer.lineNum);
+			skipToFunc();
+			return;
+
+		}
 
 		symTab.insert(name, FUNCKD, type, 0);
 		quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
@@ -544,8 +589,11 @@ void Parser::funcWithVal() {
 		getToken();
 	}
 	else if (curToken.type == LBRA) {	//无参数
-		if (symTab.funcDefInTable(name))
+		if (symTab.funcDefInTable(name)) {
 			error(IDENT_REDEF, lexer.lineNum);
+			skipToFunc();
+			return;
+		}
 		symTab.insert(name, FUNCKD, type, 0);
 		quaterList.push_back(Quaternary("FUNC", (type == INTTP ? "int" : "char"), "", name));
 		
@@ -579,6 +627,8 @@ void Parser::funcWithNoVal() {
 
 	if (curToken.type != VOID) {
 		error(MISSING_TYPE, lexer.lineNum);
+		skipToFunc();
+		return;
 	}
 
 	type = VOIDTP;
@@ -586,14 +636,17 @@ void Parser::funcWithNoVal() {
 	getToken();
 	if (curToken.type != ID) {
 		error(MISSING_IDEN, lexer.lineNum);
+		skipToFunc();
+		return;
 	}
 	name = curToken.str;
 	fname = name;
 
 	getToken();
 	if (curToken.type == LPAR) {	//有参数
-		if (symTab.funcDefInTable(name))
+		if (symTab.funcDefInTable(name)) {
 			error(IDENT_REDEF, lexer.lineNum);
+		}
 		symTab.insert(name, FUNCKD, type, 0);
 		quaterList.push_back(Quaternary("FUNC", "void", "", name));
 
@@ -617,8 +670,11 @@ void Parser::funcWithNoVal() {
 		getToken();
 	}
 	else if (curToken.type == LBRA) {	//无参数
-		if (symTab.funcDefInTable(name))
+		if (symTab.funcDefInTable(name)) {
 			error(IDENT_REDEF, lexer.lineNum);
+			skipToSemi();
+			return;
+		}
 		symTab.insert(name, FUNCKD, type, 0);
 		quaterList.push_back(Quaternary("FUNC", "void", "", name));
 
@@ -658,10 +714,14 @@ void Parser::declHeader() {
 		}
 		else {
 			error(MISSING_IDEN, lexer.lineNum);
+			skipToSemi();
+			return;
 		}
 	}
 	else {
 		error(MISSING_TYPE, lexer.lineNum);
+		skipToSemi();
+		return;
 	}
 
 	fout << setw(4) << left << lexer.lineNum<< "This is a declaration header" << endl;
@@ -1107,6 +1167,8 @@ void Parser::compState() {
 	}
 	else {
 		error(STATEMENT_ERROR, lexer.lineNum);
+		skipToSemi();
+		return;
 	}
 	fout << setw(4) << left << lexer.lineNum<< "This is a compound statement" << endl;
 }
@@ -1608,12 +1670,15 @@ void Parser::assignState() {
 	SymbolItem exprSym, arrayIndex;
 	if (curToken.type != ID) {
 		error(MISSING_IDEN, lexer.lineNum);
+		skipToSemiStop();
+		return;
 	}
 
 	string idName = curToken.str;
 	if (!symTab.varInTable(idName)) {
 		error(IDENT_NOT_DEF, lexer.lineNum);
-		skipToSemi();
+		skipToSemiStop();
+		return;
 	}
 
 	getToken();
@@ -1660,7 +1725,9 @@ void Parser::assignState() {
 		quaterList.push_back(Quaternary("SARY", idName, indexStr, exprStr));
 	}
 	else {
-		error(0, lexer.lineNum);
+		error(MISSING_EQUAL_SIGN, lexer.lineNum);
+		skipToSemiStop();
+		return;
 	}
 	
 	fout << setw(4) << left << lexer.lineNum<< "This is a assign statement" << endl;
@@ -1681,11 +1748,14 @@ void Parser::scanfState() {
 	getToken();
 	if (curToken.type != ID) {
 		error(MISSING_IDEN, lexer.lineNum);
+		skipToSemiStop();
+		return;
 	}
 
 	if (!symTab.varInTable(curToken.str)) {
 		error(IDENT_NOT_DEF, lexer.lineNum);
 		skipToSemi();
+		return;
 	}
 
 	quaterList.push_back(Quaternary("READ", "", "", curToken.str));

@@ -65,6 +65,8 @@ private:
 	void skipToFunc();
 	void skipToSemi();
 
+	void skipToSemiStop();
+
 	string name;		//±íÏî
 	SymbolKind kind;	//const/ var/ para/ array/ func
 	SymbolType type;	//void/ int/ char/ string
