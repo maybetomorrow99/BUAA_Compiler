@@ -203,11 +203,11 @@ string MipsGenerator::getRegWithVal(string name) {
 	else if (symTab.isGlobal(name)) {	//全局变量
 		if ((index = regpool.searchReg(name)) == -1) {
 			index = applyReg(name);
-			//mipsout << "la $v1, " << name << endl;
-			//mipsout << "lw $t" << index << ", 0($v1)" << endl;
-			arrayAddrReg = getReg("000");
-			mipsout << "la " << arrayAddrReg << ", " << name << endl;
-			mipsout << "lw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
+			mipsout << "la $a3, " << name << endl;
+			mipsout << "lw $t" << index << ", 0($a3)" << endl;
+			//arrayAddrReg = getReg("000");
+			//mipsout << "la " << arrayAddrReg << ", " << name << endl;
+			//mipsout << "lw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
 		}
 		return "$t" + to_string(index);
 	}
@@ -286,18 +286,18 @@ void MipsGenerator::reg2Mem(int index) {
 		mipsout << "sw $t" << index << ", " << addr << "($fp)" << endl;
 	}
 	else if(reg.kind == 3){
-		//mipsout << "la $v1, " << reg.name << endl;
-		//mipsout << "sw $t" << index << ", 0($v1)" << endl;
-		arrayAddrReg = getReg("000");
-		mipsout << "la " << arrayAddrReg << ", " << reg.name << endl;
-		mipsout << "sw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
+		mipsout << "la $a3, " << reg.name << endl;
+		mipsout << "sw $t" << index << ", 0($a3)" << endl;
+		//arrayAddrReg = getReg("000");
+		//mipsout << "la " << arrayAddrReg << ", " << reg.name << endl;
+		//mipsout << "sw $t" << index << ", 0(" << arrayAddrReg << ")" << endl;
 	}
 }
 
 /*
 清空寄存器
-option = 0， 清空 $8-25寄存器, 不存入内存，在函数声明开始时使用
-option = 1, 清空 $8-25寄存器, 将相应内容存入内存中, 在调用其他函数之前使用
+option = 0， 清空 $8-$25寄存器, 不存入内存，在函数声明开始时使用
+option = 1, 清空 $8-$25寄存器, 将相应内容存入内存中, 在调用其他函数之前使用
 option = 2, 清空 $8-$25寄存器, 将全局变量存入内存,其余不存入，函数返回时使用
 option = 3, 清空 $t0-$t9临时变量寄存器，保留全局寄存器(函数内跨块使用)，
 			将t寄存器中的局部变量，全局变量，和switch变量，将其写入内存
@@ -731,18 +731,6 @@ void MipsGenerator::mipsVOF() {
 	
 	mipsout << "move " << reg << ", $v0" << endl;
 
-	//if (symTab.isGlobal(resname)) {	//是全局变量
-	//	mipsout << "la $t1, " << resname << endl;
-	//	mipsout << "sw $v0, 0($t1)" << endl;
-	//}
-	//else if (inReg(resname)) {		//是在寄存器中的局部变量
-	//	int regNum = getRegNum(resname);
-	//	mipsout << "move $" << regNum << ", $v0" << endl;
-	//}
-	//else {							//不在寄存器中的局部变量
-	//	int resaddr = -getOffset(resname);
-	//	mipsout << "sw $v0, " << resaddr << "($fp)" << endl;
-	//}
 }
 
 
@@ -799,22 +787,22 @@ void MipsGenerator::mipsSARY() {
 	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
-	reg1 = getReg("000");
+	//reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
-		mipsout << "la " << reg1 << ", " << op1name << endl;
-		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "la $a3, " << op1name << endl;
+		mipsout << "addu $a3, $a3, " << reg2 << endl;
 		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
-		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "addi $a3, $fp, " << op1addr << endl;
+		mipsout << "subu $a3, $a3, " << reg2 << endl;
 		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3，并给数组赋值
 	reg3 = getRegWithVal(resname);
-	mipsout << "sw " << reg3 << ", (" << reg1 << ")" << endl;
+	mipsout << "sw " << reg3 << ", ($a3)" << endl;
 }
 
 
@@ -836,22 +824,22 @@ void MipsGenerator::mipsLARY() {
 	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
-	reg1 = getReg("000");
+	//reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
-		mipsout << "la " << reg1 << ", " << op1name << endl;
-		mipsout << "addu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "la $a3, " << op1name << endl;
+		mipsout << "addu $a3, $a3, " << reg2 << endl;
 		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
-		mipsout << "addi " << reg1 << ", $fp, " << op1addr << endl;
-		mipsout << "subu " << reg1 << ", " << reg1 << ", " << reg2 << endl;
+		mipsout << "addi $a3, $fp, " << op1addr << endl;
+		mipsout << "subu $a3, $a3, " << reg2 << endl;
 		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3
 	reg3 = getReg(resname);
-	mipsout << "lw " << reg3 << ", (" << reg1 << ")" << endl;
+	mipsout << "lw " << reg3 << ", ($a3)" << endl;
 }
 
 

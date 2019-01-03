@@ -1,1319 +1,583 @@
 token 1   :CONST   const at line 1
 token 2   :INT     int   at line 1
-token 3   :ID      _const_int_0 at line 1
+token 3   :ID      max_num at line 1
 token 4   :EQU     =     at line 1
-token 5   :PLUS    +     at line 1
-token 6   :NUM     0     at line 1
-token 7   :COMMA   ,     at line 1
-token 8   :ID      _const_int_1 at line 1
-token 9   :EQU     =     at line 1
-token 10  :PLUS    +     at line 1
-token 11  :NUM     00001 at line 1
-token 12  :COMMA   ,     at line 1
-token 13  :ID      _const_int_2 at line 1
-token 14  :EQU     =     at line 1
-token 15  :MINUS   -     at line 1
-token 16  :NUM     00003 at line 1
-token 17  :SEMI    ;     at line 1
-token 18  :CONST   const at line 2
-token 19  :CHAR    char  at line 2
-token 20  :ID      _const_char_0 at line 2
-token 21  :EQU     =     at line 2
-token 22  :SIGCHAR '*' at line 2
-token 23  :COMMA   ,     at line 2
-token 24  :ID      _const_char_1 at line 2
-token 25  :EQU     =     at line 2
-token 26  :SIGCHAR '0' at line 2
-token 27  :SEMI    ;     at line 2
-token 28  :CONST   const at line 3
-token 29  :INT     int   at line 3
-token 30  :ID      max   at line 3
-token 31  :EQU     =     at line 4
-token 32  :NUM     1000  at line 4
-token 33  :SEMI    ;     at line 4
-token 34  :INT     int   at line 6
-token 35  :ID      error at line 6
-token 36  :SEMI    ;     at line 6
-token 37  :INT     int   at line 7
-token 38  :ID      numbers_to_be_selected at line 7
-token 39  :COMMA   ,     at line 7
-token 40  :ID      amount at line 7
-token 41  :SEMI    ;     at line 7
-token 42  :INT     int   at line 8
-token 43  :ID      f     at line 8
-token 44  :LBRK    [     at line 8
-token 45  :NUM     1000  at line 8
-token 46  :RBRK    ]     at line 8
-token 47  :SEMI    ;     at line 8
-token 48  :INT     int   at line 9
-token 49  :ID      _var_int_0 at line 9
-token 50  :COMMA   ,     at line 9
-token 51  :ID      _var_int_arr_0 at line 9
-token 52  :LBRK    [     at line 9
-token 53  :NUM     1     at line 9
-token 54  :RBRK    ]     at line 9
-token 55  :SEMI    ;     at line 9
-token 56  :INT     int   at line 10
-token 57  :ID      _var_int_1 at line 10
-token 58  :COMMA   ,     at line 10
-token 59  :ID      _var_int_arr_1 at line 10
-token 60  :LBRK    [     at line 10
-token 61  :NUM     16    at line 10
-token 62  :RBRK    ]     at line 10
-token 63  :SEMI    ;     at line 10
-token 64  :CHAR    char  at line 11
-token 65  :ID      _var_char_0 at line 11
-token 66  :COMMA   ,     at line 11
-token 67  :ID      _var_char_arr_0 at line 11
-token 68  :LBRK    [     at line 11
-token 69  :NUM     1     at line 11
-token 70  :RBRK    ]     at line 11
-token 71  :SEMI    ;     at line 11
-token 72  :CHAR    char  at line 12
-token 73  :ID      _var_char_1 at line 12
-token 74  :COMMA   ,     at line 12
-token 75  :ID      _var_char_arr_1 at line 12
-token 76  :LBRK    [     at line 12
-token 77  :NUM     16    at line 12
-token 78  :RBRK    ]     at line 12
-token 79  :SEMI    ;     at line 12
-token 80  :CHAR    char  at line 13
-token 81  :ID      _char at line 13
-token 82  :SEMI    ;     at line 13
-token 83  :VOID    void  at line 15
-token 84  :ID      testdo at line 15
-token 85  :LBRA    {     at line 15
-token 86  :INT     int   at line 16
-token 87  :ID      i     at line 16
-token 88  :SEMI    ;     at line 16
-token 89  :ID      i     at line 17
-token 90  :EQU     =     at line 17
-token 91  :NUM     0     at line 17
-token 92  :SEMI    ;     at line 17
-token 93  :DO      do    at line 18
-token 94  :LBRA    {     at line 18
-token 95  :ID      _var_int_arr_1 at line 19
-token 96  :LBRK    [     at line 19
-token 97  :ID      i     at line 19
-token 98  :RBRK    ]     at line 19
-token 99  :EQU     =     at line 19
-token 100 :ID      i     at line 19
-token 101 :SEMI    ;     at line 19
-token 102 :ID      i     at line 20
-token 103 :EQU     =     at line 20
-token 104 :ID      i     at line 20
-token 105 :PLUS    +     at line 20
-token 106 :NUM     1     at line 20
-token 107 :SEMI    ;     at line 20
-token 108 :RBRA    }     at line 21
-token 109 :WHILE   while at line 21
-token 110 :LPAR    (     at line 21
-token 111 :ID      i     at line 21
-token 112 :LEQ     <=    at line 21
-token 113 :NUM     15    at line 21
-token 114 :RPAR    )     at line 21
-token 115 :SEMI    ;     at line 21
-token 116 :ID      i     at line 22
-token 117 :EQU     =     at line 22
-token 118 :NUM     0     at line 22
-token 119 :SEMI    ;     at line 22
-token 120 :DO      do    at line 23
-token 121 :LBRA    {     at line 23
-token 122 :ID      _var_int_arr_1 at line 24
-token 123 :LBRK    [     at line 24
-token 124 :ID      i     at line 24
-token 125 :RBRK    ]     at line 24
-token 126 :EQU     =     at line 24
-token 127 :ID      _var_int_arr_1 at line 24
-token 128 :LBRK    [     at line 24
-token 129 :NUM     2     at line 24
-token 130 :MULT    *     at line 24
-token 131 :ID      i     at line 24
-token 132 :MINUS   -     at line 24
-token 133 :ID      i     at line 24
-token 134 :RBRK    ]     at line 24
-token 135 :PLUS    +     at line 24
-token 136 :ID      _var_int_arr_1 at line 24
-token 137 :LBRK    [     at line 24
-token 138 :NUM     9     at line 24
-token 139 :PLUS    +     at line 24
-token 140 :NUM     2     at line 24
-token 141 :MULT    *     at line 24
-token 142 :NUM     3     at line 24
-token 143 :MINUS   -     at line 24
-token 144 :ID      i     at line 24
-token 145 :RBRK    ]     at line 24
-token 146 :SEMI    ;     at line 24
-token 147 :ID      i     at line 25
-token 148 :EQU     =     at line 25
-token 149 :ID      i     at line 25
-token 150 :PLUS    +     at line 25
-token 151 :NUM     1     at line 25
-token 152 :SEMI    ;     at line 25
-token 153 :RBRA    }     at line 26
-token 154 :WHILE   while at line 26
-token 155 :LPAR    (     at line 26
-token 156 :ID      i     at line 26
-token 157 :LEQ     <=    at line 26
-token 158 :NUM     15    at line 26
-token 159 :RPAR    )     at line 26
-token 160 :SEMI    ;     at line 26
-token 161 :IF      if    at line 27
-token 162 :LPAR    (     at line 27
-token 163 :ID      _var_int_arr_1 at line 27
-token 164 :LBRK    [     at line 27
-token 165 :NUM     1     at line 27
-token 166 :RBRK    ]     at line 27
-token 167 :EQEQ    ==    at line 27
-token 168 :ID      _var_int_arr_1 at line 27
-token 169 :LBRK    [     at line 27
-token 170 :NUM     5     at line 27
-token 171 :RBRK    ]     at line 27
-token 172 :RPAR    )     at line 27
-token 173 :SEMI    ;     at line 28
-token 174 :ELSE    else  at line 29
-token 175 :LBRA    {     at line 29
-token 176 :PRINTF  printf at line 30
-token 177 :LPAR    (     at line 30
-token 178 :STRING  "Error in Array & Loop Check!" at line 30
-token 179 :RPAR    )     at line 30
-token 180 :SEMI    ;     at line 30
-token 181 :ID      error at line 31
-token 182 :EQU     =     at line 31
-token 183 :NUM     1     at line 31
-token 184 :SEMI    ;     at line 31
-token 185 :RBRA    }     at line 32
-token 186 :IF      if    at line 33
-token 187 :LPAR    (     at line 33
-token 188 :ID      _var_int_arr_1 at line 33
-token 189 :LBRK    [     at line 33
-token 190 :NUM     15    at line 33
-token 191 :RBRK    ]     at line 33
-token 192 :EQEQ    ==    at line 33
-token 193 :NUM     30    at line 33
-token 194 :RPAR    )     at line 33
-token 195 :PRINTF  printf at line 34
-token 196 :LPAR    (     at line 34
-token 197 :STRING  "Array & Loop Check Succeed!" at line 34
-token 198 :RPAR    )     at line 34
-token 199 :SEMI    ;     at line 34
-token 200 :ELSE    else  at line 35
-token 201 :LBRA    {     at line 35
-token 202 :PRINTF  printf at line 36
-token 203 :LPAR    (     at line 36
-token 204 :STRING  "Error in Array & Loop Check!" at line 36
-token 205 :RPAR    )     at line 36
-token 206 :SEMI    ;     at line 36
-token 207 :ID      error at line 37
-token 208 :EQU     =     at line 37
-token 209 :NUM     1     at line 37
-token 210 :SEMI    ;     at line 37
-token 211 :RBRA    }     at line 38
-token 212 :RBRA    }     at line 39
-token 213 :VOID    void  at line 41
-token 214 :ID      testarithmetic at line 41
-token 215 :LBRA    {     at line 41
-token 216 :CONST   const at line 42
-token 217 :INT     int   at line 42
-token 218 :ID      standard at line 42
-token 219 :EQU     =     at line 42
-token 220 :NUM     100   at line 42
-token 221 :COMMA   ,     at line 42
-token 222 :ID      ten   at line 42
-token 223 :EQU     =     at line 42
-token 224 :NUM     10    at line 42
-token 225 :SEMI    ;     at line 42
-token 226 :INT     int   at line 43
-token 227 :ID      temp  at line 43
-token 228 :SEMI    ;     at line 43
-token 229 :ID      temp  at line 44
-token 230 :EQU     =     at line 44
-token 231 :MINUS   -     at line 44
-token 232 :MINUS   -     at line 44
-token 233 :NUM     10    at line 44
-token 234 :MINUS   -     at line 44
-token 235 :PLUS    +     at line 44
-token 236 :NUM     10    at line 44
-token 237 :PLUS    +     at line 44
-token 238 :ID      ten   at line 44
-token 239 :MULT    *     at line 44
-token 240 :LPAR    (     at line 44
-token 241 :ID      _const_char_1 at line 44
-token 242 :MINUS   -     at line 44
-token 243 :ID      _const_char_0 at line 44
-token 244 :RPAR    )     at line 44
-token 245 :DIV     /     at line 44
-token 246 :ID      _const_int_2 at line 44
-token 247 :PLUS    +     at line 44
-token 248 :ID      standard at line 44
-token 249 :DIV     /     at line 44
-token 250 :LPAR    (     at line 44
-token 251 :ID      ten   at line 44
-token 252 :PLUS    +     at line 44
-token 253 :ID      _const_int_2 at line 44
-token 254 :MINUS   -     at line 44
-token 255 :ID      _const_int_1 at line 44
-token 256 :RPAR    )     at line 44
-token 257 :SEMI    ;     at line 44
-token 258 :IF      if    at line 45
-token 259 :LPAR    (     at line 45
-token 260 :ID      temp  at line 45
-token 261 :RPAR    )     at line 45
-token 262 :PRINTF  printf at line 46
-token 263 :LPAR    (     at line 46
-token 264 :STRING  "Arithmetic Check Succeed!" at line 46
-token 265 :RPAR    )     at line 46
-token 266 :SEMI    ;     at line 46
-token 267 :ELSE    else  at line 47
-token 268 :LBRA    {     at line 47
-token 269 :PRINTF  printf at line 48
-token 270 :LPAR    (     at line 48
-token 271 :STRING  "Arithmetic Check Failed!" at line 48
-token 272 :RPAR    )     at line 48
-token 273 :SEMI    ;     at line 48
-token 274 :ID      error at line 49
-token 275 :EQU     =     at line 49
-token 276 :NUM     1     at line 49
-token 277 :SEMI    ;     at line 49
-token 278 :RBRA    }     at line 50
-token 279 :ID      temp  at line 51
-token 280 :EQU     =     at line 51
-token 281 :LPAR    (     at line 51
-token 282 :ID      standard at line 51
-token 283 :PLUS    +     at line 51
-token 284 :ID      _const_int_1 at line 51
-token 285 :MULT    *     at line 51
-token 286 :NUM     15    at line 51
-token 287 :RPAR    )     at line 51
-token 288 :DIV     /     at line 51
-token 289 :ID      ten   at line 51
-token 290 :SEMI    ;     at line 51
-token 291 :IF      if    at line 52
-token 292 :LPAR    (     at line 52
-token 293 :ID      temp  at line 52
-token 294 :EQEQ    ==    at line 52
-token 295 :NUM     11    at line 52
-token 296 :RPAR    )     at line 52
-token 297 :PRINTF  printf at line 53
-token 298 :LPAR    (     at line 53
-token 299 :STRING  "Division Check Passed!" at line 53
-token 300 :RPAR    )     at line 53
-token 301 :SEMI    ;     at line 53
-token 302 :ELSE    else  at line 54
-token 303 :LBRA    {     at line 54
-token 304 :PRINTF  printf at line 55
-token 305 :LPAR    (     at line 55
-token 306 :STRING  "Error in Division Unit!" at line 55
-token 307 :RPAR    )     at line 55
-token 308 :SEMI    ;     at line 55
-token 309 :ID      error at line 56
-token 310 :EQU     =     at line 56
-token 311 :NUM     1     at line 56
-token 312 :SEMI    ;     at line 56
-token 313 :RBRA    }     at line 57
-token 314 :RBRA    }     at line 58
-token 315 :VOID    void  at line 60
-token 316 :ID      testvalue at line 60
-token 317 :LBRA    {     at line 60
-token 318 :ID      _var_int_0 at line 61
-token 319 :EQU     =     at line 61
-token 320 :MINUS   -     at line 61
-token 321 :NUM     0     at line 61
-token 322 :SEMI    ;     at line 61
-token 323 :IF      if    at line 62
-token 324 :LPAR    (     at line 62
-token 325 :ID      _var_int_0 at line 62
-token 326 :EQEQ    ==    at line 62
-token 327 :ID      _const_int_0 at line 62
-token 328 :RPAR    )     at line 62
-token 329 :IF      if    at line 63
-token 330 :LPAR    (     at line 63
-token 331 :ID      _var_int_0 at line 63
-token 332 :LSS     <     at line 63
-token 333 :ID      _const_int_1 at line 63
-token 334 :RPAR    )     at line 63
-token 335 :IF      if    at line 64
-token 336 :LPAR    (     at line 64
-token 337 :ID      _var_int_0 at line 64
-token 338 :GTR     >     at line 64
-token 339 :ID      _const_int_2 at line 64
-token 340 :RPAR    )     at line 64
-token 341 :PRINTF  printf at line 65
-token 342 :LPAR    (     at line 65
-token 343 :STRING  "Value Assignment Succeed!" at line 65
-token 344 :RPAR    )     at line 65
-token 345 :SEMI    ;     at line 65
-token 346 :ELSE    else  at line 66
-token 347 :LBRA    {     at line 66
-token 348 :PRINTF  printf at line 67
-token 349 :LPAR    (     at line 67
-token 350 :STRING  "Negative Assignment Failed!" at line 67
-token 351 :RPAR    )     at line 67
-token 352 :SEMI    ;     at line 67
-token 353 :ID      error at line 68
-token 354 :EQU     =     at line 68
-token 355 :NUM     1     at line 68
-token 356 :SEMI    ;     at line 68
-token 357 :RBRA    }     at line 69
-token 358 :ELSE    else  at line 70
-token 359 :LBRA    {     at line 70
-token 360 :PRINTF  printf at line 71
-token 361 :LPAR    (     at line 71
-token 362 :STRING  "Positive Assignment Failed!" at line 71
-token 363 :RPAR    )     at line 71
-token 364 :SEMI    ;     at line 71
-token 365 :ID      error at line 72
-token 366 :EQU     =     at line 72
-token 367 :NUM     1     at line 72
-token 368 :SEMI    ;     at line 72
-token 369 :RBRA    }     at line 73
-token 370 :ELSE    else  at line 74
-token 371 :LBRA    {     at line 74
-token 372 :PRINTF  printf at line 75
-token 373 :LPAR    (     at line 75
-token 374 :STRING  "Basic Assignment Failed!" at line 75
-token 375 :RPAR    )     at line 75
-token 376 :SEMI    ;     at line 75
-token 377 :ID      error at line 76
-token 378 :EQU     =     at line 76
-token 379 :NUM     1     at line 76
-token 380 :SEMI    ;     at line 76
-token 381 :RBRA    }     at line 77
-token 382 :RBRA    }     at line 78
-token 383 :VOID    void  at line 80
-token 384 :ID      testcaseinsensitive at line 80
-token 385 :LBRA    {     at line 80
-token 386 :INT     int   at line 81
-token 387 :ID      temp  at line 81
-token 388 :SEMI    ;     at line 81
-token 389 :ID      temp  at line 82
-token 390 :EQU     =     at line 82
-token 391 :MINUS   -     at line 82
-token 392 :NUM     0     at line 82
-token 393 :SEMI    ;     at line 82
-token 394 :ID      temp  at line 83
-token 395 :EQU     =     at line 83
-token 396 :ID      _const_int_1 at line 83
-token 397 :SEMI    ;     at line 83
-token 398 :SWITCH  switch at line 84
-token 399 :LPAR    (     at line 84
-token 400 :ID      temp  at line 84
-token 401 :RPAR    )     at line 84
-token 402 :LBRA    {     at line 84
-token 403 :CASE    case  at line 85
-token 404 :NUM     0     at line 85
-token 405 :COLON   :     at line 85
-token 406 :LBRA    {     at line 85
-token 407 :PRINTF  printf at line 86
-token 408 :LPAR    (     at line 86
-token 409 :STRING  "Case Sensitive Detected!" at line 86
-token 410 :RPAR    )     at line 86
-token 411 :SEMI    ;     at line 86
-token 412 :ID      error at line 87
-token 413 :EQU     =     at line 87
-token 414 :NUM     1     at line 87
-token 415 :SEMI    ;     at line 87
-token 416 :RBRA    }     at line 88
-token 417 :CASE    case  at line 89
-token 418 :NUM     1     at line 89
-token 419 :COLON   :     at line 89
-token 420 :PRINTF  printf at line 89
-token 421 :LPAR    (     at line 89
-token 422 :STRING  "Case Insensitive Passed!" at line 89
-token 423 :RPAR    )     at line 89
-token 424 :SEMI    ;     at line 89
-token 425 :DEFAULT default at line 90
-token 426 :COLON   :     at line 90
-token 427 :LBRA    {     at line 90
-token 428 :PRINTF  printf at line 91
-token 429 :LPAR    (     at line 91
-token 430 :STRING  "Error in testing Case Insensitive!" at line 91
-token 431 :RPAR    )     at line 91
-token 432 :SEMI    ;     at line 91
-token 433 :ID      error at line 92
-token 434 :EQU     =     at line 92
-token 435 :NUM     1     at line 92
-token 436 :SEMI    ;     at line 92
-token 437 :RBRA    }     at line 93
-token 438 :RBRA    }     at line 94
-token 439 :RBRA    }     at line 95
-token 440 :VOID    void  at line 97
-token 441 :ID      testswitch at line 97
-token 442 :LPAR    (     at line 97
-token 443 :INT     int   at line 97
-token 444 :ID      i     at line 97
-token 445 :RPAR    )     at line 97
-token 446 :LBRA    {     at line 97
-token 447 :INT     int   at line 98
-token 448 :ID      temp  at line 98
-token 449 :SEMI    ;     at line 98
-token 450 :ID      temp  at line 99
-token 451 :EQU     =     at line 99
-token 452 :ID      i     at line 99
-token 453 :SEMI    ;     at line 99
-token 454 :ID      _var_int_1 at line 100
-token 455 :EQU     =     at line 100
-token 456 :PLUS    +     at line 100
-token 457 :NUM     0001  at line 100
-token 458 :SEMI    ;     at line 100
-token 459 :SWITCH  switch at line 101
-token 460 :LPAR    (     at line 101
-token 461 :ID      temp  at line 101
-token 462 :PLUS    +     at line 101
-token 463 :ID      _const_int_2 at line 101
-token 464 :PLUS    +     at line 101
-token 465 :ID      _var_int_1 at line 101
-token 466 :MULT    *     at line 101
-token 467 :ID      _const_int_1 at line 101
-token 468 :RPAR    )     at line 101
-token 469 :LBRA    {     at line 101
-token 470 :CASE    case  at line 102
-token 471 :NUM     1     at line 102
-token 472 :COLON   :     at line 102
-token 473 :LBRA    {     at line 102
-token 474 :PRINTF  printf at line 103
-token 475 :LPAR    (     at line 103
-token 476 :STRING  "Switch Parse Check Succeed!" at line 103
-token 477 :RPAR    )     at line 103
-token 478 :SEMI    ;     at line 103
-token 479 :RBRA    }     at line 104
-token 480 :DEFAULT default at line 105
-token 481 :COLON   :     at line 105
-token 482 :LBRA    {     at line 105
-token 483 :PRINTF  printf at line 106
-token 484 :LPAR    (     at line 106
-token 485 :STRING  "Switch Logic Error!" at line 106
-token 486 :RPAR    )     at line 106
-token 487 :SEMI    ;     at line 106
-token 488 :ID      error at line 107
-token 489 :EQU     =     at line 107
-token 490 :NUM     1     at line 107
-token 491 :SEMI    ;     at line 107
-token 492 :RBRA    }     at line 108
-token 493 :RBRA    }     at line 109
-token 494 :RBRA    }     at line 110
-token 495 :VOID    void  at line 112
-token 496 :ID      testif at line 112
-token 497 :LBRA    {     at line 112
-token 498 :IF      if    at line 113
-token 499 :LPAR    (     at line 113
-token 500 :ID      _const_char_1 at line 113
-token 501 :MINUS   -     at line 113
-token 502 :ID      _const_char_0 at line 113
-token 503 :NEQ     !=    at line 113
-token 504 :NUM     2     at line 113
-token 505 :MULT    *     at line 113
-token 506 :NUM     3     at line 113
-token 507 :RPAR    )     at line 113
-token 508 :LBRA    {     at line 113
-token 509 :PRINTF  printf at line 114
-token 510 :LPAR    (     at line 114
-token 511 :STRING  "If Statement Error!" at line 114
-token 512 :RPAR    )     at line 114
-token 513 :SEMI    ;     at line 114
-token 514 :ID      error at line 115
-token 515 :EQU     =     at line 115
-token 516 :NUM     1     at line 115
-token 517 :SEMI    ;     at line 115
-token 518 :RBRA    }     at line 116
-token 519 :ELSE    else  at line 117
-token 520 :PRINTF  printf at line 118
-token 521 :LPAR    (     at line 118
-token 522 :STRING  "Passed If Statement Testing!" at line 118
-token 523 :RPAR    )     at line 118
-token 524 :SEMI    ;     at line 118
-token 525 :RBRA    }     at line 119
-token 526 :VOID    void  at line 121
-token 527 :ID      calrecursive at line 121
-token 528 :LPAR    (     at line 121
-token 529 :INT     int   at line 121
-token 530 :ID      cur_pointer at line 121
-token 531 :COMMA   ,     at line 121
-token 532 :INT     int   at line 121
-token 533 :ID      min   at line 121
-token 534 :RPAR    )     at line 121
-token 535 :LBRA    {     at line 121
-token 536 :INT     int   at line 122
-token 537 :ID      i     at line 122
-token 538 :SEMI    ;     at line 122
-token 539 :IF      if    at line 123
-token 540 :LPAR    (     at line 123
-token 541 :ID      cur_pointer at line 123
-token 542 :EQEQ    ==    at line 123
-token 543 :ID      amount at line 123
-token 544 :RPAR    )     at line 123
-token 545 :LBRA    {     at line 123
-token 546 :PRINTF  printf at line 124
-token 547 :LPAR    (     at line 124
-token 548 :ID      f     at line 124
-token 549 :LBRK    [     at line 124
-token 550 :NUM     0     at line 124
-token 551 :RBRK    ]     at line 124
-token 552 :RPAR    )     at line 124
-token 553 :SEMI    ;     at line 124
-token 554 :ID      i     at line 125
-token 555 :EQU     =     at line 125
-token 556 :NUM     1     at line 125
-token 557 :SEMI    ;     at line 125
-token 558 :IF      if    at line 126
-token 559 :LPAR    (     at line 126
-token 560 :ID      i     at line 126
-token 561 :LSS     <     at line 126
-token 562 :ID      amount at line 126
-token 563 :RPAR    )     at line 126
-token 564 :DO      do    at line 127
-token 565 :LBRA    {     at line 127
-token 566 :PRINTF  printf at line 128
-token 567 :LPAR    (     at line 128
-token 568 :ID      f     at line 128
-token 569 :LBRK    [     at line 128
-token 570 :ID      i     at line 128
-token 571 :RBRK    ]     at line 128
-token 572 :RPAR    )     at line 128
-token 573 :SEMI    ;     at line 128
-token 574 :ID      i     at line 129
-token 575 :EQU     =     at line 129
-token 576 :ID      i     at line 129
-token 577 :PLUS    +     at line 129
-token 578 :NUM     1     at line 129
-token 579 :SEMI    ;     at line 129
-token 580 :RBRA    }     at line 130
-token 581 :WHILE   while at line 130
-token 582 :LPAR    (     at line 130
-token 583 :ID      i     at line 130
-token 584 :LSS     <     at line 130
-token 585 :ID      amount at line 130
-token 586 :RPAR    )     at line 130
-token 587 :ELSE    else  at line 131
-token 588 :SEMI    ;     at line 131
-token 589 :PRINTF  printf at line 132
-token 590 :LPAR    (     at line 132
-token 591 :STRING  "" at line 132
-token 592 :RPAR    )     at line 132
-token 593 :SEMI    ;     at line 132
-token 594 :RETURN  return at line 133
-token 595 :SEMI    ;     at line 133
-token 596 :RBRA    }     at line 134
-token 597 :ELSE    else  at line 134
-token 598 :SEMI    ;     at line 134
-token 599 :ID      i     at line 135
-token 600 :EQU     =     at line 135
-token 601 :ID      min   at line 135
-token 602 :SEMI    ;     at line 135
-token 603 :IF      if    at line 136
-token 604 :LPAR    (     at line 136
-token 605 :ID      i     at line 136
-token 606 :LEQ     <=    at line 136
-token 607 :ID      cur_pointer at line 136
-token 608 :PLUS    +     at line 136
-token 609 :ID      numbers_to_be_selected at line 136
-token 610 :MINUS   -     at line 136
-token 611 :ID      amount at line 136
-token 612 :PLUS    +     at line 136
-token 613 :NUM     1     at line 136
-token 614 :RPAR    )     at line 136
-token 615 :DO      do    at line 137
-token 616 :LBRA    {     at line 137
-token 617 :ID      f     at line 138
-token 618 :LBRK    [     at line 138
-token 619 :ID      cur_pointer at line 138
-token 620 :RBRK    ]     at line 138
-token 621 :EQU     =     at line 138
-token 622 :ID      i     at line 138
-token 623 :SEMI    ;     at line 138
-token 624 :ID      calrecursive at line 139
-token 625 :LPAR    (     at line 139
-token 626 :ID      cur_pointer at line 139
-token 627 :PLUS    +     at line 139
-token 628 :NUM     1     at line 139
-token 629 :COMMA   ,     at line 139
-token 630 :ID      i     at line 139
-token 631 :PLUS    +     at line 139
-token 632 :NUM     1     at line 139
-token 633 :RPAR    )     at line 139
-token 634 :SEMI    ;     at line 139
-token 635 :ID      i     at line 140
-token 636 :EQU     =     at line 140
-token 637 :ID      i     at line 140
-token 638 :PLUS    +     at line 140
-token 639 :NUM     1     at line 140
-token 640 :SEMI    ;     at line 140
-token 641 :RBRA    }     at line 141
-token 642 :WHILE   while at line 141
-token 643 :LPAR    (     at line 141
-token 644 :ID      i     at line 141
-token 645 :LEQ     <=    at line 141
-token 646 :ID      cur_pointer at line 141
-token 647 :PLUS    +     at line 141
-token 648 :ID      numbers_to_be_selected at line 141
-token 649 :MINUS   -     at line 141
-token 650 :ID      amount at line 141
-token 651 :PLUS    +     at line 141
-token 652 :NUM     1     at line 141
-token 653 :RPAR    )     at line 141
-token 654 :ELSE    else  at line 142
-token 655 :SEMI    ;     at line 142
-token 656 :RBRA    }     at line 143
-token 657 :VOID    void  at line 145
-token 658 :ID      initpermutation at line 145
-token 659 :LPAR    (     at line 145
-token 660 :INT     int   at line 145
-token 661 :ID      var   at line 145
-token 662 :COMMA   ,     at line 145
-token 663 :INT     int   at line 145
-token 664 :ID      lenth at line 145
-token 665 :RPAR    )     at line 145
-token 666 :LBRA    {     at line 145
-token 667 :INT     int   at line 146
-token 668 :ID      i     at line 146
-token 669 :SEMI    ;     at line 146
-token 670 :ID      i     at line 147
-token 671 :EQU     =     at line 147
-token 672 :NUM     0     at line 147
-token 673 :SEMI    ;     at line 147
-token 674 :DO      do    at line 148
-token 675 :LBRA    {     at line 149
-token 676 :ID      f     at line 150
-token 677 :LBRK    [     at line 150
-token 678 :ID      i     at line 150
-token 679 :RBRK    ]     at line 150
-token 680 :EQU     =     at line 150
-token 681 :ID      var   at line 150
-token 682 :SEMI    ;     at line 150
-token 683 :ID      i     at line 151
-token 684 :EQU     =     at line 151
-token 685 :ID      i     at line 151
-token 686 :PLUS    +     at line 151
-token 687 :NUM     1     at line 151
-token 688 :SEMI    ;     at line 151
-token 689 :RBRA    }     at line 152
-token 690 :WHILE   while at line 152
-token 691 :LPAR    (     at line 152
-token 692 :ID      i     at line 152
-token 693 :LEQ     <=    at line 152
-token 694 :ID      lenth at line 152
-token 695 :RPAR    )     at line 152
-token 696 :RETURN  return at line 153
-token 697 :SEMI    ;     at line 153
-token 698 :RBRA    }     at line 154
-token 699 :INT     int   at line 156
-token 700 :ID      seqsum at line 156
-token 701 :LPAR    (     at line 156
-token 702 :INT     int   at line 156
-token 703 :ID      i     at line 156
-token 704 :RPAR    )     at line 156
-token 705 :LBRA    {     at line 156
-token 706 :IF      if    at line 157
-token 707 :LPAR    (     at line 157
-token 708 :ID      i     at line 157
-token 709 :EQEQ    ==    at line 157
-token 710 :NUM     1     at line 157
-token 711 :RPAR    )     at line 157
-token 712 :RETURN  return at line 158
-token 713 :LPAR    (     at line 158
-token 714 :NUM     1     at line 158
-token 715 :RPAR    )     at line 158
-token 716 :SEMI    ;     at line 158
-token 717 :ELSE    else  at line 159
-token 718 :RETURN  return at line 160
-token 719 :LPAR    (     at line 160
-token 720 :ID      i     at line 160
-token 721 :PLUS    +     at line 160
-token 722 :ID      seqsum at line 160
-token 723 :LPAR    (     at line 160
-token 724 :ID      i     at line 160
-token 725 :MINUS   -     at line 160
-token 726 :NUM     1     at line 160
-token 727 :RPAR    )     at line 160
-token 728 :RPAR    )     at line 160
-token 729 :SEMI    ;     at line 160
-token 730 :RBRA    }     at line 161
-token 731 :VOID    void  at line 163
-token 732 :ID      printtable at line 163
-token 733 :LBRA    {     at line 163
-token 734 :PRINTF  printf at line 164
-token 735 :LPAR    (     at line 164
-token 736 :STRING  "INPUT 0: Basic Test        [Arithmetic, Case Inseneitive, Control Flow Logics]" at line 164
-token 737 :RPAR    )     at line 164
-token 738 :SEMI    ;     at line 164
-token 739 :PRINTF  printf at line 165
-token 740 :LPAR    (     at line 165
-token 741 :STRING  "INPUT 1: Value Type Test   [Char Return, Char Operation, Char Conversion, Escape Char]" at line 165
-token 742 :RPAR    )     at line 165
-token 743 :SEMI    ;     at line 165
-token 744 :PRINTF  printf at line 166
-token 745 :LPAR    (     at line 166
-token 746 :STRING  "INPUT 2: Structure Test    [Loop, Array, Structures]" at line 166
-token 747 :RPAR    )     at line 166
-token 748 :SEMI    ;     at line 166
-token 749 :PRINTF  printf at line 167
-token 750 :LPAR    (     at line 167
-token 751 :STRING  "INPUT 3: Recursive Test    [Permutation, Sequential Sum]" at line 167
-token 752 :RPAR    )     at line 167
-token 753 :SEMI    ;     at line 167
-token 754 :PRINTF  printf at line 168
-token 755 :LPAR    (     at line 168
-token 756 :STRING  "INPUT 4: Exit Program" at line 168
-token 757 :RPAR    )     at line 168
-token 758 :SEMI    ;     at line 168
-token 759 :RBRA    }     at line 169
-token 760 :INT     int   at line 171
-token 761 :ID      and   at line 171
-token 762 :LPAR    (     at line 171
-token 763 :INT     int   at line 171
-token 764 :ID      a     at line 171
-token 765 :COMMA   ,     at line 171
-token 766 :INT     int   at line 171
-token 767 :ID      b     at line 171
-token 768 :RPAR    )     at line 171
-token 769 :LBRA    {     at line 171
-token 770 :IF      if    at line 172
-token 771 :LPAR    (     at line 172
-token 772 :ID      b     at line 172
-token 773 :EQEQ    ==    at line 172
-token 774 :NUM     4     at line 172
-token 775 :RPAR    )     at line 172
-token 776 :RETURN  return at line 173
-token 777 :LPAR    (     at line 173
-token 778 :NUM     0     at line 173
-token 779 :RPAR    )     at line 173
-token 780 :SEMI    ;     at line 173
-token 781 :ELSE    else  at line 174
-token 782 :IF      if    at line 175
-token 783 :LPAR    (     at line 175
-token 784 :ID      a     at line 175
-token 785 :EQEQ    ==    at line 175
-token 786 :NUM     0     at line 175
-token 787 :RPAR    )     at line 175
-token 788 :RETURN  return at line 176
-token 789 :LPAR    (     at line 176
-token 790 :NUM     1     at line 176
-token 791 :RPAR    )     at line 176
-token 792 :SEMI    ;     at line 176
-token 793 :ELSE    else  at line 177
-token 794 :RETURN  return at line 178
-token 795 :LPAR    (     at line 178
-token 796 :NUM     0     at line 178
-token 797 :RPAR    )     at line 178
-token 798 :SEMI    ;     at line 178
-token 799 :RBRA    }     at line 179
-token 800 :CHAR    char  at line 181
-token 801 :ID      helpchar at line 181
-token 802 :LBRA    {     at line 181
-token 803 :CHAR    char  at line 182
-token 804 :ID      temp  at line 182
-token 805 :SEMI    ;     at line 182
-token 806 :ID      temp  at line 183
-token 807 :EQU     =     at line 183
-token 808 :SIGCHAR '-' at line 183
-token 809 :SEMI    ;     at line 183
-token 810 :RETURN  return at line 184
-token 811 :LPAR    (     at line 184
-token 812 :ID      temp  at line 184
-token 813 :RPAR    )     at line 184
-token 814 :SEMI    ;     at line 184
-token 815 :RBRA    }     at line 185
-token 816 :VOID    void  at line 187
-token 817 :ID      typecorrosion at line 187
-token 818 :LBRA    {     at line 187
-token 819 :INT     int   at line 188
-token 820 :ID      temp  at line 188
-token 821 :SEMI    ;     at line 188
-token 822 :CHAR    char  at line 189
-token 823 :ID      _char at line 189
-token 824 :SEMI    ;     at line 189
-token 825 :ID      _char at line 190
-token 826 :EQU     =     at line 190
-token 827 :SIGCHAR 'i' at line 190
-token 828 :SEMI    ;     at line 190
-token 829 :ID      temp  at line 191
-token 830 :EQU     =     at line 191
-token 831 :NUM     8     at line 191
-token 832 :SEMI    ;     at line 191
-token 833 :PRINTF  printf at line 192
-token 834 :LPAR    (     at line 192
-token 835 :SIGCHAR 'H' at line 192
-token 836 :RPAR    )     at line 192
-token 837 :SEMI    ;     at line 192
-token 838 :PRINTF  printf at line 193
-token 839 :LPAR    (     at line 193
-token 840 :ID      _char at line 193
-token 841 :RPAR    )     at line 193
-token 842 :SEMI    ;     at line 193
-token 843 :PRINTF  printf at line 194
-token 844 :LPAR    (     at line 194
-token 845 :ID      helpchar at line 194
-token 846 :RPAR    )     at line 194
-token 847 :SEMI    ;     at line 194
-token 848 :PRINTF  printf at line 195
-token 849 :LPAR    (     at line 195
-token 850 :STRING  " " at line 195
-token 851 :RPAR    )     at line 195
-token 852 :SEMI    ;     at line 195
-token 853 :PRINTF  printf at line 196
-token 854 :LPAR    (     at line 196
-token 855 :NUM     2     at line 196
-token 856 :RPAR    )     at line 196
-token 857 :SEMI    ;     at line 196
-token 858 :PRINTF  printf at line 197
-token 859 :LPAR    (     at line 197
-token 860 :NUM     2     at line 197
-token 861 :MULT    *     at line 197
-token 862 :NUM     1009  at line 197
-token 863 :MINUS   -     at line 197
-token 864 :NUM     1     at line 197
-token 865 :MINUS   -     at line 197
-token 866 :NUM     2017  at line 197
-token 867 :RPAR    )     at line 197
-token 868 :SEMI    ;     at line 197
-token 869 :PRINTF  printf at line 198
-token 870 :LPAR    (     at line 198
-token 871 :SIGCHAR 'c' at line 198
-token 872 :MINUS   -     at line 198
-token 873 :SIGCHAR 'a' at line 198
-token 874 :MINUS   -     at line 198
-token 875 :LPAR    (     at line 198
-token 876 :SIGCHAR 'b' at line 198
-token 877 :MINUS   -     at line 198
-token 878 :SIGCHAR 'a' at line 198
-token 879 :RPAR    )     at line 198
-token 880 :RPAR    )     at line 198
-token 881 :SEMI    ;     at line 198
-token 882 :PRINTF  printf at line 199
-token 883 :LPAR    (     at line 199
-token 884 :ID      temp  at line 199
-token 885 :RPAR    )     at line 199
-token 886 :SEMI    ;     at line 199
-token 887 :RBRA    }     at line 200
-token 888 :VOID    void  at line 202
-token 889 :ID      testemptyfunction at line 202
-token 890 :LBRA    {     at line 202
-token 891 :LBRA    {     at line 202
-token 892 :RBRA    }     at line 202
-token 893 :RBRA    }     at line 202
-token 894 :VOID    void  at line 204
-token 895 :ID      teststructure at line 204
-token 896 :LPAR    (     at line 204
-token 897 :INT     int   at line 204
-token 898 :ID      a     at line 204
-token 899 :COMMA   ,     at line 204
-token 900 :INT     int   at line 204
-token 901 :ID      b     at line 204
-token 902 :COMMA   ,     at line 204
-token 903 :CHAR    char  at line 204
-token 904 :ID      c     at line 204
-token 905 :COMMA   ,     at line 204
-token 906 :CHAR    char  at line 204
-token 907 :ID      d     at line 204
-token 908 :COMMA   ,     at line 204
-token 909 :CHAR    char  at line 204
-token 910 :ID      e     at line 204
-token 911 :RPAR    )     at line 204
-token 912 :LBRA    {     at line 204
-token 913 :INT     int   at line 205
-token 914 :ID      t1    at line 205
-token 915 :COMMA   ,     at line 205
-token 916 :ID      t2    at line 205
-token 917 :SEMI    ;     at line 205
-token 918 :LBRA    {     at line 206
-token 919 :LBRA    {     at line 207
-token 920 :LBRA    {     at line 208
-token 921 :LBRA    {     at line 209
-token 922 :LBRA    {     at line 210
-token 923 :LBRA    {     at line 211
-token 924 :LBRA    {     at line 211
-token 925 :LBRA    {     at line 211
-token 926 :LBRA    {     at line 211
-token 927 :LBRA    {     at line 211
-token 928 :LBRA    {     at line 211
-token 929 :LBRA    {     at line 211
-token 930 :RBRA    }     at line 211
-token 931 :RBRA    }     at line 211
-token 932 :RBRA    }     at line 211
-token 933 :RBRA    }     at line 211
-token 934 :RBRA    }     at line 211
-token 935 :RBRA    }     at line 211
-token 936 :RBRA    }     at line 211
-token 937 :RBRA    }     at line 212
-token 938 :RBRA    }     at line 213
-token 939 :RBRA    }     at line 214
-token 940 :RBRA    }     at line 215
-token 941 :RBRA    }     at line 216
-token 942 :SWITCH  switch at line 217
-token 943 :LPAR    (     at line 217
-token 944 :ID      a     at line 217
-token 945 :PLUS    +     at line 217
-token 946 :ID      b     at line 217
-token 947 :PLUS    +     at line 217
-token 948 :ID      d     at line 217
-token 949 :MINUS   -     at line 217
-token 950 :ID      c     at line 217
-token 951 :MINUS   -     at line 217
-token 952 :LPAR    (     at line 217
-token 953 :ID      c     at line 217
-token 954 :MINUS   -     at line 217
-token 955 :ID      e     at line 217
-token 956 :RPAR    )     at line 217
-token 957 :RPAR    )     at line 217
-token 958 :LBRA    {     at line 217
-token 959 :CASE    case  at line 218
-token 960 :NUM     66666 at line 218
-token 961 :COLON   :     at line 218
-token 962 :LBRA    {     at line 218
-token 963 :PRINTF  printf at line 219
-token 964 :LPAR    (     at line 219
-token 965 :STRING  "Structure Check Succeed!" at line 219
-token 966 :RPAR    )     at line 219
-token 967 :SEMI    ;     at line 219
-token 968 :ID      t1    at line 220
-token 969 :EQU     =     at line 220
-token 970 :NUM     0     at line 220
-token 971 :SEMI    ;     at line 220
-token 972 :ID      t2    at line 221
-token 973 :EQU     =     at line 221
-token 974 :NUM     0     at line 221
-token 975 :SEMI    ;     at line 221
-token 976 :RBRA    }     at line 222
-token 977 :CASE    case  at line 223
-token 978 :NUM     0     at line 223
-token 979 :COLON   :     at line 223
-token 980 :LBRA    {     at line 223
-token 981 :PRINTF  printf at line 224
-token 982 :LPAR    (     at line 224
-token 983 :STRING  "Error In Register Name!" at line 224
-token 984 :RPAR    )     at line 224
-token 985 :SEMI    ;     at line 224
-token 986 :ID      error at line 225
-token 987 :EQU     =     at line 225
-token 988 :NUM     1     at line 225
-token 989 :SEMI    ;     at line 225
-token 990 :RBRA    }     at line 226
-token 991 :DEFAULT default at line 227
-token 992 :COLON   :     at line 227
-token 993 :ID      error at line 228
-token 994 :EQU     =     at line 228
-token 995 :NUM     1     at line 228
-token 996 :SEMI    ;     at line 228
-token 997 :RBRA    }     at line 229
-token 998 :LBRA    {     at line 230
-token 999 :SEMI    ;     at line 230
-token 1000:LBRA    {     at line 230
-token 1001:SEMI    ;     at line 230
-token 1002:LBRA    {     at line 230
-token 1003:SEMI    ;     at line 230
-token 1004:SEMI    ;     at line 230
-token 1005:SEMI    ;     at line 230
-token 1006:RBRA    }     at line 230
-token 1007:SEMI    ;     at line 230
-token 1008:RBRA    }     at line 230
-token 1009:SEMI    ;     at line 230
-token 1010:RBRA    }     at line 230
-token 1011:RBRA    }     at line 232
-token 1012:VOID    void  at line 235
-token 1013:MAIN    main  at line 235
-token 1014:LPAR    (     at line 235
-token 1015:RPAR    )     at line 235
-token 1016:LBRA    {     at line 235
-token 1017:CHAR    char  at line 236
-token 1018:ID      choice at line 236
-token 1019:SEMI    ;     at line 236
-token 1020:INT     int   at line 237
-token 1021:ID      select at line 237
-token 1022:SEMI    ;     at line 237
-token 1023:ID      error at line 238
-token 1024:EQU     =     at line 238
-token 1025:NUM     0     at line 238
-token 1026:SEMI    ;     at line 238
-token 1027:ID      _char at line 239
-token 1028:EQU     =     at line 239
-token 1029:SIGCHAR '0' at line 239
-token 1030:SEMI    ;     at line 239
-token 1031:DO      do    at line 240
-token 1032:LBRA    {     at line 240
-token 1033:ID      printtable at line 241
-token 1034:SEMI    ;     at line 241
-token 1035:SCANF   scan  at line 242
-token 1036:LPAR    (     at line 242
-token 1037:ID      select at line 242
-token 1038:RPAR    )     at line 242
-token 1039:SEMI    ;     at line 242
-token 1040:SWITCH  switch at line 243
-token 1041:LPAR    (     at line 243
-token 1042:ID      select at line 243
-token 1043:RPAR    )     at line 243
-token 1044:LBRA    {     at line 243
-token 1045:CASE    case  at line 244
-token 1046:NUM     0     at line 244
-token 1047:COLON   :     at line 244
-token 1048:LBRA    {     at line 245
-token 1049:ID      testvalue at line 246
-token 1050:SEMI    ;     at line 246
-token 1051:ID      testarithmetic at line 247
-token 1052:SEMI    ;     at line 247
-token 1053:ID      testif at line 248
-token 1054:SEMI    ;     at line 248
-token 1055:ID      testswitch at line 249
-token 1056:LPAR    (     at line 249
-token 1057:MINUS   -     at line 249
-token 1058:NUM     1     at line 249
-token 1059:MULT    *     at line 249
-token 1060:ID      _const_int_2 at line 249
-token 1061:RPAR    )     at line 249
-token 1062:SEMI    ;     at line 249
-token 1063:RBRA    }     at line 250
-token 1064:CASE    case  at line 251
-token 1065:NUM     1     at line 251
-token 1066:COLON   :     at line 251
-token 1067:LBRA    {     at line 252
-token 1068:PRINTF  printf at line 253
-token 1069:LPAR    (     at line 253
-token 1070:STRING  "The Following Test Should Output 'Hi- 2018'" at line 253
-token 1071:RPAR    )     at line 253
-token 1072:SEMI    ;     at line 253
-token 1073:ID      typecorrosion at line 254
-token 1074:SEMI    ;     at line 254
-token 1075:PRINTF  printf at line 255
-token 1076:LPAR    (     at line 255
-token 1077:STRING  "This Test Should Output '\\n\\t\\r~!@#$%^&*`' Rather Than Escape Them" at line 255
-token 1078:RPAR    )     at line 255
-token 1079:SEMI    ;     at line 255
-token 1080:PRINTF  printf at line 256
-token 1081:LPAR    (     at line 256
-token 1082:STRING  "#t1" at line 256
-token 1083:RPAR    )     at line 256
-token 1084:SEMI    ;     at line 256
-token 1085:PRINTF  printf at line 257
-token 1086:LPAR    (     at line 257
-token 1087:STRING  "$t1" at line 257
-token 1088:RPAR    )     at line 257
-token 1089:SEMI    ;     at line 257
-token 1090:RBRA    }     at line 258
-token 1091:CASE    case  at line 259
-token 1092:NUM     2     at line 259
-token 1093:COLON   :     at line 259
-token 1094:LBRA    {     at line 260
-token 1095:ID      _var_char_0 at line 261
-token 1096:EQU     =     at line 261
-token 1097:SIGCHAR '1' at line 261
-token 1098:SEMI    ;     at line 261
-token 1099:ID      _var_char_1 at line 262
-token 1100:EQU     =     at line 262
-token 1101:SIGCHAR '2' at line 262
-token 1102:SEMI    ;     at line 262
-token 1103:ID      _var_int_0 at line 263
-token 1104:EQU     =     at line 263
-token 1105:NUM     0012345 at line 263
-token 1106:SEMI    ;     at line 263
-token 1107:ID      _var_int_1 at line 264
-token 1108:EQU     =     at line 264
-token 1109:NUM     54321 at line 264
-token 1110:SEMI    ;     at line 264
-token 1111:ID      testdo at line 265
-token 1112:SEMI    ;     at line 265
-token 1113:ID      testemptyfunction at line 266
-token 1114:SEMI    ;     at line 266
-token 1115:ID      teststructure at line 267
-token 1116:LPAR    (     at line 267
-token 1117:ID      _var_int_0 at line 267
-token 1118:COMMA   ,     at line 267
-token 1119:ID      _var_int_1 at line 267
-token 1120:COMMA   ,     at line 267
-token 1121:ID      _var_char_0 at line 267
-token 1122:COMMA   ,     at line 267
-token 1123:ID      _var_char_1 at line 267
-token 1124:COMMA   ,     at line 267
-token 1125:ID      _char at line 267
-token 1126:RPAR    )     at line 267
-token 1127:SEMI    ;     at line 267
-token 1128:RBRA    }     at line 268
-token 1129:CASE    case  at line 269
-token 1130:NUM     3     at line 269
-token 1131:COLON   :     at line 269
-token 1132:LBRA    {     at line 270
-token 1133:PRINTF  printf at line 271
-token 1134:LPAR    (     at line 271
-token 1135:STRING  "INPUT P: Permutation Output" at line 271
-token 1136:RPAR    )     at line 271
-token 1137:SEMI    ;     at line 271
-token 1138:PRINTF  printf at line 272
-token 1139:LPAR    (     at line 272
-token 1140:STRING  "INPUT S: Sequential Sum" at line 272
-token 1141:RPAR    )     at line 272
-token 1142:SEMI    ;     at line 272
-token 1143:SCANF   scan  at line 273
-token 1144:LPAR    (     at line 273
-token 1145:ID      choice at line 273
-token 1146:RPAR    )     at line 273
-token 1147:SEMI    ;     at line 273
-token 1148:SWITCH  switch at line 274
-token 1149:LPAR    (     at line 274
-token 1150:ID      choice at line 274
-token 1151:RPAR    )     at line 274
-token 1152:LBRA    {     at line 274
-token 1153:CASE    case  at line 275
-token 1154:SIGCHAR 'P' at line 275
-token 1155:COLON   :     at line 275
-token 1156:LBRA    {     at line 276
-token 1157:PRINTF  printf at line 277
-token 1158:LPAR    (     at line 277
-token 1159:STRING  "INPUT INT0 INT1: Select INT1 From INT0 To Do Permutation" at line 277
-token 1160:RPAR    )     at line 277
-token 1161:SEMI    ;     at line 277
-token 1162:SCANF   scan  at line 278
-token 1163:LPAR    (     at line 278
-token 1164:ID      numbers_to_be_selected at line 278
-token 1165:COMMA   ,     at line 278
-token 1166:ID      amount at line 278
-token 1167:RPAR    )     at line 278
-token 1168:SEMI    ;     at line 278
-token 1169:PRINTF  printf at line 279
-token 1170:LPAR    (     at line 279
-token 1171:STRING  "" at line 279
-token 1172:RPAR    )     at line 279
-token 1173:SEMI    ;     at line 279
-token 1174:IF      if    at line 280
-token 1175:LPAR    (     at line 280
-token 1176:ID      amount at line 280
-token 1177:PLUS    +     at line 280
-token 1178:NUM     1     at line 280
-token 1179:GTR     >     at line 280
-token 1180:ID      max   at line 280
-token 1181:RPAR    )     at line 280
-token 1182:LBRA    {     at line 280
-token 1183:PRINTF  printf at line 281
-token 1184:LPAR    (     at line 281
-token 1185:STRING  "ERROR!" at line 281
-token 1186:RPAR    )     at line 281
-token 1187:SEMI    ;     at line 281
-token 1188:RETURN  return at line 282
-token 1189:SEMI    ;     at line 282
-token 1190:RBRA    }     at line 283
-token 1191:ELSE    else  at line 283
-token 1192:SEMI    ;     at line 283
-token 1193:ID      initpermutation at line 284
-token 1194:LPAR    (     at line 284
-token 1195:NUM     0     at line 284
-token 1196:COMMA   ,     at line 284
-token 1197:ID      amount at line 284
-token 1198:PLUS    +     at line 284
-token 1199:NUM     1     at line 284
-token 1200:RPAR    )     at line 284
-token 1201:SEMI    ;     at line 284
-token 1202:ID      calrecursive at line 285
-token 1203:LPAR    (     at line 285
-token 1204:NUM     0     at line 285
-token 1205:COMMA   ,     at line 285
-token 1206:NUM     1     at line 285
-token 1207:RPAR    )     at line 285
-token 1208:SEMI    ;     at line 285
-token 1209:RBRA    }     at line 286
-token 1210:CASE    case  at line 287
-token 1211:SIGCHAR 'S' at line 287
-token 1212:COLON   :     at line 287
-token 1213:LBRA    {     at line 288
-token 1214:PRINTF  printf at line 289
-token 1215:LPAR    (     at line 289
-token 1216:STRING  "INPUT N: Calculate Sum From 1 To N" at line 289
-token 1217:RPAR    )     at line 289
-token 1218:SEMI    ;     at line 289
-token 1219:SCANF   scan  at line 290
-token 1220:LPAR    (     at line 290
-token 1221:ID      select at line 290
-token 1222:RPAR    )     at line 290
-token 1223:SEMI    ;     at line 290
-token 1224:PRINTF  printf at line 291
-token 1225:LPAR    (     at line 291
-token 1226:STRING  "Sequential Sum Result is: " at line 291
-token 1227:COMMA   ,     at line 291
-token 1228:ID      seqsum at line 291
-token 1229:LPAR    (     at line 291
-token 1230:ID      select at line 291
-token 1231:RPAR    )     at line 291
-token 1232:RPAR    )     at line 291
-token 1233:SEMI    ;     at line 291
-token 1234:IF      if    at line 292
-token 1235:LPAR    (     at line 292
-token 1236:ID      seqsum at line 292
-token 1237:LPAR    (     at line 292
-token 1238:NUM     10    at line 292
-token 1239:RPAR    )     at line 292
-token 1240:EQEQ    ==    at line 292
-token 1241:NUM     55    at line 292
-token 1242:RPAR    )     at line 292
-token 1243:PRINTF  printf at line 293
-token 1244:LPAR    (     at line 293
-token 1245:STRING  "Recursive Check Succeed!" at line 293
-token 1246:RPAR    )     at line 293
-token 1247:SEMI    ;     at line 293
-token 1248:ELSE    else  at line 294
-token 1249:LBRA    {     at line 294
-token 1250:ID      error at line 295
-token 1251:EQU     =     at line 295
-token 1252:NUM     1     at line 295
-token 1253:SEMI    ;     at line 295
-token 1254:PRINTF  printf at line 296
-token 1255:LPAR    (     at line 296
-token 1256:STRING  "Error in Recursive Check!" at line 296
-token 1257:RPAR    )     at line 296
-token 1258:SEMI    ;     at line 296
-token 1259:RBRA    }     at line 297
-token 1260:ID      select at line 298
-token 1261:EQU     =     at line 298
-token 1262:NUM     3     at line 298
-token 1263:SEMI    ;     at line 298
-token 1264:RBRA    }     at line 299
-token 1265:DEFAULT default at line 300
-token 1266:COLON   :     at line 300
-token 1267:PRINTF  printf at line 300
-token 1268:LPAR    (     at line 300
-token 1269:STRING  "Illigal Input Detected!" at line 300
-token 1270:RPAR    )     at line 300
-token 1271:SEMI    ;     at line 300
-token 1272:RBRA    }     at line 301
-token 1273:RBRA    }     at line 303
-token 1274:CASE    case  at line 304
-token 1275:NUM     4     at line 304
-token 1276:COLON   :     at line 304
-token 1277:SEMI    ;     at line 305
-token 1278:DEFAULT default at line 306
-token 1279:COLON   :     at line 306
-token 1280:PRINTF  printf at line 306
-token 1281:LPAR    (     at line 306
-token 1282:STRING  "Illigal Input Detected!" at line 306
-token 1283:RPAR    )     at line 306
-token 1284:SEMI    ;     at line 306
-token 1285:RBRA    }     at line 307
-token 1286:RBRA    }     at line 308
-token 1287:WHILE   while at line 308
-token 1288:LPAR    (     at line 308
-token 1289:ID      and   at line 308
-token 1290:LPAR    (     at line 308
-token 1291:ID      error at line 308
-token 1292:COMMA   ,     at line 308
-token 1293:ID      select at line 308
-token 1294:RPAR    )     at line 308
-token 1295:RPAR    )     at line 308
-token 1296:SEMI    ;     at line 308
-token 1297:IF      if    at line 309
-token 1298:LPAR    (     at line 309
-token 1299:ID      error at line 309
-token 1300:GEQ     >=    at line 309
-token 1301:NUM     1     at line 309
-token 1302:RPAR    )     at line 309
-token 1303:PRINTF  printf at line 310
-token 1304:LPAR    (     at line 310
-token 1305:STRING  "Critical Error Occurred During Testing..." at line 310
-token 1306:RPAR    )     at line 310
-token 1307:SEMI    ;     at line 310
-token 1308:ELSE    else  at line 311
-token 1309:PRINTF  printf at line 312
-token 1310:LPAR    (     at line 312
-token 1311:STRING  "Test Passed!" at line 312
-token 1312:RPAR    )     at line 312
-token 1313:SEMI    ;     at line 312
-token 1314:PRINTF  printf at line 313
-token 1315:LPAR    (     at line 313
-token 1316:STRING  "Test End" at line 313
-token 1317:RPAR    )     at line 313
-token 1318:SEMI    ;     at line 313
-token 1319:RBRA    }     at line 314
+token 5   :NUM     30    at line 1
+token 6   :SEMI    ;     at line 1
+token 7   :INT     int   at line 3
+token 8   :ID      factorial at line 3
+token 9   :LPAR    (     at line 3
+token 10  :INT     int   at line 3
+token 11  :ID      n     at line 3
+token 12  :RPAR    )     at line 3
+token 13  :LBRA    {     at line 3
+token 14  :IF      if    at line 4
+token 15  :LPAR    (     at line 4
+token 16  :ID      n     at line 4
+token 17  :LEQ     <=    at line 4
+token 18  :NUM     1     at line 4
+token 19  :RPAR    )     at line 4
+token 20  :RETURN  return at line 5
+token 21  :LPAR    (     at line 5
+token 22  :NUM     1     at line 5
+token 23  :RPAR    )     at line 5
+token 24  :SEMI    ;     at line 5
+token 25  :ELSE    else  at line 6
+token 26  :RETURN  return at line 7
+token 27  :LPAR    (     at line 7
+token 28  :ID      n     at line 7
+token 29  :MULT    *     at line 7
+token 30  :ID      factorial at line 7
+token 31  :LPAR    (     at line 7
+token 32  :ID      n     at line 7
+token 33  :MINUS   -     at line 7
+token 34  :NUM     1     at line 7
+token 35  :RPAR    )     at line 7
+token 36  :RPAR    )     at line 7
+token 37  :SEMI    ;     at line 7
+token 38  :RBRA    }     at line 8
+token 39  :INT     int   at line 10
+token 40  :ID      mod   at line 10
+token 41  :LPAR    (     at line 10
+token 42  :INT     int   at line 10
+token 43  :ID      x     at line 10
+token 44  :COMMA   ,     at line 10
+token 45  :INT     int   at line 10
+token 46  :ID      y     at line 10
+token 47  :RPAR    )     at line 10
+token 48  :LBRA    {     at line 10
+token 49  :ID      x     at line 11
+token 50  :EQU     =     at line 11
+token 51  :ID      x     at line 11
+token 52  :MINUS   -     at line 11
+token 53  :ID      x     at line 11
+token 54  :DIV     /     at line 11
+token 55  :ID      y     at line 11
+token 56  :MULT    *     at line 11
+token 57  :ID      y     at line 11
+token 58  :SEMI    ;     at line 11
+token 59  :RETURN  return at line 13
+token 60  :LPAR    (     at line 13
+token 61  :ID      x     at line 13
+token 62  :RPAR    )     at line 13
+token 63  :SEMI    ;     at line 13
+token 64  :RBRA    }     at line 14
+token 65  :VOID    void  at line 16
+token 66  :ID      swap  at line 16
+token 67  :LPAR    (     at line 16
+token 68  :INT     int   at line 16
+token 69  :ID      x     at line 16
+token 70  :COMMA   ,     at line 16
+token 71  :INT     int   at line 16
+token 72  :ID      y     at line 16
+token 73  :RPAR    )     at line 16
+token 74  :LBRA    {     at line 16
+token 75  :INT     int   at line 17
+token 76  :ID      temp  at line 17
+token 77  :SEMI    ;     at line 17
+token 78  :PRINTF  printf at line 19
+token 79  :LPAR    (     at line 19
+token 80  :STRING  " x = " at line 19
+token 81  :COMMA   ,     at line 19
+token 82  :ID      x     at line 19
+token 83  :RPAR    )     at line 19
+token 84  :SEMI    ;     at line 19
+token 85  :PRINTF  printf at line 20
+token 86  :LPAR    (     at line 20
+token 87  :STRING  " y = " at line 20
+token 88  :COMMA   ,     at line 20
+token 89  :ID      y     at line 20
+token 90  :RPAR    )     at line 20
+token 91  :SEMI    ;     at line 20
+token 92  :ID      temp  at line 21
+token 93  :EQU     =     at line 21
+token 94  :ID      x     at line 21
+token 95  :SEMI    ;     at line 21
+token 96  :ID      x     at line 22
+token 97  :EQU     =     at line 22
+token 98  :ID      y     at line 22
+token 99  :SEMI    ;     at line 22
+token 100 :ID      y     at line 23
+token 101 :EQU     =     at line 23
+token 102 :ID      temp  at line 23
+token 103 :SEMI    ;     at line 23
+token 104 :PRINTF  printf at line 24
+token 105 :LPAR    (     at line 24
+token 106 :STRING  " SWAP x = " at line 24
+token 107 :COMMA   ,     at line 24
+token 108 :ID      x     at line 24
+token 109 :RPAR    )     at line 24
+token 110 :SEMI    ;     at line 24
+token 111 :PRINTF  printf at line 25
+token 112 :LPAR    (     at line 25
+token 113 :STRING  " SWAP y = " at line 25
+token 114 :COMMA   ,     at line 25
+token 115 :ID      y     at line 25
+token 116 :RPAR    )     at line 25
+token 117 :SEMI    ;     at line 25
+token 118 :RBRA    }     at line 26
+token 119 :VOID    void  at line 29
+token 120 :ID      complete_num at line 29
+token 121 :LPAR    (     at line 29
+token 122 :INT     int   at line 29
+token 123 :ID      val   at line 29
+token 124 :RPAR    )     at line 29
+token 125 :LBRA    {     at line 30
+token 126 :INT     int   at line 31
+token 127 :ID      k     at line 31
+token 128 :LBRK    [     at line 31
+token 129 :NUM     128   at line 31
+token 130 :RBRK    ]     at line 31
+token 131 :SEMI    ;     at line 31
+token 132 :INT     int   at line 32
+token 133 :ID      i     at line 32
+token 134 :COMMA   ,     at line 32
+token 135 :ID      j     at line 32
+token 136 :COMMA   ,     at line 32
+token 137 :ID      n     at line 32
+token 138 :COMMA   ,     at line 32
+token 139 :ID      s     at line 32
+token 140 :COMMA   ,     at line 32
+token 141 :ID      x1    at line 32
+token 142 :SEMI    ;     at line 32
+token 143 :INT     int   at line 33
+token 144 :ID      m     at line 33
+token 145 :COMMA   ,     at line 33
+token 146 :ID      k2    at line 33
+token 147 :COMMA   ,     at line 33
+token 148 :ID      h     at line 33
+token 149 :COMMA   ,     at line 33
+token 150 :ID      leap  at line 33
+token 151 :COMMA   ,     at line 33
+token 152 :ID      x2    at line 33
+token 153 :SEMI    ;     at line 33
+token 154 :INT     int   at line 34
+token 155 :ID      a     at line 34
+token 156 :COMMA   ,     at line 34
+token 157 :ID      b     at line 34
+token 158 :COMMA   ,     at line 34
+token 159 :ID      c     at line 34
+token 160 :SEMI    ;     at line 34
+token 161 :ID      j     at line 36
+token 162 :EQU     =     at line 36
+token 163 :ID      val   at line 36
+token 164 :SEMI    ;     at line 36
+token 165 :DO      do    at line 37
+token 166 :LBRA    {     at line 38
+token 167 :ID      n     at line 39
+token 168 :EQU     =     at line 39
+token 169 :MINUS   -     at line 39
+token 170 :NUM     1     at line 39
+token 171 :SEMI    ;     at line 39
+token 172 :ID      s     at line 40
+token 173 :EQU     =     at line 40
+token 174 :ID      j     at line 40
+token 175 :SEMI    ;     at line 40
+token 176 :ID      i     at line 41
+token 177 :EQU     =     at line 41
+token 178 :NUM     1     at line 41
+token 179 :SEMI    ;     at line 41
+token 180 :DO      do    at line 42
+token 181 :LBRA    {     at line 43
+token 182 :ID      x1    at line 44
+token 183 :EQU     =     at line 44
+token 184 :LPAR    (     at line 44
+token 185 :ID      j     at line 44
+token 186 :DIV     /     at line 44
+token 187 :ID      i     at line 44
+token 188 :RPAR    )     at line 44
+token 189 :MULT    *     at line 44
+token 190 :ID      i     at line 44
+token 191 :SEMI    ;     at line 44
+token 192 :IF      if    at line 45
+token 193 :LPAR    (     at line 45
+token 194 :ID      mod   at line 45
+token 195 :LPAR    (     at line 45
+token 196 :ID      j     at line 45
+token 197 :COMMA   ,     at line 45
+token 198 :ID      i     at line 45
+token 199 :RPAR    )     at line 45
+token 200 :EQEQ    ==    at line 45
+token 201 :NUM     0     at line 45
+token 202 :RPAR    )     at line 45
+token 203 :LBRA    {     at line 46
+token 204 :ID      n     at line 47
+token 205 :EQU     =     at line 47
+token 206 :ID      n     at line 47
+token 207 :PLUS    +     at line 47
+token 208 :NUM     1     at line 47
+token 209 :SEMI    ;     at line 47
+token 210 :ID      s     at line 48
+token 211 :EQU     =     at line 48
+token 212 :ID      s     at line 48
+token 213 :MINUS   -     at line 48
+token 214 :ID      i     at line 48
+token 215 :SEMI    ;     at line 48
+token 216 :IF      if    at line 49
+token 217 :LPAR    (     at line 49
+token 218 :ID      n     at line 49
+token 219 :GEQ     >=    at line 49
+token 220 :NUM     128   at line 49
+token 221 :RPAR    )     at line 49
+token 222 :PRINTF  printf at line 50
+token 223 :LPAR    (     at line 50
+token 224 :STRING  " OVERFLOW!          " at line 50
+token 225 :RPAR    )     at line 50
+token 226 :SEMI    ;     at line 50
+token 227 :ELSE    else  at line 51
+token 228 :ID      k     at line 52
+token 229 :LBRK    [     at line 52
+token 230 :ID      n     at line 52
+token 231 :RBRK    ]     at line 52
+token 232 :EQU     =     at line 52
+token 233 :ID      i     at line 52
+token 234 :SEMI    ;     at line 52
+token 235 :RBRA    }     at line 53
+token 236 :ELSE    else  at line 54
+token 237 :SEMI    ;     at line 55
+token 238 :ID      i     at line 56
+token 239 :EQU     =     at line 56
+token 240 :ID      i     at line 56
+token 241 :PLUS    +     at line 56
+token 242 :NUM     1     at line 56
+token 243 :SEMI    ;     at line 56
+token 244 :RBRA    }     at line 57
+token 245 :WHILE   while at line 57
+token 246 :LPAR    (     at line 57
+token 247 :ID      i     at line 57
+token 248 :LSS     <     at line 57
+token 249 :ID      j     at line 57
+token 250 :RPAR    )     at line 57
+token 251 :IF      if    at line 59
+token 252 :LPAR    (     at line 59
+token 253 :ID      s     at line 59
+token 254 :EQEQ    ==    at line 59
+token 255 :NUM     0     at line 59
+token 256 :RPAR    )     at line 59
+token 257 :LBRA    {     at line 60
+token 258 :PRINTF  printf at line 61
+token 259 :LPAR    (     at line 61
+token 260 :STRING  " complete number: " at line 61
+token 261 :COMMA   ,     at line 61
+token 262 :ID      j     at line 61
+token 263 :RPAR    )     at line 61
+token 264 :SEMI    ;     at line 61
+token 265 :ID      i     at line 62
+token 266 :EQU     =     at line 62
+token 267 :NUM     0     at line 62
+token 268 :SEMI    ;     at line 62
+token 269 :DO      do    at line 63
+token 270 :LBRA    {     at line 64
+token 271 :PRINTF  printf at line 65
+token 272 :LPAR    (     at line 65
+token 273 :STRING  "  " at line 65
+token 274 :COMMA   ,     at line 65
+token 275 :ID      k     at line 65
+token 276 :LBRK    [     at line 65
+token 277 :ID      i     at line 65
+token 278 :RBRK    ]     at line 65
+token 279 :RPAR    )     at line 65
+token 280 :SEMI    ;     at line 65
+token 281 :ID      i     at line 66
+token 282 :EQU     =     at line 66
+token 283 :ID      i     at line 66
+token 284 :PLUS    +     at line 66
+token 285 :NUM     1     at line 66
+token 286 :SEMI    ;     at line 66
+token 287 :RBRA    }     at line 67
+token 288 :WHILE   while at line 67
+token 289 :LPAR    (     at line 67
+token 290 :ID      i     at line 67
+token 291 :LEQ     <=    at line 67
+token 292 :ID      n     at line 67
+token 293 :RPAR    )     at line 67
+token 294 :PRINTF  printf at line 68
+token 295 :LPAR    (     at line 68
+token 296 :STRING  "          " at line 68
+token 297 :RPAR    )     at line 68
+token 298 :SEMI    ;     at line 68
+token 299 :RBRA    }     at line 69
+token 300 :ELSE    else  at line 70
+token 301 :SEMI    ;     at line 71
+token 302 :ID      j     at line 72
+token 303 :EQU     =     at line 72
+token 304 :ID      j     at line 72
+token 305 :PLUS    +     at line 72
+token 306 :NUM     1     at line 72
+token 307 :SEMI    ;     at line 72
+token 308 :RBRA    }     at line 73
+token 309 :WHILE   while at line 73
+token 310 :LPAR    (     at line 73
+token 311 :ID      j     at line 73
+token 312 :LSS     <     at line 73
+token 313 :ID      max_num at line 73
+token 314 :RPAR    )     at line 73
+token 315 :PRINTF  printf at line 75
+token 316 :LPAR    (     at line 75
+token 317 :STRING  " ---------------------------------------------------------------          " at line 75
+token 318 :RPAR    )     at line 75
+token 319 :SEMI    ;     at line 75
+token 320 :ID      a     at line 76
+token 321 :EQU     =     at line 76
+token 322 :NUM     0     at line 76
+token 323 :SEMI    ;     at line 76
+token 324 :ID      i     at line 77
+token 325 :EQU     =     at line 77
+token 326 :NUM     0     at line 77
+token 327 :SEMI    ;     at line 77
+token 328 :DO      do    at line 78
+token 329 :LBRA    {     at line 78
+token 330 :ID      b     at line 79
+token 331 :EQU     =     at line 79
+token 332 :ID      a     at line 79
+token 333 :MULT    *     at line 79
+token 334 :ID      i     at line 79
+token 335 :SEMI    ;     at line 79
+token 336 :ID      c     at line 80
+token 337 :EQU     =     at line 80
+token 338 :ID      j     at line 80
+token 339 :MULT    *     at line 80
+token 340 :ID      n     at line 80
+token 341 :SEMI    ;     at line 80
+token 342 :ID      a     at line 81
+token 343 :EQU     =     at line 81
+token 344 :ID      a     at line 81
+token 345 :MULT    *     at line 81
+token 346 :ID      i     at line 81
+token 347 :SEMI    ;     at line 81
+token 348 :ID      a     at line 82
+token 349 :EQU     =     at line 82
+token 350 :ID      a     at line 82
+token 351 :PLUS    +     at line 82
+token 352 :ID      b     at line 82
+token 353 :PLUS    +     at line 82
+token 354 :ID      c     at line 82
+token 355 :SEMI    ;     at line 82
+token 356 :ID      i     at line 83
+token 357 :EQU     =     at line 83
+token 358 :ID      i     at line 83
+token 359 :PLUS    +     at line 83
+token 360 :NUM     1     at line 83
+token 361 :SEMI    ;     at line 83
+token 362 :RBRA    }     at line 84
+token 363 :WHILE   while at line 84
+token 364 :LPAR    (     at line 84
+token 365 :ID      i     at line 84
+token 366 :LSS     <     at line 84
+token 367 :ID      max_num at line 84
+token 368 :RPAR    )     at line 84
+token 369 :ID      b     at line 86
+token 370 :EQU     =     at line 86
+token 371 :ID      a     at line 86
+token 372 :SEMI    ;     at line 86
+token 373 :ID      i     at line 87
+token 374 :EQU     =     at line 87
+token 375 :NUM     0     at line 87
+token 376 :SEMI    ;     at line 87
+token 377 :DO      do    at line 88
+token 378 :LBRA    {     at line 88
+token 379 :ID      b     at line 89
+token 380 :EQU     =     at line 89
+token 381 :ID      b     at line 89
+token 382 :PLUS    +     at line 89
+token 383 :ID      i     at line 89
+token 384 :SEMI    ;     at line 89
+token 385 :ID      i     at line 90
+token 386 :EQU     =     at line 90
+token 387 :ID      i     at line 90
+token 388 :PLUS    +     at line 90
+token 389 :NUM     1     at line 90
+token 390 :SEMI    ;     at line 90
+token 391 :RBRA    }     at line 91
+token 392 :WHILE   while at line 91
+token 393 :LPAR    (     at line 91
+token 394 :ID      i     at line 91
+token 395 :LSS     <     at line 91
+token 396 :ID      max_num at line 91
+token 397 :RPAR    )     at line 91
+token 398 :PRINTF  printf at line 93
+token 399 :LPAR    (     at line 93
+token 400 :STRING  " b = " at line 93
+token 401 :COMMA   ,     at line 93
+token 402 :ID      b     at line 93
+token 403 :RPAR    )     at line 93
+token 404 :SEMI    ;     at line 93
+token 405 :PRINTF  printf at line 97
+token 406 :LPAR    (     at line 97
+token 407 :STRING  " ---------------------------------------------------------------          " at line 97
+token 408 :RPAR    )     at line 97
+token 409 :SEMI    ;     at line 97
+token 410 :ID      h     at line 98
+token 411 :EQU     =     at line 98
+token 412 :NUM     0     at line 98
+token 413 :SEMI    ;     at line 98
+token 414 :ID      leap  at line 99
+token 415 :EQU     =     at line 99
+token 416 :NUM     1     at line 99
+token 417 :SEMI    ;     at line 99
+token 418 :ID      m     at line 100
+token 419 :EQU     =     at line 100
+token 420 :NUM     2     at line 100
+token 421 :SEMI    ;     at line 100
+token 422 :DO      do    at line 101
+token 423 :LBRA    {     at line 102
+token 424 :ID      k2    at line 103
+token 425 :EQU     =     at line 103
+token 426 :ID      m     at line 103
+token 427 :DIV     /     at line 103
+token 428 :NUM     2     at line 103
+token 429 :SEMI    ;     at line 103
+token 430 :ID      i     at line 104
+token 431 :EQU     =     at line 104
+token 432 :NUM     2     at line 104
+token 433 :SEMI    ;     at line 104
+token 434 :DO      do    at line 105
+token 435 :LBRA    {     at line 105
+token 436 :ID      x2    at line 106
+token 437 :EQU     =     at line 106
+token 438 :LPAR    (     at line 106
+token 439 :ID      m     at line 106
+token 440 :DIV     /     at line 106
+token 441 :ID      i     at line 106
+token 442 :RPAR    )     at line 106
+token 443 :MULT    *     at line 106
+token 444 :ID      i     at line 106
+token 445 :SEMI    ;     at line 106
+token 446 :IF      if    at line 107
+token 447 :LPAR    (     at line 107
+token 448 :ID      mod   at line 107
+token 449 :LPAR    (     at line 107
+token 450 :ID      m     at line 107
+token 451 :COMMA   ,     at line 107
+token 452 :ID      i     at line 107
+token 453 :RPAR    )     at line 107
+token 454 :EQEQ    ==    at line 107
+token 455 :NUM     0     at line 107
+token 456 :RPAR    )     at line 107
+token 457 :LBRA    {     at line 108
+token 458 :ID      leap  at line 109
+token 459 :EQU     =     at line 109
+token 460 :NUM     0     at line 109
+token 461 :SEMI    ;     at line 109
+token 462 :RBRA    }     at line 110
+token 463 :ELSE    else  at line 111
+token 464 :SEMI    ;     at line 112
+token 465 :ID      i     at line 113
+token 466 :EQU     =     at line 113
+token 467 :ID      i     at line 113
+token 468 :PLUS    +     at line 113
+token 469 :NUM     1     at line 113
+token 470 :SEMI    ;     at line 113
+token 471 :RBRA    }     at line 114
+token 472 :WHILE   while at line 114
+token 473 :LPAR    (     at line 114
+token 474 :ID      i     at line 114
+token 475 :LEQ     <=    at line 114
+token 476 :ID      k2    at line 114
+token 477 :RPAR    )     at line 114
+token 478 :IF      if    at line 115
+token 479 :LPAR    (     at line 115
+token 480 :ID      leap  at line 115
+token 481 :EQEQ    ==    at line 115
+token 482 :NUM     1     at line 115
+token 483 :RPAR    )     at line 115
+token 484 :LBRA    {     at line 116
+token 485 :PRINTF  printf at line 117
+token 486 :LPAR    (     at line 117
+token 487 :STRING  " " at line 117
+token 488 :COMMA   ,     at line 117
+token 489 :ID      m     at line 117
+token 490 :RPAR    )     at line 117
+token 491 :SEMI    ;     at line 117
+token 492 :ID      h     at line 118
+token 493 :EQU     =     at line 118
+token 494 :ID      h     at line 118
+token 495 :PLUS    +     at line 118
+token 496 :NUM     1     at line 118
+token 497 :SEMI    ;     at line 118
+token 498 :ID      x2    at line 120
+token 499 :EQU     =     at line 120
+token 500 :LPAR    (     at line 120
+token 501 :ID      h     at line 120
+token 502 :DIV     /     at line 120
+token 503 :NUM     10    at line 120
+token 504 :RPAR    )     at line 120
+token 505 :MULT    *     at line 120
+token 506 :NUM     10    at line 120
+token 507 :SEMI    ;     at line 120
+token 508 :IF      if    at line 121
+token 509 :LPAR    (     at line 121
+token 510 :ID      x2    at line 121
+token 511 :EQEQ    ==    at line 121
+token 512 :ID      h     at line 121
+token 513 :RPAR    )     at line 121
+token 514 :PRINTF  printf at line 122
+token 515 :LPAR    (     at line 122
+token 516 :STRING  "          " at line 122
+token 517 :RPAR    )     at line 122
+token 518 :SEMI    ;     at line 122
+token 519 :ELSE    else  at line 123
+token 520 :SEMI    ;     at line 124
+token 521 :RBRA    }     at line 125
+token 522 :ELSE    else  at line 126
+token 523 :SEMI    ;     at line 127
+token 524 :ID      leap  at line 128
+token 525 :EQU     =     at line 128
+token 526 :NUM     1     at line 128
+token 527 :SEMI    ;     at line 128
+token 528 :ID      m     at line 129
+token 529 :EQU     =     at line 129
+token 530 :ID      m     at line 129
+token 531 :PLUS    +     at line 129
+token 532 :NUM     1     at line 129
+token 533 :SEMI    ;     at line 129
+token 534 :RBRA    }     at line 130
+token 535 :WHILE   while at line 130
+token 536 :LPAR    (     at line 130
+token 537 :ID      m     at line 130
+token 538 :LEQ     <=    at line 130
+token 539 :ID      max_num at line 130
+token 540 :RPAR    )     at line 130
+token 541 :PRINTF  printf at line 132
+token 542 :LPAR    (     at line 132
+token 543 :STRING  "          The total is " at line 132
+token 544 :COMMA   ,     at line 132
+token 545 :ID      h     at line 132
+token 546 :RPAR    )     at line 132
+token 547 :SEMI    ;     at line 132
+token 548 :RBRA    }     at line 134
+token 549 :VOID    void  at line 137
+token 550 :MAIN    main  at line 137
+token 551 :LPAR    (     at line 137
+token 552 :RPAR    )     at line 137
+token 553 :LBRA    {     at line 138
+token 554 :INT     int   at line 139
+token 555 :ID      n     at line 139
+token 556 :SEMI    ;     at line 139
+token 557 :ID      n     at line 141
+token 558 :EQU     =     at line 141
+token 559 :ID      factorial at line 141
+token 560 :LPAR    (     at line 141
+token 561 :NUM     10    at line 141
+token 562 :RPAR    )     at line 141
+token 563 :SEMI    ;     at line 141
+token 564 :PRINTF  printf at line 142
+token 565 :LPAR    (     at line 142
+token 566 :STRING  " 10! = " at line 142
+token 567 :COMMA   ,     at line 142
+token 568 :ID      n     at line 142
+token 569 :RPAR    )     at line 142
+token 570 :SEMI    ;     at line 142
+token 571 :ID      swap  at line 144
+token 572 :LPAR    (     at line 144
+token 573 :NUM     5     at line 144
+token 574 :COMMA   ,     at line 144
+token 575 :NUM     10    at line 144
+token 576 :RPAR    )     at line 144
+token 577 :SEMI    ;     at line 144
+token 578 :ID      complete_num at line 146
+token 579 :LPAR    (     at line 146
+token 580 :NUM     2     at line 146
+token 581 :RPAR    )     at line 146
+token 582 :SEMI    ;     at line 146
+token 583 :RBRA    }     at line 147
