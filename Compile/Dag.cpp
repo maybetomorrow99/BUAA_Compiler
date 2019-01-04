@@ -169,9 +169,9 @@ void insertDAG(Quaternary curq) {
 	setParents(x, z);
 	setParents(y, z);
 
-	cout << curq.op1 << " " << x << "    ";
-	cout << curq.op2 << " " << y << "    ";
-	cout << curq.res << " " << z << endl;
+	//cout << curq.op1 << " " << x << "    ";
+	//cout << curq.op2 << " " << y << "    ";
+	//cout << curq.res << " " << z << endl;
 }
 
 
@@ -279,8 +279,8 @@ void dagInit() {
 
 
 	for (unsigned int i = 0; i < blockIndex.size(); i++) {
-		cout << blockIndex[i] + 1 << endl;
+		//cout << blockIndex[i] + 1 << endl;
 	}
-	cout << "block num: " << blockIndex.size() << endl;
+	//cout << "block num: " << blockIndex.size() << endl;
 	//buildDAG();
 }

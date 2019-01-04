@@ -361,3 +361,11 @@ void SymbolTable::setupSwitchPara(string name) {
 			items[i].para = 1;
 	}
 }
+
+
+void SymbolTable::clear() {
+	items.clear();
+	curFuncAddr = 0;				//当前函数在符号表中的位置
+	funcIndex.clear();			//函数索引表，记录函数在符号表中的位置
+	offset = 0;
+}

@@ -122,7 +122,9 @@
     <ClCompile Include="Error.cpp" />
     <ClCompile Include="Lexer.cpp" />
     <ClCompile Include="MipsGenerator.cpp" />
+    <ClCompile Include="MipsGenerator_old.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Parser_old.cpp" />
     <ClCompile Include="Quaternary.cpp" />
     <ClCompile Include="Reg.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
@@ -134,7 +136,9 @@
     <ClInclude Include="global.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="mips.h" />
+    <ClInclude Include="mips_old.h" />
     <ClInclude Include="parser.h" />
+    <ClInclude Include="parser_old.h" />
     <ClInclude Include="quaternary.h" />
     <ClInclude Include="reg.h" />
     <ClInclude Include="stdafx.h" />

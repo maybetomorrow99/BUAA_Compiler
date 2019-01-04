@@ -1,0 +1,317 @@
+CON       int       1024      max_num   
+FUNC      int                 factorial 
+PARA      int                 n         
+LVAR      n                   $temp0    
+LI        1                   $temp1    
+BGT       $temp0    $temp1    $label0   
+LI        1                   $temp2    
+RET                           $temp2    
+JUMP                          $label1   
+LAB                           $label0   
+LVAR      n                   $temp3    
+LVAR      n                   $temp5    
+LI        1                   $temp6    
+SUB       $temp5    $temp6    $temp5    
+PUSH                          $temp5    
+CALL                          factorial 
+VOF       factorial           $temp4    
+MUL       $temp3    $temp4    $temp3    
+RET                           $temp3    
+LAB                           $label1   
+FUNC      int                 mod       
+PARA      int                 x         
+PARA      int                 y         
+LVAR      x                   $temp7    
+LVAR      x                   $temp8    
+LVAR      y                   $temp9    
+DIV       $temp8    $temp9    $temp8    
+LVAR      y                   $temp10   
+MUL       $temp8    $temp10   $temp8    
+SUB       $temp7    $temp8    $temp7    
+LVAR      $temp7              x         
+LVAR      x                   $temp11   
+RET                           $temp11   
+FUNC      void                swap      
+PARA      int                 x         
+PARA      int                 y         
+VAR       int                 temp      
+LVAR      x                   $temp12   
+PRT       2         0         $temp12   
+LVAR      y                   $temp13   
+PRT       2         1         $temp13   
+LVAR      x                   $temp14   
+LVAR      $temp14             temp      
+LVAR      y                   $temp15   
+LVAR      $temp15             x         
+LVAR      temp                $temp16   
+LVAR      $temp16             y         
+LVAR      x                   $temp17   
+PRT       2         2         $temp17   
+LVAR      y                   $temp18   
+PRT       2         3         $temp18   
+REN                                     
+FUNC      void                complete_num
+PARA      int                 val       
+ARY       int       128       k         
+VAR       int                 i         
+VAR       int                 j         
+VAR       int                 n         
+VAR       int                 s         
+VAR       int                 x1        
+VAR       int                 m         
+VAR       int                 k2        
+VAR       int                 h         
+VAR       int                 leap      
+VAR       int                 x2        
+VAR       int                 a         
+VAR       int                 b         
+VAR       int                 c         
+LVAR      val                 $temp19   
+LVAR      $temp19             j         
+LAB                           $label3   
+LI        1                   $temp20   
+LI        0                   $temp21   
+SUB       $temp21   $temp20   $temp20   
+LVAR      $temp20             n         
+LVAR      j                   $temp22   
+LVAR      $temp22             s         
+LI        1                   $temp23   
+LVAR      $temp23             i         
+LAB                           $label6   
+LVAR      j                   $temp24   
+LVAR      i                   $temp25   
+DIV       $temp24   $temp25   $temp24   
+LVAR      i                   $temp26   
+MUL       $temp24   $temp26   $temp24   
+LVAR      $temp24             x1        
+LVAR      j                   $temp28   
+PUSH                          $temp28   
+LVAR      i                   $temp29   
+PUSH                          $temp29   
+CALL                          mod       
+VOF       mod                 $temp27   
+LI        0                   $temp30   
+BNE       $temp27   $temp30   $label8   
+LVAR      n                   $temp31   
+LI        1                   $temp32   
+ADD       $temp31   $temp32   $temp31   
+LVAR      $temp31             n         
+LVAR      s                   $temp33   
+LVAR      i                   $temp34   
+SUB       $temp33   $temp34   $temp33   
+LVAR      $temp33             s         
+LVAR      n                   $temp35   
+LI        128                 $temp36   
+BLT       $temp35   $temp36   $label10  
+PRT       1                   4         
+JUMP                          $label11  
+LAB                           $label10  
+LVAR      n                   $temp37   
+LVAR      i                   $temp38   
+SARY      k         $temp37   $temp38   
+LAB                           $label11  
+JUMP                          $label9   
+LAB                           $label8   
+LAB                           $label9   
+LVAR      i                   $temp39   
+LI        1                   $temp40   
+ADD       $temp39   $temp40   $temp39   
+LVAR      $temp39             i         
+LAB                           $label5   
+LVAR      i                   $temp41   
+LVAR      j                   $temp42   
+BGE       $temp41   $temp42   $label7   
+JUMP                          $label6   
+LAB                           $label7   
+LVAR      s                   $temp43   
+LI        0                   $temp44   
+BNE       $temp43   $temp44   $label12  
+LVAR      j                   $temp45   
+PRT       2         5         $temp45   
+LI        0                   $temp46   
+LVAR      $temp46             i         
+LAB                           $label15  
+VAR       int                 $temp47   
+LVAR      i                   $temp48   
+LARY      k         $temp48   $temp47   
+PRT       2         6         $temp47   
+LVAR      i                   $temp49   
+LI        1                   $temp50   
+ADD       $temp49   $temp50   $temp49   
+LVAR      $temp49             i         
+LAB                           $label14  
+LVAR      i                   $temp51   
+LVAR      n                   $temp52   
+BGT       $temp51   $temp52   $label16  
+JUMP                          $label15  
+LAB                           $label16  
+PRT       1                   7         
+JUMP                          $label13  
+LAB                           $label12  
+LAB                           $label13  
+LVAR      j                   $temp53   
+LI        1                   $temp54   
+ADD       $temp53   $temp54   $temp53   
+LVAR      $temp53             j         
+LAB                           $label2   
+LVAR      j                   $temp55   
+LVAR      max_num             $temp56   
+BGE       $temp55   $temp56   $label4   
+JUMP                          $label3   
+LAB                           $label4   
+PRT       1                   8         
+LI        0                   $temp57   
+LVAR      $temp57             a         
+LI        0                   $temp58   
+LVAR      $temp58             i         
+LAB                           $label18  
+LVAR      a                   $temp59   
+LVAR      i                   $temp60   
+MUL       $temp59   $temp60   $temp59   
+LVAR      $temp59             b         
+LVAR      j                   $temp61   
+LVAR      n                   $temp62   
+MUL       $temp61   $temp62   $temp61   
+LVAR      $temp61             c         
+LVAR      a                   $temp63   
+LVAR      i                   $temp64   
+MUL       $temp63   $temp64   $temp63   
+LVAR      $temp63             a         
+LVAR      a                   $temp65   
+LVAR      b                   $temp66   
+ADD       $temp65   $temp66   $temp65   
+LVAR      c                   $temp67   
+ADD       $temp65   $temp67   $temp65   
+LVAR      $temp65             a         
+LVAR      i                   $temp68   
+LI        1                   $temp69   
+ADD       $temp68   $temp69   $temp68   
+LVAR      $temp68             i         
+LAB                           $label17  
+LVAR      i                   $temp70   
+LVAR      max_num             $temp71   
+BGE       $temp70   $temp71   $label19  
+JUMP                          $label18  
+LAB                           $label19  
+LVAR      a                   $temp72   
+LVAR      $temp72             b         
+LI        0                   $temp73   
+LVAR      $temp73             i         
+LAB                           $label21  
+LVAR      b                   $temp74   
+LVAR      i                   $temp75   
+ADD       $temp74   $temp75   $temp74   
+LVAR      $temp74             b         
+LVAR      i                   $temp76   
+LI        1                   $temp77   
+ADD       $temp76   $temp77   $temp76   
+LVAR      $temp76             i         
+LAB                           $label20  
+LVAR      i                   $temp78   
+LVAR      max_num             $temp79   
+BGE       $temp78   $temp79   $label22  
+JUMP                          $label21  
+LAB                           $label22  
+LVAR      b                   $temp80   
+PRT       2         9         $temp80   
+PRT       1                   8         
+LI        0                   $temp81   
+LVAR      $temp81             h         
+LI        1                   $temp82   
+LVAR      $temp82             leap      
+LI        2                   $temp83   
+LVAR      $temp83             m         
+LAB                           $label24  
+LVAR      m                   $temp84   
+LI        2                   $temp85   
+DIV       $temp84   $temp85   $temp84   
+LVAR      $temp84             k2        
+LI        2                   $temp86   
+LVAR      $temp86             i         
+LAB                           $label27  
+LVAR      m                   $temp87   
+LVAR      i                   $temp88   
+DIV       $temp87   $temp88   $temp87   
+LVAR      i                   $temp89   
+MUL       $temp87   $temp89   $temp87   
+LVAR      $temp87             x2        
+LVAR      m                   $temp91   
+PUSH                          $temp91   
+LVAR      i                   $temp92   
+PUSH                          $temp92   
+CALL                          mod       
+VOF       mod                 $temp90   
+LI        0                   $temp93   
+BNE       $temp90   $temp93   $label29  
+LI        0                   $temp94   
+LVAR      $temp94             leap      
+JUMP                          $label30  
+LAB                           $label29  
+LAB                           $label30  
+LVAR      i                   $temp95   
+LI        1                   $temp96   
+ADD       $temp95   $temp96   $temp95   
+LVAR      $temp95             i         
+LAB                           $label26  
+LVAR      i                   $temp97   
+LVAR      k2                  $temp98   
+BGT       $temp97   $temp98   $label28  
+JUMP                          $label27  
+LAB                           $label28  
+LVAR      leap                $temp99   
+LI        1                   $temp100  
+BNE       $temp99   $temp100  $label31  
+LVAR      m                   $temp101  
+PRT       2         10        $temp101  
+LVAR      h                   $temp102  
+LI        1                   $temp103  
+ADD       $temp102  $temp103  $temp102  
+LVAR      $temp102            h         
+LVAR      h                   $temp104  
+LI        10                  $temp105  
+DIV       $temp104  $temp105  $temp104  
+LI        10                  $temp106  
+MUL       $temp104  $temp106  $temp104  
+LVAR      $temp104            x2        
+LVAR      x2                  $temp107  
+LVAR      h                   $temp108  
+BNE       $temp107  $temp108  $label33  
+PRT       1                   7         
+JUMP                          $label34  
+LAB                           $label33  
+LAB                           $label34  
+JUMP                          $label32  
+LAB                           $label31  
+LAB                           $label32  
+LI        1                   $temp109  
+LVAR      $temp109            leap      
+LVAR      m                   $temp110  
+LI        1                   $temp111  
+ADD       $temp110  $temp111  $temp110  
+LVAR      $temp110            m         
+LAB                           $label23  
+LVAR      m                   $temp112  
+LVAR      max_num             $temp113  
+BGT       $temp112  $temp113  $label25  
+JUMP                          $label24  
+LAB                           $label25  
+LVAR      h                   $temp114  
+PRT       2         11        $temp114  
+REN                                     
+FUNC      void                main      
+VAR       int                 n         
+LI        10                  $temp116  
+PUSH                          $temp116  
+CALL                          factorial 
+VOF       factorial           $temp115  
+LVAR      $temp115            n         
+LVAR      n                   $temp117  
+PRT       2         12        $temp117  
+LI        5                   $temp118  
+PUSH                          $temp118  
+LI        10                  $temp119  
+PUSH                          $temp119  
+CALL                          swap      
+LI        2                   $temp120  
+PUSH                          $temp120  
+CALL                          complete_num

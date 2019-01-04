@@ -1,4 +1,4 @@
-const int MAX_NUM = 30 ;
+const int MAX_NUM = 1024 ;
 
 int factorial(int n){
    if(n<=1) 

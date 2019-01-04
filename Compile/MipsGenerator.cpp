@@ -95,13 +95,13 @@ void MipsGenerator::referCount() {
 	sort(refCountVec.begin(), refCountVec.end(), cmp_by_value);
 	funcRefCountMap[fname] = refCountVec;
 
-	for (map < string, vector<PAIR> >::iterator it = funcRefCountMap.begin(); it != funcRefCountMap.end(); it++) {
+	/*for (map < string, vector<PAIR> >::iterator it = funcRefCountMap.begin(); it != funcRefCountMap.end(); it++) {
 		cout << "===== "<< it->first << " =====" << endl;
 		refCountVec = it->second;
 		for (unsigned int i = 0; i < refCountVec.size(); ++i) {
 			cout << refCountVec[i].first << " : " << refCountVec[i].second << endl;
 		}
-	}
+	}*/
 }
 
 
@@ -651,8 +651,8 @@ void MipsGenerator::mipsCalMULDIV() {
 	reg3 = getReg(resname);
 
 	if (curq.oper == "MUL") {
-		mipsout << "mult " << reg1 << ", " << reg2 << endl;
-		mipsout << "mflo " << reg3 << endl;
+		mipsout << "mul "<< reg3 << ", " << reg1 << ", " << reg2 << endl;
+		//mipsout << "mflo " << reg3 << endl;
 	}
 	else {	//curq.oper == "DIV"
 		mipsout << "div " << reg1 << ", " << reg2 << endl;
@@ -782,22 +782,22 @@ void MipsGenerator::mipsSARY() {
 	string reg2;
 	string reg3;
 
-	//读取i到reg2
+	//读取i到reg2，进行偏移，偏移后的值地址为a2
 	reg2 = getRegWithVal(op2name);
-	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
+	mipsout << "sll $a2, " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
 	//reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
 		mipsout << "la $a3, " << op1name << endl;
-		mipsout << "addu $a3, $a3, " << reg2 << endl;
-		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
+		mipsout << "addu $a3, $a3, $a2" << endl;
+		//mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
 		mipsout << "addi $a3, $fp, " << op1addr << endl;
-		mipsout << "subu $a3, $a3, " << reg2 << endl;
-		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
+		mipsout << "subu $a3, $a3, $a2" << endl;
+		//mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3，并给数组赋值
@@ -821,20 +821,20 @@ void MipsGenerator::mipsLARY() {
 
 	//读取i到reg2
 	reg2 = getRegWithVal(op2name);
-	mipsout << "sll " << reg2 << ", " << reg2 << ", 2" << endl;
+	mipsout << "sll $a2, " << reg2 << ", 2" << endl;
 
 	//读取数组地址到reg1
 	//reg1 = getReg("000");
 	if (symTab.isGlobal(op1name)) {	//全局变量，数组的地址不会复用，用v1存
 		mipsout << "la $a3, " << op1name << endl;
-		mipsout << "addu $a3, $a3, " << reg2 << endl;
-		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
+		mipsout << "addu $a3, $a3, $a2"<< endl;
+		//mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 	else {							//是不在寄存器中的局部变量，数组只能这样
 		int op1addr = -getOffset(op1name);
 		mipsout << "addi $a3, $fp, " << op1addr << endl;
-		mipsout << "subu $a3, $a3, " << reg2 << endl;
-		mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
+		mipsout << "subu $a3, $a3, $a2" << endl;
+		//mipsout << "sra " << reg2 << ", " << reg2 << ", 2" << endl;
 	}
 
 	//取值x到reg3

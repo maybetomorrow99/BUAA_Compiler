@@ -1,5 +1,5 @@
 name      kind      type      value     addr      para
-max_num   const     int       30        0         0         
+max_num   const     int       1024      0         0         
 factorial func      int       32        0         1         
 n         para      int       0         4         0         
 $temp0    var       int       1         8         0         

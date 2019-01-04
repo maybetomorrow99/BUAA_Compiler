@@ -61,4 +61,6 @@ public:
 
 	void setupSwitchPara(string name);
 
+	void clear();
+
 };

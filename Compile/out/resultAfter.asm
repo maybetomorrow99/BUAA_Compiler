@@ -1,5 +1,5 @@
 .data
-max_num: .word 30
+max_num: .word 1024
 $string0: .asciiz " x = "
 $string1: .asciiz " y = "
 $string2: .asciiz " SWAP x = "
@@ -54,8 +54,7 @@ lw $s0, 0($fp)
 # VOF, factorial, , $temp2
 move $t0, $v0
 # MUL, n, $temp2, $temp5
-mult $s0, $t0
-mflo $t1
+mul $t1, $s0, $t0
 # RET, , , $temp5
 move $v0, $t1
 addi $sp, $sp, 160
@@ -75,8 +74,7 @@ lw $s1, -4($fp)
 div $s0, $s1
 mflo $t0
 # MUL, $temp6, y, $temp7
-mult $t0, $s1
-mflo $t1
+mul $t1, $t0, $s1
 # SUB, x, $temp7, x
 subu $s0, $s0, $t1
 # RET, , , x
@@ -182,8 +180,7 @@ $label6:
 div $s1, $s0
 mflo $t0
 # MUL, $temp13, i, x1
-mult $t0, $s0
-mflo $t1
+mul $t1, $t0, $s0
 # PUSH, , , j
 sw $s1, ($sp)
 subi $sp, $sp, 4
@@ -246,10 +243,9 @@ j $label11
 #clearReg(3)
 $label10:
 # SARY, k, n, i
-sll $s4, $s4, 2
+sll $a2, $s4, 2
 addi $a3, $fp, -132
-subu $a3, $a3, $s4
-sra $s4, $s4, 2
+subu $a3, $a3, $a2
 sw $s0, ($a3)
 # LAB, , , $label11
 #clearReg(3)
@@ -300,10 +296,9 @@ li $s0, 0
 #clearReg(3)
 $label15:
 # LARY, k, i, $temp25
-sll $s0, $s0, 2
+sll $a2, $s0, 2
 addi $a3, $fp, -132
-subu $a3, $a3, $s0
-sra $s0, $s0, 2
+subu $a3, $a3, $a2
 lw $t0, ($a3)
 # PRT, 2, 6, $temp25
 li $v0, 4
@@ -350,8 +345,8 @@ addi $s1, $s1, 1
 # LAB, , , $label2
 #clearReg(3)
 $label2:
-# BGE, j, 30, $label4
-li $t0, 30
+# BGE, j, 1024, $label4
+li $t0, 1024
 #clearReg(3)
 bge $s1, $t0, $label4
 # JUMP, , , $label3
@@ -375,14 +370,11 @@ li $s0, 0
 #clearReg(3)
 $label18:
 # MUL, a, i, b
-mult $s3, $s0
-mflo $s5
+mul $s5, $s3, $s0
 # MUL, j, n, c
-mult $s1, $s4
-mflo $t0
+mul $t0, $s1, $s4
 # MUL, a, i, a
-mult $s3, $s0
-mflo $s3
+mul $s3, $s3, $s0
 # ADD, a, b, $temp35
 addu $t1, $s3, $s5
 # ADD, $temp35, c, a
@@ -393,8 +385,8 @@ addi $s0, $s0, 1
 #clearReg(3)
 sw $t0, -692($fp)
 $label17:
-# BGE, i, 30, $label19
-li $t0, 30
+# BGE, i, 1024, $label19
+li $t0, 1024
 #clearReg(3)
 bge $s0, $t0, $label19
 # JUMP, , , $label18
@@ -417,8 +409,8 @@ addi $s0, $s0, 1
 # LAB, , , $label20
 #clearReg(3)
 $label20:
-# BGE, i, 30, $label22
-li $t0, 30
+# BGE, i, 1024, $label22
+li $t0, 1024
 #clearReg(3)
 bge $s0, $t0, $label22
 # JUMP, , , $label21
@@ -467,8 +459,7 @@ $label27:
 div $s2, $s0
 mflo $t0
 # MUL, $temp49, i, x2
-mult $t0, $s0
-mflo $t1
+mul $t1, $t0, $s0
 # PUSH, , , m
 sw $s2, ($sp)
 subi $sp, $sp, 4
@@ -555,8 +546,7 @@ li $t0, 10
 div $s6, $t0
 mflo $t1
 # MUL, $temp60, 10, x2
-mult $t1, $t0
-mflo $t2
+mul $t2, $t1, $t0
 # BNE, x2, h, $label33
 #clearReg(3)
 sw $t2, -680($fp)
@@ -593,8 +583,8 @@ addi $s2, $s2, 1
 # LAB, , , $label23
 #clearReg(3)
 $label23:
-# BGT, m, 30, $label25
-li $t0, 30
+# BGT, m, 1024, $label25
+li $t0, 1024
 #clearReg(3)
 bgt $s2, $t0, $label25
 # JUMP, , , $label24

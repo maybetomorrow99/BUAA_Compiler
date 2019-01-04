@@ -2,7 +2,7 @@ token 1   :CONST   const at line 1
 token 2   :INT     int   at line 1
 token 3   :ID      max_num at line 1
 token 4   :EQU     =     at line 1
-token 5   :NUM     30    at line 1
+token 5   :NUM     1024  at line 1
 token 6   :SEMI    ;     at line 1
 token 7   :INT     int   at line 3
 token 8   :ID      factorial at line 3

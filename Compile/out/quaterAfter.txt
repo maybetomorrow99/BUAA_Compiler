@@ -1,4 +1,4 @@
-CON       int       30        max_num   
+CON       int       1024      max_num   
 FUNC      int                 factorial 
 PARA      int                 n         
 BGT       n         1         $label0   
@@ -96,7 +96,7 @@ LAB                           $label12
 LAB                           $label13  
 ADD       j         1         j         
 LAB                           $label2   
-BGE       j         30        $label4   
+BGE       j         1024      $label4   
 JUMP                          $label3   
 LAB                           $label4   
 PRT       1                   8         
@@ -110,7 +110,7 @@ ADD       a         b         $temp35
 ADD       $temp35   c         a         
 ADD       i         1         i         
 LAB                           $label17  
-BGE       i         30        $label19  
+BGE       i         1024      $label19  
 JUMP                          $label18  
 LAB                           $label19  
 LVAR      a                   b         
@@ -119,7 +119,7 @@ LAB                           $label21
 ADD       b         i         b         
 ADD       i         1         i         
 LAB                           $label20  
-BGE       i         30        $label22  
+BGE       i         1024      $label22  
 JUMP                          $label21  
 LAB                           $label22  
 PRT       2         9         b         
@@ -164,7 +164,7 @@ LAB                           $label32
 LI        1                   leap      
 ADD       m         1         m         
 LAB                           $label23  
-BGT       m         30        $label25  
+BGT       m         1024      $label25  
 JUMP                          $label24  
 LAB                           $label25  
 PRT       2         11        h         

@@ -1,35 +1,17 @@
 #pragma once
-#include "parser.h"
-#include "reg.h"
+#include "stdafx.h"
+#include "parser_old.h"
 
-class MipsGenerator {
+class MipsGenerator_old {
 public:
 	ofstream mipsout;
-	map < string, vector<pair<string, int> > > funcRefCountMap;
-	RegPool regpool;
+	MipsGenerator_old(string asmPath);
 
-	MipsGenerator(string asmPath);
+	bool inReg(string name);
 
-	void referCount();
-
-	bool varInReg(string name);
-
-	int getVarRegNum(string name);
-
-	string getReg(string name);
-
+	int getRegNum(string name);
 
 	int getOffset(string name);
-
-	int applyReg(string name);
-
-	string getRegWithVal(string name);
-
-	void reg2Mem(int index);
-
-	void clearRegs(int option);
-
-	void recovery();
 
 	void genMips();
 	int mipsGlobal();
@@ -37,8 +19,7 @@ public:
 	void mipsVAR();
 	void mipsARY();
 	void mipsFUNC();
-	void mipsCalADDSUB();
-	void mipsCalMULDIV();
+	void mipsCal();
 	void mipsPARA();
 	void mipsCALL();
 	void mipsPUSH();
@@ -47,6 +28,8 @@ public:
 	void mipsLVAR();
 	void mipsSARY();
 	void mipsLARY();
+	void mipsPC();
+	void mipsPI();
 	void mipsPRT();
 	void mipsREAD();
 	void mipsRET();
