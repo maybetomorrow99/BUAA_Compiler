@@ -163,7 +163,6 @@ lw $t0, 0($fp)
 move $s1, $t0
 # LAB, , , $label3
 #clearReg(3)
-sw $t0, 0($fp)
 $label3:
 # SUB, 0, 1, $temp11
 # LI, -1, , n
@@ -174,7 +173,6 @@ move $t0, $s1
 li $s0, 1
 # LAB, , , $label6
 #clearReg(3)
-sw $t0, -656($fp)
 $label6:
 # DIV, j, i, $temp13
 div $s1, $s0
@@ -227,7 +225,6 @@ subu $t0, $t0, $s0
 # BLT, n, 128, $label10
 li $t1, 128
 #clearReg(3)
-sw $t0, -656($fp)
 blt $s4, $t1, $label10
 # PRT, 1, , 4
 li $v0, 4
@@ -278,7 +275,6 @@ li $t0, 0
 # BNE, s, $temp23, $label12
 lw $t1, -656($fp)
 #clearReg(3)
-sw $t1, -656($fp)
 bne $t1, $t0, $label12
 # PRT, 2, 5, j
 li $v0, 4
@@ -383,7 +379,6 @@ addu $s3, $t1, $t0
 addi $s0, $s0, 1
 # LAB, , , $label17
 #clearReg(3)
-sw $t0, -692($fp)
 $label17:
 # BGE, i, 1024, $label19
 li $t0, 1024
@@ -453,7 +448,6 @@ mflo $t1
 li $s0, 2
 # LAB, , , $label27
 #clearReg(3)
-sw $t1, -668($fp)
 $label27:
 # DIV, m, i, $temp49
 div $s2, $s0
@@ -517,7 +511,6 @@ $label26:
 # BGT, i, k2, $label28
 lw $t0, -668($fp)
 #clearReg(3)
-sw $t0, -668($fp)
 bgt $s0, $t0, $label28
 # JUMP, , , $label27
 #clearReg(3)
@@ -549,7 +542,6 @@ mflo $t1
 mul $t2, $t1, $t0
 # BNE, x2, h, $label33
 #clearReg(3)
-sw $t2, -680($fp)
 bne $t2, $s6, $label33
 # PRT, 1, , 7
 li $v0, 4

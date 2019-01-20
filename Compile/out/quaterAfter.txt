@@ -5,19 +5,19 @@ BGT       n         1         $label0
 RET                           1         
 JUMP                          $label1   
 LAB                           $label0   
-SUB       n         1         $temp4    
+$temp4=   n         -         1         
 PUSH                          $temp4    
 CALL                          factorial 
-VOF       factorial           $temp2    
-MUL       n         $temp2    $temp5    
+$temp2    =                   RET       
+$temp5=   n         *         $temp2    
 RET                           $temp5    
 LAB                           $label1   
 FUNC      int                 mod       
 PARA      int                 x         
 PARA      int                 y         
-DIV       x         y         $temp6    
-MUL       $temp6    y         $temp7    
-SUB       x         $temp7    x         
+$temp6=   x         /         y         
+$temp7=   $temp6    *         y         
+x=        x         -         $temp7    
 RET                           x         
 FUNC      void                swap      
 PARA      int                 x         
@@ -25,9 +25,9 @@ PARA      int                 y
 VAR       int                 temp      
 PRT       2         0         x         
 PRT       2         1         y         
-LVAR      x                   temp      
-LVAR      y                   x         
-LVAR      temp                y         
+temp      =                   x         
+x         =                   y         
+y         =                   temp      
 PRT       2         2         x         
 PRT       2         3         y         
 REN                                     
@@ -47,33 +47,33 @@ VAR       int                 x2
 VAR       int                 a         
 VAR       int                 b         
 VAR       int                 c         
-LVAR      val                 j         
+j         =                   val       
 LAB                           $label3   
-SUB       0         1         $temp11   
+$temp11=  0         -         1         
 LI        -1                  n         
-LVAR      j                   s         
+s         =                   j         
 LI        1                   i         
 LAB                           $label6   
-DIV       j         i         $temp13   
-MUL       $temp13   i         x1        
+$temp13=  j         /         i         
+x1=       $temp13   *         i         
 PUSH                          j         
 PUSH                          i         
 CALL                          mod       
-VOF       mod                 $temp15   
+$temp15   =                   RET       
 LI        0                   $temp16   
 BNE       $temp15   $temp16   $label8   
-ADD       n         1         n         
-SUB       s         i         s         
+n=        n         +         1         
+s=        s         -         i         
 BLT       n         128       $label10  
 PRT       1                   4         
 JUMP                          $label11  
 LAB                           $label10  
-SARY      k         n         i         
+k         n         []=       i         
 LAB                           $label11  
 JUMP                          $label9   
 LAB                           $label8   
 LAB                           $label9   
-ADD       i         1         i         
+i=        i         +         1         
 LAB                           $label5   
 BGE       i         j         $label7   
 JUMP                          $label6   
@@ -83,9 +83,9 @@ BNE       s         $temp23   $label12
 PRT       2         5         j         
 LI        0                   i         
 LAB                           $label15  
-LARY      k         i         $temp25   
+$temp25   =[]       k         i         
 PRT       2         6         $temp25   
-ADD       i         1         i         
+i=        i         +         1         
 LAB                           $label14  
 BGT       i         n         $label16  
 JUMP                          $label15  
@@ -94,7 +94,7 @@ PRT       1                   7
 JUMP                          $label13  
 LAB                           $label12  
 LAB                           $label13  
-ADD       j         1         j         
+j=        j         +         1         
 LAB                           $label2   
 BGE       j         1024      $label4   
 JUMP                          $label3   
@@ -103,21 +103,21 @@ PRT       1                   8
 LI        0                   a         
 LI        0                   i         
 LAB                           $label18  
-MUL       a         i         b         
-MUL       j         n         c         
-MUL       a         i         a         
-ADD       a         b         $temp35   
-ADD       $temp35   c         a         
-ADD       i         1         i         
+b=        a         *         i         
+c=        j         *         n         
+a=        a         *         i         
+$temp35=  a         +         b         
+a=        $temp35   +         c         
+i=        i         +         1         
 LAB                           $label17  
 BGE       i         1024      $label19  
 JUMP                          $label18  
 LAB                           $label19  
-LVAR      a                   b         
+b         =                   a         
 LI        0                   i         
 LAB                           $label21  
-ADD       b         i         b         
-ADD       i         1         i         
+b=        b         +         i         
+i=        i         +         1         
 LAB                           $label20  
 BGE       i         1024      $label22  
 JUMP                          $label21  
@@ -128,31 +128,31 @@ LI        0                   h
 LI        1                   leap      
 LI        2                   m         
 LAB                           $label24  
-DIV       m         2         k2        
+k2=       m         /         2         
 LI        2                   i         
 LAB                           $label27  
-DIV       m         i         $temp49   
-MUL       $temp49   i         x2        
+$temp49=  m         /         i         
+x2=       $temp49   *         i         
 PUSH                          m         
 PUSH                          i         
 CALL                          mod       
-VOF       mod                 $temp51   
+$temp51   =                   RET       
 LI        0                   $temp52   
 BNE       $temp51   $temp52   $label29  
 LI        0                   leap      
 JUMP                          $label30  
 LAB                           $label29  
 LAB                           $label30  
-ADD       i         1         i         
+i=        i         +         1         
 LAB                           $label26  
 BGT       i         k2        $label28  
 JUMP                          $label27  
 LAB                           $label28  
 BNE       leap      1         $label31  
 PRT       2         10        m         
-ADD       h         1         h         
-DIV       h         10        $temp60   
-MUL       $temp60   10        x2        
+h=        h         +         1         
+$temp60=  h         /         10        
+x2=       $temp60   *         10        
 BNE       x2        h         $label33  
 PRT       1                   7         
 JUMP                          $label34  
@@ -162,7 +162,7 @@ JUMP                          $label32
 LAB                           $label31  
 LAB                           $label32  
 LI        1                   leap      
-ADD       m         1         m         
+m=        m         +         1         
 LAB                           $label23  
 BGT       m         1024      $label25  
 JUMP                          $label24  
@@ -173,8 +173,8 @@ FUNC      void                main
 VAR       int                 n         
 PUSH                          10        
 CALL                          factorial 
-VOF       factorial           $temp66   
-LVAR      $temp66             n         
+$temp66   =                   RET       
+n         =                   $temp66   
 PRT       2         12        n         
 PUSH                          5         
 PUSH                          10        

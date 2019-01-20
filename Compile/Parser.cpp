@@ -1865,14 +1865,83 @@ void Parser::returnState() {
 void printQuater(string path) {
 	ofstream fout;
 	fout.open(path);
+	string oper;
+	string op1;
+	string op2;
+	string res;
 	//fout << "\nThis is quaternary list " << endl;
-	for (unsigned int i = 0; i < quaterList.size(); i++) {
-		Quaternary quater = quaterList[i];
-		fout << setw(10) << left << quater.oper;
-		fout << setw(10) << left << quater.op1;
-		fout << setw(10) << left << quater.op2;
-		fout << setw(10) << left << quater.res << endl;
+	bool meFlag = false;
+	if (meFlag) {
+		for (unsigned int i = 0; i < quaterList.size(); i++) {
+				Quaternary quater = quaterList[i];
+				fout << setw(10) << left << quater.oper;
+				fout << setw(10) << left << quater.op1;
+				fout << setw(10) << left << quater.op2;
+				fout << setw(10) << left << quater.res << endl;
+			}
 	}
+	else {
+		for (unsigned int i = 0; i < quaterList.size(); i++) {
+			Quaternary quater = quaterList[i];
+			oper = quater.oper;
+			op1 = quater.op1;
+			op2 = quater.op2;
+			res = quater.res;
+
+			if (oper == "VOF") {
+				oper = quater.res;
+				op1 = "=";
+				res = "RET";
+			}
+			else if (oper == "ADD") {
+				oper = quater.res + "=";
+				op2 = "+";
+				op1 = quater.op1;
+				res = quater.op2;
+			}
+			else if (oper == "SUB") {
+				oper = quater.res + "=";
+				op2 = "-";
+				op1 = quater.op1;
+				res = quater.op2;
+			}
+			else if (oper == "MUL") {
+				oper = quater.res + "=";
+				op2 = "*";
+				op1 = quater.op1;
+				res = quater.op2;
+			}
+			else if (oper == "DIV") {
+				oper = quater.res + "=";
+				op2 = "/";
+				op1 = quater.op1;
+				res = quater.op2;
+			}
+			else if (oper == "LVAR") {
+				oper = quater.res;
+				op1 = "=";
+				res = quater.op1;
+			}
+			else if (oper == "SARY") {
+				oper = quater.op1;
+				op1 = quater.op2;
+				op2 = "[]=";
+				res = quater.res;
+			}
+			else if (oper == "LARY") {
+				oper = quater.res;
+				op1 = "=[]";
+				op2 = quater.op1;
+				res = quater.op2;
+			}
+
+			fout << setw(10) << left << oper;
+			fout << setw(10) << left << op1;
+			fout << setw(10) << left << op2;
+			fout << setw(10) << left << res << endl;
+		}
+	}
+	
 }
 
 

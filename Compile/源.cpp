@@ -24,8 +24,8 @@ int main() {
 
 	
 
-	srcpath = "./in/dowhile.c";
-	//cin >> srcpath;
+	//srcpath = "./in/error5.c";
+	cin >> srcpath;
 
 	if (_access(srcpath.data(), 0) == -1) {
 		cout << "File doesn't exist!" << endl;

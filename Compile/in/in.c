@@ -1,4 +1,9 @@
 
+int ret{
+	char c;
+	c = 'a';
+	return (('a'));	
+} 
 
 void main(){
 	const int loc_con = 20;
@@ -16,6 +21,7 @@ void main(){
 	c = b;
 	printf(a);
 	
+	printf(ret);
 	
 	return;
 }

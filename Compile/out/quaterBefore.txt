@@ -1,53 +1,53 @@
 CON       int       1024      max_num   
 FUNC      int                 factorial 
 PARA      int                 n         
-LVAR      n                   $temp0    
+$temp0    =                   n         
 LI        1                   $temp1    
 BGT       $temp0    $temp1    $label0   
 LI        1                   $temp2    
 RET                           $temp2    
 JUMP                          $label1   
 LAB                           $label0   
-LVAR      n                   $temp3    
-LVAR      n                   $temp5    
+$temp3    =                   n         
+$temp5    =                   n         
 LI        1                   $temp6    
-SUB       $temp5    $temp6    $temp5    
+$temp5=   $temp5    -         $temp6    
 PUSH                          $temp5    
 CALL                          factorial 
-VOF       factorial           $temp4    
-MUL       $temp3    $temp4    $temp3    
+$temp4    =                   RET       
+$temp3=   $temp3    *         $temp4    
 RET                           $temp3    
 LAB                           $label1   
 FUNC      int                 mod       
 PARA      int                 x         
 PARA      int                 y         
-LVAR      x                   $temp7    
-LVAR      x                   $temp8    
-LVAR      y                   $temp9    
-DIV       $temp8    $temp9    $temp8    
-LVAR      y                   $temp10   
-MUL       $temp8    $temp10   $temp8    
-SUB       $temp7    $temp8    $temp7    
-LVAR      $temp7              x         
-LVAR      x                   $temp11   
+$temp7    =                   x         
+$temp8    =                   x         
+$temp9    =                   y         
+$temp8=   $temp8    /         $temp9    
+$temp10   =                   y         
+$temp8=   $temp8    *         $temp10   
+$temp7=   $temp7    -         $temp8    
+x         =                   $temp7    
+$temp11   =                   x         
 RET                           $temp11   
 FUNC      void                swap      
 PARA      int                 x         
 PARA      int                 y         
 VAR       int                 temp      
-LVAR      x                   $temp12   
+$temp12   =                   x         
 PRT       2         0         $temp12   
-LVAR      y                   $temp13   
+$temp13   =                   y         
 PRT       2         1         $temp13   
-LVAR      x                   $temp14   
-LVAR      $temp14             temp      
-LVAR      y                   $temp15   
-LVAR      $temp15             x         
-LVAR      temp                $temp16   
-LVAR      $temp16             y         
-LVAR      x                   $temp17   
+$temp14   =                   x         
+temp      =                   $temp14   
+$temp15   =                   y         
+x         =                   $temp15   
+$temp16   =                   temp      
+y         =                   $temp16   
+$temp17   =                   x         
 PRT       2         2         $temp17   
-LVAR      y                   $temp18   
+$temp18   =                   y         
 PRT       2         3         $temp18   
 REN                                     
 FUNC      void                complete_num
@@ -66,82 +66,82 @@ VAR       int                 x2
 VAR       int                 a         
 VAR       int                 b         
 VAR       int                 c         
-LVAR      val                 $temp19   
-LVAR      $temp19             j         
+$temp19   =                   val       
+j         =                   $temp19   
 LAB                           $label3   
 LI        1                   $temp20   
 LI        0                   $temp21   
-SUB       $temp21   $temp20   $temp20   
-LVAR      $temp20             n         
-LVAR      j                   $temp22   
-LVAR      $temp22             s         
+$temp20=  $temp21   -         $temp20   
+n         =                   $temp20   
+$temp22   =                   j         
+s         =                   $temp22   
 LI        1                   $temp23   
-LVAR      $temp23             i         
+i         =                   $temp23   
 LAB                           $label6   
-LVAR      j                   $temp24   
-LVAR      i                   $temp25   
-DIV       $temp24   $temp25   $temp24   
-LVAR      i                   $temp26   
-MUL       $temp24   $temp26   $temp24   
-LVAR      $temp24             x1        
-LVAR      j                   $temp28   
+$temp24   =                   j         
+$temp25   =                   i         
+$temp24=  $temp24   /         $temp25   
+$temp26   =                   i         
+$temp24=  $temp24   *         $temp26   
+x1        =                   $temp24   
+$temp28   =                   j         
 PUSH                          $temp28   
-LVAR      i                   $temp29   
+$temp29   =                   i         
 PUSH                          $temp29   
 CALL                          mod       
-VOF       mod                 $temp27   
+$temp27   =                   RET       
 LI        0                   $temp30   
 BNE       $temp27   $temp30   $label8   
-LVAR      n                   $temp31   
+$temp31   =                   n         
 LI        1                   $temp32   
-ADD       $temp31   $temp32   $temp31   
-LVAR      $temp31             n         
-LVAR      s                   $temp33   
-LVAR      i                   $temp34   
-SUB       $temp33   $temp34   $temp33   
-LVAR      $temp33             s         
-LVAR      n                   $temp35   
+$temp31=  $temp31   +         $temp32   
+n         =                   $temp31   
+$temp33   =                   s         
+$temp34   =                   i         
+$temp33=  $temp33   -         $temp34   
+s         =                   $temp33   
+$temp35   =                   n         
 LI        128                 $temp36   
 BLT       $temp35   $temp36   $label10  
 PRT       1                   4         
 JUMP                          $label11  
 LAB                           $label10  
-LVAR      n                   $temp37   
-LVAR      i                   $temp38   
-SARY      k         $temp37   $temp38   
+$temp37   =                   n         
+$temp38   =                   i         
+k         $temp37   []=       $temp38   
 LAB                           $label11  
 JUMP                          $label9   
 LAB                           $label8   
 LAB                           $label9   
-LVAR      i                   $temp39   
+$temp39   =                   i         
 LI        1                   $temp40   
-ADD       $temp39   $temp40   $temp39   
-LVAR      $temp39             i         
+$temp39=  $temp39   +         $temp40   
+i         =                   $temp39   
 LAB                           $label5   
-LVAR      i                   $temp41   
-LVAR      j                   $temp42   
+$temp41   =                   i         
+$temp42   =                   j         
 BGE       $temp41   $temp42   $label7   
 JUMP                          $label6   
 LAB                           $label7   
-LVAR      s                   $temp43   
+$temp43   =                   s         
 LI        0                   $temp44   
 BNE       $temp43   $temp44   $label12  
-LVAR      j                   $temp45   
+$temp45   =                   j         
 PRT       2         5         $temp45   
 LI        0                   $temp46   
-LVAR      $temp46             i         
+i         =                   $temp46   
 LAB                           $label15  
 VAR       int                 $temp47   
-LVAR      i                   $temp48   
-LARY      k         $temp48   $temp47   
+$temp48   =                   i         
+$temp47   =[]       k         $temp48   
 PRT       2         6         $temp47   
-LVAR      i                   $temp49   
+$temp49   =                   i         
 LI        1                   $temp50   
-ADD       $temp49   $temp50   $temp49   
-LVAR      $temp49             i         
+$temp49=  $temp49   +         $temp50   
+i         =                   $temp49   
 LAB                           $label14  
-LVAR      i                   $temp51   
-LVAR      n                   $temp52   
+$temp51   =                   i         
+$temp52   =                   n         
 BGT       $temp51   $temp52   $label16  
 JUMP                          $label15  
 LAB                           $label16  
@@ -149,132 +149,132 @@ PRT       1                   7
 JUMP                          $label13  
 LAB                           $label12  
 LAB                           $label13  
-LVAR      j                   $temp53   
+$temp53   =                   j         
 LI        1                   $temp54   
-ADD       $temp53   $temp54   $temp53   
-LVAR      $temp53             j         
+$temp53=  $temp53   +         $temp54   
+j         =                   $temp53   
 LAB                           $label2   
-LVAR      j                   $temp55   
-LVAR      max_num             $temp56   
+$temp55   =                   j         
+$temp56   =                   max_num   
 BGE       $temp55   $temp56   $label4   
 JUMP                          $label3   
 LAB                           $label4   
 PRT       1                   8         
 LI        0                   $temp57   
-LVAR      $temp57             a         
+a         =                   $temp57   
 LI        0                   $temp58   
-LVAR      $temp58             i         
+i         =                   $temp58   
 LAB                           $label18  
-LVAR      a                   $temp59   
-LVAR      i                   $temp60   
-MUL       $temp59   $temp60   $temp59   
-LVAR      $temp59             b         
-LVAR      j                   $temp61   
-LVAR      n                   $temp62   
-MUL       $temp61   $temp62   $temp61   
-LVAR      $temp61             c         
-LVAR      a                   $temp63   
-LVAR      i                   $temp64   
-MUL       $temp63   $temp64   $temp63   
-LVAR      $temp63             a         
-LVAR      a                   $temp65   
-LVAR      b                   $temp66   
-ADD       $temp65   $temp66   $temp65   
-LVAR      c                   $temp67   
-ADD       $temp65   $temp67   $temp65   
-LVAR      $temp65             a         
-LVAR      i                   $temp68   
+$temp59   =                   a         
+$temp60   =                   i         
+$temp59=  $temp59   *         $temp60   
+b         =                   $temp59   
+$temp61   =                   j         
+$temp62   =                   n         
+$temp61=  $temp61   *         $temp62   
+c         =                   $temp61   
+$temp63   =                   a         
+$temp64   =                   i         
+$temp63=  $temp63   *         $temp64   
+a         =                   $temp63   
+$temp65   =                   a         
+$temp66   =                   b         
+$temp65=  $temp65   +         $temp66   
+$temp67   =                   c         
+$temp65=  $temp65   +         $temp67   
+a         =                   $temp65   
+$temp68   =                   i         
 LI        1                   $temp69   
-ADD       $temp68   $temp69   $temp68   
-LVAR      $temp68             i         
+$temp68=  $temp68   +         $temp69   
+i         =                   $temp68   
 LAB                           $label17  
-LVAR      i                   $temp70   
-LVAR      max_num             $temp71   
+$temp70   =                   i         
+$temp71   =                   max_num   
 BGE       $temp70   $temp71   $label19  
 JUMP                          $label18  
 LAB                           $label19  
-LVAR      a                   $temp72   
-LVAR      $temp72             b         
+$temp72   =                   a         
+b         =                   $temp72   
 LI        0                   $temp73   
-LVAR      $temp73             i         
+i         =                   $temp73   
 LAB                           $label21  
-LVAR      b                   $temp74   
-LVAR      i                   $temp75   
-ADD       $temp74   $temp75   $temp74   
-LVAR      $temp74             b         
-LVAR      i                   $temp76   
+$temp74   =                   b         
+$temp75   =                   i         
+$temp74=  $temp74   +         $temp75   
+b         =                   $temp74   
+$temp76   =                   i         
 LI        1                   $temp77   
-ADD       $temp76   $temp77   $temp76   
-LVAR      $temp76             i         
+$temp76=  $temp76   +         $temp77   
+i         =                   $temp76   
 LAB                           $label20  
-LVAR      i                   $temp78   
-LVAR      max_num             $temp79   
+$temp78   =                   i         
+$temp79   =                   max_num   
 BGE       $temp78   $temp79   $label22  
 JUMP                          $label21  
 LAB                           $label22  
-LVAR      b                   $temp80   
+$temp80   =                   b         
 PRT       2         9         $temp80   
 PRT       1                   8         
 LI        0                   $temp81   
-LVAR      $temp81             h         
+h         =                   $temp81   
 LI        1                   $temp82   
-LVAR      $temp82             leap      
+leap      =                   $temp82   
 LI        2                   $temp83   
-LVAR      $temp83             m         
+m         =                   $temp83   
 LAB                           $label24  
-LVAR      m                   $temp84   
+$temp84   =                   m         
 LI        2                   $temp85   
-DIV       $temp84   $temp85   $temp84   
-LVAR      $temp84             k2        
+$temp84=  $temp84   /         $temp85   
+k2        =                   $temp84   
 LI        2                   $temp86   
-LVAR      $temp86             i         
+i         =                   $temp86   
 LAB                           $label27  
-LVAR      m                   $temp87   
-LVAR      i                   $temp88   
-DIV       $temp87   $temp88   $temp87   
-LVAR      i                   $temp89   
-MUL       $temp87   $temp89   $temp87   
-LVAR      $temp87             x2        
-LVAR      m                   $temp91   
+$temp87   =                   m         
+$temp88   =                   i         
+$temp87=  $temp87   /         $temp88   
+$temp89   =                   i         
+$temp87=  $temp87   *         $temp89   
+x2        =                   $temp87   
+$temp91   =                   m         
 PUSH                          $temp91   
-LVAR      i                   $temp92   
+$temp92   =                   i         
 PUSH                          $temp92   
 CALL                          mod       
-VOF       mod                 $temp90   
+$temp90   =                   RET       
 LI        0                   $temp93   
 BNE       $temp90   $temp93   $label29  
 LI        0                   $temp94   
-LVAR      $temp94             leap      
+leap      =                   $temp94   
 JUMP                          $label30  
 LAB                           $label29  
 LAB                           $label30  
-LVAR      i                   $temp95   
+$temp95   =                   i         
 LI        1                   $temp96   
-ADD       $temp95   $temp96   $temp95   
-LVAR      $temp95             i         
+$temp95=  $temp95   +         $temp96   
+i         =                   $temp95   
 LAB                           $label26  
-LVAR      i                   $temp97   
-LVAR      k2                  $temp98   
+$temp97   =                   i         
+$temp98   =                   k2        
 BGT       $temp97   $temp98   $label28  
 JUMP                          $label27  
 LAB                           $label28  
-LVAR      leap                $temp99   
+$temp99   =                   leap      
 LI        1                   $temp100  
 BNE       $temp99   $temp100  $label31  
-LVAR      m                   $temp101  
+$temp101  =                   m         
 PRT       2         10        $temp101  
-LVAR      h                   $temp102  
+$temp102  =                   h         
 LI        1                   $temp103  
-ADD       $temp102  $temp103  $temp102  
-LVAR      $temp102            h         
-LVAR      h                   $temp104  
+$temp102= $temp102  +         $temp103  
+h         =                   $temp102  
+$temp104  =                   h         
 LI        10                  $temp105  
-DIV       $temp104  $temp105  $temp104  
+$temp104= $temp104  /         $temp105  
 LI        10                  $temp106  
-MUL       $temp104  $temp106  $temp104  
-LVAR      $temp104            x2        
-LVAR      x2                  $temp107  
-LVAR      h                   $temp108  
+$temp104= $temp104  *         $temp106  
+x2        =                   $temp104  
+$temp107  =                   x2        
+$temp108  =                   h         
 BNE       $temp107  $temp108  $label33  
 PRT       1                   7         
 JUMP                          $label34  
@@ -284,18 +284,18 @@ JUMP                          $label32
 LAB                           $label31  
 LAB                           $label32  
 LI        1                   $temp109  
-LVAR      $temp109            leap      
-LVAR      m                   $temp110  
+leap      =                   $temp109  
+$temp110  =                   m         
 LI        1                   $temp111  
-ADD       $temp110  $temp111  $temp110  
-LVAR      $temp110            m         
+$temp110= $temp110  +         $temp111  
+m         =                   $temp110  
 LAB                           $label23  
-LVAR      m                   $temp112  
-LVAR      max_num             $temp113  
+$temp112  =                   m         
+$temp113  =                   max_num   
 BGT       $temp112  $temp113  $label25  
 JUMP                          $label24  
 LAB                           $label25  
-LVAR      h                   $temp114  
+$temp114  =                   h         
 PRT       2         11        $temp114  
 REN                                     
 FUNC      void                main      
@@ -303,9 +303,9 @@ VAR       int                 n
 LI        10                  $temp116  
 PUSH                          $temp116  
 CALL                          factorial 
-VOF       factorial           $temp115  
-LVAR      $temp115            n         
-LVAR      n                   $temp117  
+$temp115  =                   RET       
+n         =                   $temp115  
+$temp117  =                   n         
 PRT       2         12        $temp117  
 LI        5                   $temp118  
 PUSH                          $temp118  
